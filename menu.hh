@@ -1,1 +1,4 @@
-enum menu_option { Jouer = 0, Scores, Options, Credits, Quitter };
+#pragma once
+#include <SFML/Graphics.hpp>
+
+enum menu_option { JOUER = 0, SCORES, OPTIONS, CREDITS, QUITTER };
