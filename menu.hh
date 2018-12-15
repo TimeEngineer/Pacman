@@ -1,0 +1,1 @@
+enum menu_option { Jouer = 0, Scores, Options, Credits, Quitter };
