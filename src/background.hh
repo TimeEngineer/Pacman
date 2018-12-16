@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-enum background_option { bMENU = 0, bJEU, bSCORES, bOPTIONS, bCREDITS };
+enum background_option { bMENU = 0, bREGLES, bJEU, bSCORES, bOPTIONS, bCREDITS };
 
 class Background {
 	public:

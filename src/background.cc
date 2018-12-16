@@ -25,19 +25,23 @@ void Background::set_sprite(background_option option) {
 	switch (option) {
 		case bMENU:
 			texture.loadFromFile("./DataBase/Images/Fonds/menu.png");
-			sprite.setTexture(texture);
-			token = bMENU;
+			break;
+		case bREGLES:
+			texture.loadFromFile("./DataBase/Images/Fonds/rules.png");
 			break;
 		case bJEU:
+			texture.loadFromFile("./DataBase/Images/Fonds/basic_level.png");
 			break;
 		case bSCORES:
 			texture.loadFromFile("./DataBase/Images/Fonds/scores.png");
-			sprite.setTexture(texture);
-			token = bSCORES;
 			break;
 		case bOPTIONS:
 			break;
 		case bCREDITS:
 			break;
+		default:
+			break;
 	}
+	sprite.setTexture(texture);
+	token = option;
 }

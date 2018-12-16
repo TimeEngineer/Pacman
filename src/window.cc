@@ -10,6 +10,10 @@ Window::~Window() {}
 void menu_escape(sf::RenderWindow& window) {
     window.close();
 }
+void rules_escape(Background& background, Cursor& cursor) {
+    background.set_sprite(bMENU);
+    cursor.set_visible(true);
+}
 void scores_escape(Background& background, Cursor& cursor) {
     background.set_sprite(bMENU);
     cursor.set_visible(true);
@@ -18,6 +22,9 @@ void switch_escape(sf::RenderWindow& window, Background& background, Cursor& cur
     switch (background.get_token()) {
         case bMENU:
             menu_escape(window);
+            break;
+        case bREGLES:
+            rules_escape(background, cursor);
             break;
         case bSCORES:
             scores_escape(background, cursor);
@@ -30,6 +37,8 @@ void switch_escape(sf::RenderWindow& window, Background& background, Cursor& cur
 void menu_return(sf::RenderWindow& window, Background& background, Cursor& cursor) {
     switch ((int(cursor.get_y())-500)/69) {
         case JOUER:
+            background.set_sprite(bREGLES);
+            cursor.set_visible(false);
             break;
         case SCORES:
             background.set_sprite(bSCORES);
@@ -42,16 +51,24 @@ void menu_return(sf::RenderWindow& window, Background& background, Cursor& curso
         case QUITTER:
             window.close();
             break;
+        default:
+            break;
     }
 }
 void scores_return(Background& background, Cursor& cursor) {
     background.set_sprite(bMENU);
     cursor.set_visible(true);
 }
+void rules_return(Background& background) {
+    background.set_sprite(bJEU);
+}
 void switch_return(sf::RenderWindow& window, Background& background, Cursor& cursor) {
     switch (background.get_token()) {
         case bMENU:
             menu_return(window, background, cursor);
+            break;
+        case bREGLES:
+            rules_return(background);
             break;
         case bSCORES:
             scores_return(background, cursor);
