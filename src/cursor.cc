@@ -33,6 +33,9 @@ void Cursor::set_x(float f) {
 	sprite.setPosition(sf::Vector2f(x,y));
 }
 void Cursor::set_y(float f) {
+	buffer.loadFromFile("./DataBase/Sounds/cursor.wav");
+    sound.setBuffer(buffer);
+    sound.play();
 	y = f;
 	sprite.setPosition(sf::Vector2f(x,y));
 }

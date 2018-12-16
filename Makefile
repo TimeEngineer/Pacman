@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -g
 EXEC=main
 SRC= $(wildcard ./src/*.cc)
-SFML=-lsfml-graphics -lsfml-window -lsfml-system
+SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
 all: $(EXEC)
 

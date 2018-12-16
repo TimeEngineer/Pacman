@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 enum background_option { bMENU = 0, bJEU, bSCORES, bOPTIONS, bCREDITS };
 
@@ -13,5 +14,7 @@ class Background {
 	private:
 		sf::Texture texture;
 		sf::Sprite sprite;
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
 		background_option token;
 };

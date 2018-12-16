@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 class Cursor {
 	public:
@@ -19,4 +20,6 @@ class Cursor {
 		float x;
 		float y;
 		bool visible;
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
 };
