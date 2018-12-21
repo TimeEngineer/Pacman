@@ -3,9 +3,19 @@
 Background::Background(unsigned int width, unsigned int high) {
     texture.loadFromFile("./DataBase/Images/Fonds/menu.png");
 
+    // texture size : 420x460
     sprite.setTexture(texture);
-    sprite.setPosition(sf::Vector2f(540.f,80.f));
-    sprite.setScale(sf::Vector2f(2.f, 2.f));
+    if (width > 840 && high > 920) {
+    	int sprite_x = (width-840)>>2;
+    	int sprite_y = (width-920)>>2;
+	    sprite.setPosition(sf::Vector2f(float(sprite_x),float(sprite_y)));
+	    sprite.setScale(sf::Vector2f(2.f, 2.f));
+    }
+    else {
+    	int sprite_x = (width-420)>>2;
+    	int sprite_y = (width-460)>>2;
+    	sprite.setPosition(sf::Vector2f(float(sprite_x),float(sprite_y)));
+    }
 
     token = bMENU;
 }
