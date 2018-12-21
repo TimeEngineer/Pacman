@@ -1,13 +1,21 @@
 #include "cursor.hh"
 
-Cursor::Cursor(unsigned int width, unsigned int high) {
+Cursor::Cursor(unsigned int width, unsigned int high, Woption option) {
     texture.loadFromFile("./DataBase/Images/Divers/cursor.png");
 
     sprite.setTexture(texture);
-    x = 880.f;
-    y = 500.f;
-    sprite.setPosition(sf::Vector2f(x,y));
-    sprite.setScale(sf::Vector2f(2.f, 2.f));
+    if (option == MEDIUM) {
+    	x = float(((width-840)>>1) + 340);
+    	y = float(((high-920)>>1) + 420);
+    	sprite.setPosition(sf::Vector2f(x,y));
+    	sprite.setScale(sf::Vector2f(2.f, 2.f));
+    }
+    else {
+    	x = float(((width-420)>>1) + 170);
+    	y = float(((high-460)>>1) + 210);
+    	sprite.setPosition(sf::Vector2f(x,y));
+    	sprite.setScale(sf::Vector2f(1.f, 1.f));	
+    }
     visible = true;
 }
 

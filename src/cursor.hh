@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "woption.hh"
 
 class Cursor {
 	public:
-		Cursor(unsigned int width, unsigned int high);
+		Cursor(unsigned int width, unsigned int high, Woption option);
 		~Cursor();
 		sf::Sprite get_sprite() const;
 		float get_x() const;

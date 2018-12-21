@@ -3,6 +3,7 @@
 #include "background.hh"
 #include "menu.hh"
 #include "cursor.hh"
+#include "woption.hh"
 
 class Window {
 	public:

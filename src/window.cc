@@ -34,8 +34,15 @@ void switch_escape(sf::RenderWindow& window, Background& background, Cursor& cur
     }
 }
 
-void menu_return(sf::RenderWindow& window, Background& background, Cursor& cursor) {
-    switch ((int(cursor.get_y())-500)/69) {
+void menu_return(sf::RenderWindow& window, Background& background, Cursor& cursor, Woption option, unsigned int high) {
+    int condition;
+    if (option == MEDIUM) {
+        condition = (int(cursor.get_y())-(((high-920) >> 1) + 420))/69;
+    }
+    else {
+        condition = int(((cursor.get_y()-float(((high-460) >> 1) + 210)))/34.5);
+    }
+    switch (condition) {
         case JOUER:
             background.set_sprite(bREGLES);
             cursor.set_visible(false);
@@ -62,10 +69,10 @@ void scores_return(Background& background, Cursor& cursor) {
 void rules_return(Background& background) {
     background.set_sprite(bJEU);
 }
-void switch_return(sf::RenderWindow& window, Background& background, Cursor& cursor) {
+void switch_return(sf::RenderWindow& window, Background& background, Cursor& cursor, Woption option, unsigned int high) {
     switch (background.get_token()) {
         case bMENU:
-            menu_return(window, background, cursor);
+            menu_return(window, background, cursor, option, high);
             break;
         case bREGLES:
             rules_return(background);
@@ -78,30 +85,44 @@ void switch_return(sf::RenderWindow& window, Background& background, Cursor& cur
     }
 }
 
-void menu_up(Cursor& cursor) {
-    if (cursor.get_y() > 500.f) {
-        cursor.set_y(cursor.get_y() - 69.f);
+void menu_up(Cursor& cursor, Woption option, unsigned int high) {
+    if (option == MEDIUM) {
+        if (cursor.get_y() > float(((high-920) >> 1) + 420)) {
+            cursor.set_y(cursor.get_y() - 69.f);
+        }
+    }
+    else {
+        if (cursor.get_y() > float(((high-460) >> 1) + 210)) {
+            cursor.set_y(cursor.get_y() - 34.5);
+        }   
     }
 }
-void switch_up(Background& background, Cursor& cursor) {
+void switch_up(Background& background, Cursor& cursor, Woption option, unsigned int high) {
     switch (background.get_token()) {
         case bMENU:
-            menu_up(cursor);
+            menu_up(cursor, option, high);
             break;
         default:
             break;
     }
 }
 
-void menu_down(Cursor& cursor) {
-    if (cursor.get_y() < 776.f) {
-        cursor.set_y(cursor.get_y() + 69.f);
+void menu_down(Cursor& cursor, Woption option, unsigned int high) {
+    if (option == MEDIUM) {
+        if (cursor.get_y() < float(((high-920) >> 1) + 696)) {
+            cursor.set_y(cursor.get_y() + 69.f);
+        }
+    }
+    else {
+        if (cursor.get_y() < float(((high-460) >> 1) + 348)) {
+            cursor.set_y(cursor.get_y() + 34.5);
+        }   
     }
 }
-void switch_down(Background& background, Cursor& cursor) {
+void switch_down(Background& background, Cursor& cursor, Woption option, unsigned int high) {
     switch (background.get_token()) {
         case bMENU:
-            menu_down(cursor);
+            menu_down(cursor, option, high);
             break;
         default:
             break;
@@ -113,8 +134,17 @@ void Window::launch() {
 	sf::RenderWindow window(sf::VideoMode(width, high), "Pacman !", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
 
-   	Background background(width, high);
-    Cursor cursor(width, high);
+    Woption option;
+    // texture size : 420x460
+    if (width > 840 && high > 920) {
+        option = MEDIUM;
+    }
+    else {
+        option = SMALL;
+    }
+
+   	Background background(width, high, option);
+    Cursor cursor(width, high, option);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -129,13 +159,13 @@ void Window::launch() {
                             switch_escape(window, background, cursor);
                             break;
                         case sf::Keyboard::Return:
-                            switch_return(window, background, cursor);
+                            switch_return(window, background, cursor, option, high);
                             break;
                         case sf::Keyboard::Up:
-                            switch_up(background, cursor);
+                            switch_up(background, cursor, option, high);
                             break;
                         case sf::Keyboard::Down:
-                            switch_down(background, cursor);
+                            switch_down(background, cursor, option, high);
                             break;
                         default:
                             break;
