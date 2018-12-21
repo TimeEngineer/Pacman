@@ -1,19 +1,19 @@
 #include "background.hh"
 
-Background::Background(unsigned int width, unsigned int high, Woption option) {
+Background::Background(unsigned int width, unsigned int height, Woption option) {
     texture.loadFromFile("./DataBase/Images/Fonds/menu.png");
 
     // texture size : 420x460
     sprite.setTexture(texture);
     if (option == MEDIUM) {
     	int sprite_x = (width-840)>>1;
-    	int sprite_y = (high-920)>>1;
+    	int sprite_y = (height-920)>>1;
 	    sprite.setPosition(sf::Vector2f(float(sprite_x),float(sprite_y)));
 	    sprite.setScale(sf::Vector2f(2.f, 2.f));
     }
     else {
     	int sprite_x = (width-420)>>1;
-    	int sprite_y = (high-460)>>1;
+    	int sprite_y = (height-460)>>1;
     	sprite.setPosition(sf::Vector2f(float(sprite_x),float(sprite_y)));
     	sprite.setScale(sf::Vector2f(1.f, 1.f));
     }

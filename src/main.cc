@@ -8,7 +8,7 @@
 */
 
 int main() {
-    Window window(1280,800);
+    Window window(sf::VideoMode::getDesktopMode().width,sf::VideoMode::getDesktopMode().height);
     window.launch();
     return 0;
 }

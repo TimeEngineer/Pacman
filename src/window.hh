@@ -7,10 +7,10 @@
 
 class Window {
 	public:
-		Window(unsigned int width, unsigned int high);
+		Window(unsigned int width, unsigned int height);
 		~Window();
 		void launch();
 	private:
 		unsigned int width;
-		unsigned int high;
+		unsigned int height;
 };

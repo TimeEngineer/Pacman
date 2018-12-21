@@ -5,7 +5,7 @@
 
 class Cursor {
 	public:
-		Cursor(unsigned int width, unsigned int high, Woption option);
+		Cursor(unsigned int width, unsigned int height, Woption option);
 		~Cursor();
 		sf::Sprite get_sprite() const;
 		float get_x() const;
