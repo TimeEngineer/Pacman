@@ -1,13 +1,18 @@
 CC=g++
-CFLAGS=-Wall -g
+CFLAGS=-Wall -g -std=c++11
 EXEC=main
 SRC= $(wildcard ./src/*.cc)
+OBJ=$(SRC:.cc=.o)
 SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
-all: $(EXEC)
 
-main: $(SRC)
-	$(CC) -o $@ $^ $(LDFLAGS) $(SFML)
+$(EXEC) : $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) $(SFML) -o $(EXEC)
+
+%.o : %.cc
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: $(EXEC)
 
 .PHONY: clean mrproper
 
