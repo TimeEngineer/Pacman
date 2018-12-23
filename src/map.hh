@@ -10,4 +10,5 @@ public:
 	void destroy();
 private:
 	std::vector<std::vector<Block*> > map_data;
+	std::string next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
 };

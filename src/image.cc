@@ -2,6 +2,7 @@
 #include <iostream>
 
 Image::Image(std::string file_path) : 
+_scale(1.0f),
 _visible(true)
 {
     load_image(file_path);	
@@ -43,8 +44,8 @@ void Image::set_visible(bool visible)
 }
 void Image::set_size(int x, int y, float scaleWidth, float scaleHeight) 
 {
-	set_position(x,y); 
 	set_scale(scaleWidth, scaleHeight);
+	set_position(x,y); 
 }
 void Image::set_x(int x) 
 {
