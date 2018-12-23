@@ -1,16 +1,19 @@
 #include "block.hh"
-
-Block::Block(unsigned char block_id)
-{
-	std::string image_file;
-	unsigned char block, type;
-	block = block_id >> 4;
-	type = block_id & 0xF;
-	
-	image_file = std::to_string(block);
-	if(image_file.length() == 1)
+#include <iostream>
+Block::Block(const unsigned char block_id)
+{	
+	std::string image_file = std::to_string(block_id);
+	while(image_file.length() < 3)
 		image_file = "0" + image_file;
-	image_file += std::to_string(type);
 	
-	load_image(image_file);	
+	load_image(_default_path + "/Images/Carte/" + image_file + ".png");	
+	_block_id = static_cast<unsigned char>(block_id);
+}
+Block::Block(const std::string& block_id) 
+{
+	std::string image_file(block_id);
+	while(image_file.length() < 3)
+		image_file = "0" + image_file;
+	load_image(_default_path + "/Images/Carte/" + image_file + ".png");	
+	_block_id = static_cast<unsigned char>(std::stoi(block_id));
 }

@@ -1,16 +1,20 @@
 #include "image.hh" 
+#include <iostream>
 
-Image::Image(std::string file_path)
+Image::Image(std::string file_path) : 
+_visible(true)
 {
-    load_image(file_path);
-	_visible = true;
+    load_image(file_path);	
 }
 
 
 void Image::load_image(std::string file_path)
 {
     sf::Vector2u size;
-    _texture.loadFromFile(file_path);
+    if(!_texture.loadFromFile(file_path)) {
+		std::cerr<< "Invalid image." << std::endl;
+		exit(0);
+	}
 	_sprite.setTexture(_texture);
     size = _texture.getSize();
     _width = size.x;

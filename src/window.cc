@@ -10,13 +10,14 @@ Window::Window(unsigned int width, unsigned int height)
     _scale = ((_width <= BG_WIDTH && _height <= BG_HEIGHT) ? SMALL_SCALE : MEDIUM_SCALE);
     _background = new Background(_width, _height, _scale);
     _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
-
+    _map = new Map(_default_path + "/Map/Map.txt", _scale);
 }
 
 Window::~Window() 
 {
     delete _background;
     delete _cursor;
+    delete _map;
 }
 
 void Window::launch() {
@@ -38,8 +39,8 @@ void Window::launch() {
                 default:
                     break;
             }   
+            draw(window); //WinEvents.cc
         }
-        draw(window); //WinEvents.cc
     }
 }
 

@@ -4,7 +4,7 @@
 #include "woption.hh"
 #include "autoposimage.hh"
 #include "sound.hh"
-#include "database.hh"
+#include "resources.hh"
 
 enum background_option { bMENU = 0, bREGLES = 1, bJEU = 2, bSCORES = 3, bOPTIONS = 4, bCREDITS = 5, bQUIT = 6 };
 

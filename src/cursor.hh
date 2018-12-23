@@ -6,7 +6,7 @@
 #include "sound.hh"
 #include "woption.hh"
 #include "background.hh"
-#include "database.hh"
+#include "resources.hh"
 
 
 class Cursor : public AutoPosImage, Sound {

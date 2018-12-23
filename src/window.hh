@@ -4,6 +4,8 @@
 #include "menu.hh"
 #include "cursor.hh"
 #include "woption.hh"
+#include "resources.hh"
+#include "map.hh"
 
 
 
@@ -30,6 +32,7 @@ class Window {
 		void close_window(sf::RenderWindow& window);
 		Background *_background;
 		Cursor *_cursor;
+		Map *_map;
 		Woption _option;
 		unsigned int _width;
 		unsigned int _height;

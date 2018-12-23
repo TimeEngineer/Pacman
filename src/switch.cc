@@ -25,6 +25,8 @@ void Window::switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir) {
 }
 
 void Window::switch_return(sf::RenderWindow& window) {
+    _map->destroy();
+    _map = new Map(_default_path + "/Map/Map.txt", _scale);
     switch (_background->get_token()) {
         case bMENU:
             menu_selected(window);
