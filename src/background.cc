@@ -5,9 +5,11 @@ AutoPosImage(_default_path + _bg_image_paths[bMENU], // image_path
 			 width, height, // Size of screen.
 			 bg_width, bg_height, // Size of background sprite.
 			 0, 0, // offset of image pos.
-			 _scale) // scale.
+			 _scale), // scale.
+token(bMENU)
 {
 	load_sound(_default_path + _sound_paths[sCHOICE]);
+	play();
 	token = bMENU;
 }
 

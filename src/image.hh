@@ -10,6 +10,7 @@ public:
 	void load_image(std::string file_path);
 
 	// setters
+	void set_offset(int offset_x, int offset_y);
 	void set_position(int x, int y);
 	void set_scale(float scaleWidth, float scaleHeight);
 	void set_scale(float scale);
@@ -17,6 +18,8 @@ public:
 	void set_size(int x, int y, float scaleWidth, float scaleHeight);
 	void set_x(int x);
 	void set_y(int y);
+	void set_offset_x(int offset_x);
+	void set_offset_y(int offset_y);
 	//getters
 	sf::Sprite get_sprite() const {return _sprite;}
 	bool get_visible() {return _visible;}
@@ -27,6 +30,8 @@ public:
 	float get_scale() const {return _scale;}
 	float get_scale_width() const {return _scale_width;}
 	float get_scale_height() const {return _scale_height;}
+	int get_offset_x(){return _offset_x;}
+	int get_offset_y(){return _offset_y;}
 private:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
@@ -35,6 +40,8 @@ private:
 	float _scale;
 	int _x;
 	int _y;
+	int _offset_x;
+	int _offset_y;
 	std::size_t _width;
 	std::size_t _height;
 	bool _visible;

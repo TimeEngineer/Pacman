@@ -25,7 +25,7 @@ void Image::load_image(std::string file_path)
 void Image::set_position(int x, int y) { 
 	_x = x;
 	_y = y;
-	_sprite.setPosition(sf::Vector2f(float(x),float(y)));
+	_sprite.setPosition(sf::Vector2f(static_cast<float>(x + _offset_x),static_cast<float>(y + _offset_y)));
 }
 void Image::set_scale(float scale) {
 	_scale = scale;
@@ -54,4 +54,17 @@ void Image::set_x(int x)
 void Image::set_y(int y) 
 {
 	set_position(_x, y);
+}
+void Image::set_offset_x(int offset_x)
+{
+	_offset_x = offset_x;
+}
+void Image::set_offset_y(int offset_y)
+{
+	_offset_y = offset_y;
+}
+void Image::set_offset(int offset_x, int offset_y)
+{
+	_offset_x = offset_x;
+	_offset_y = offset_y;
 }

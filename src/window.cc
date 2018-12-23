@@ -10,7 +10,8 @@ Window::Window(unsigned int width, unsigned int height)
     _scale = ((_width <= BG_WIDTH && _height <= BG_HEIGHT) ? SMALL_SCALE : MEDIUM_SCALE);
     _background = new Background(_width, _height, _scale);
     _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
-    _map = new Map(_default_path + "/Map/Map.txt", _scale);
+    _map = new Map(_default_path + "/Map/Map.txt", width, height, _scale);
+    _mode = DrawMode::Bg;
 }
 
 Window::~Window() 
@@ -24,7 +25,6 @@ void Window::launch() {
 	// Init
 	sf::RenderWindow window(sf::VideoMode(_width, _height), "Pacman !", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
-    _background->set_sprite(bMENU);
 
     while (window.isOpen()) {
         sf::Event event;
