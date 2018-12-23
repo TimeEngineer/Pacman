@@ -10,7 +10,7 @@ enum background_option { bMENU = 0, bREGLES = 1, bJEU = 2, bSCORES = 3, bOPTIONS
 
 class Background : public AutoPosImage, Sound{
 	public:
-		Background(unsigned int width, unsigned int height, Woption option);
+		Background(unsigned int width, unsigned int height, float scale);
 		~Background();
 		background_option get_token() const;
 		void set_sprite(background_option option);

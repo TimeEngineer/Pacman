@@ -7,9 +7,9 @@ Window::Window(unsigned int width, unsigned int height)
 {
 	_width = width;
 	_height = height;
-    _option = ((_width <= BG_WIDTH && _height <= BG_HEIGHT) ? SMALL : MEDIUM);
-    _background = new Background(_width, _height, _option);
-    _cursor = new Cursor(_width, _height, _option, 0, 0, 4);
+    _scale = ((_width <= BG_WIDTH && _height <= BG_HEIGHT) ? SMALL_SCALE : MEDIUM_SCALE);
+    _background = new Background(_width, _height, _scale);
+    _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
 
 }
 

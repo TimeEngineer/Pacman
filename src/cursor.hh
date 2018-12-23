@@ -12,7 +12,7 @@
 class Cursor : public AutoPosImage, Sound {
 	public:
 		enum Direction {Up = 0, Down = 1};
-		Cursor(unsigned int width, unsigned int height, Woption option, int selection, int limit_min, int limit_max);
+		Cursor(unsigned int width, unsigned int height, float scale, int selection, int limit_min, int limit_max);
 		~Cursor();
 		void move(Direction dir);
 		int get_selection() const {return _selection;}

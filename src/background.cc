@@ -1,11 +1,11 @@
 #include "background.hh"
 
-Background::Background(unsigned int width, unsigned int height, Woption option):
+Background::Background(unsigned int width, unsigned int height, float _scale):
 AutoPosImage(_default_path + _bg_image_paths[bMENU], // image_path
 			 width, height, // Size of screen.
 			 bg_width, bg_height, // Size of background sprite.
 			 0, 0, // offset of image pos.
-			 (option != MEDIUM ? DEFAULT_SCALE : MEDIUM_SCALE)) // scale.
+			 _scale) // scale.
 {
 	load_sound(_default_path + _sound_paths[sCHOICE]);
 	token = bMENU;
