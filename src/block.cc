@@ -12,10 +12,5 @@ Block::Block(unsigned char block_id)
 		image_file = "0" + image_file;
 	image_file += std::to_string(type);
 	
-	texture.loadFromFile(image_file);
-
-    // texture size : 48x48
-    sprite.setTexture(texture);
-	
-	
+	load_image(image_file);	
 }

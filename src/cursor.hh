@@ -2,25 +2,28 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "woption.hh"
+#include "autoposimage.hh"
+#include "sound.hh"
+#include "woption.hh"
+#include "background.hh"
+#include "database.hh"
 
-class Cursor {
+
+class Cursor : public AutoPosImage, Sound {
 	public:
-		Cursor(unsigned int width, unsigned int height, Woption option);
+		enum Direction {Up = 0, Down = 1};
+		Cursor(unsigned int width, unsigned int height, Woption option, int selection, int limit_min, int limit_max);
 		~Cursor();
-		sf::Sprite get_sprite() const;
-		float get_x() const;
-		float get_y() const;
-		bool get_visible() const;
-		void set_sprite(sf::Sprite& s);
-		void set_x(float f);
-		void set_y(float f);
-		void set_visible(bool b);
+		void move(Direction dir);
+		int get_selection() const {return _selection;}
+		int get_limit_min() const {return _limit_min;}
+		int get_limit_max() const {return _limit_max;}
+		void set_limit_min(int limit_min);
+		void set_limit_max(int limit_max);
 	private:
-		sf::Texture texture;
-		sf::Sprite sprite;
-		float x;
-		float y;
-		bool visible;
-		sf::SoundBuffer buffer;
-		sf::Sound sound;
+		int _init_x;
+		int _init_y;
+		int _selection;
+		int _limit_min;
+		int _limit_max;
 };

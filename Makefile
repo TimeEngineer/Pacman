@@ -17,4 +17,8 @@ all: $(EXEC)
 .PHONY: clean mrproper
 
 clean:
-	rm -rf $(EXEC)
+	rm -rf $(EXEC) $(OBJ)
+del:
+	del src\*.o	
+	del $(EXEC).exe 
+	

@@ -1,52 +1,42 @@
 #include "cursor.hh"
-
-Cursor::Cursor(unsigned int width, unsigned int height, Woption option) {
-    texture.loadFromFile("./DataBase/Images/Divers/cursor.png");
-
-    sprite.setTexture(texture);
-    if (option == MEDIUM) {
-    	x = float(((width-840)>>1) + 340);
-    	y = float(((height-920)>>1) + 420);
-    	sprite.setPosition(sf::Vector2f(x,y));
-    	sprite.setScale(sf::Vector2f(2.f, 2.f));
-    }
-    else {
-    	x = float(((width-420)>>1) + 170);
-    	y = float(((height-460)>>1) + 210);
-    	sprite.setPosition(sf::Vector2f(x,y));
-    	sprite.setScale(sf::Vector2f(1.f, 1.f));	
-    }
-    visible = true;
+#include <iostream>
+#define DEFAULT_OFFSET_X 170
+#define DEFAULT_OFFSET_Y 210
+#define DEFAULT_VSPACING 34.5f
+Cursor::Cursor(unsigned int width, unsigned int height, Woption option, int selection, int limit_min, int limit_max) :
+AutoPosImage(_default_path + _image_paths[iCURSOR], // image_path
+			 width, height, // Size of screen.
+			 Background::bg_width, Background::bg_height, // Size of background sprite.
+			 DEFAULT_OFFSET_X, DEFAULT_OFFSET_Y, // offset of image pos.
+			 (option != MEDIUM ? DEFAULT_SCALE : MEDIUM_SCALE)), // scale.			 
+_selection(selection),
+_limit_min(limit_min),
+_limit_max(limit_max)
+{
+	_init_x = get_x();
+	_init_y = get_y();
+	load_sound(_default_path + _sound_paths[sCURSOR]);
 }
 
 Cursor::~Cursor() {}
 
-sf::Sprite Cursor::get_sprite() const {
-	return sprite;
+void Cursor::move(Direction dir)
+{
+    play();
+	if(dir == Direction::Down &&_selection < _limit_max)
+		_selection += 1;
+	else if(dir == Direction::Up &&_selection > _limit_min)
+		_selection += -1;
+	else
+		return;
+		
+	set_y(_init_y + (DEFAULT_VSPACING * get_scale()) * _selection);
 }
-float Cursor::get_x() const {
-	return x;
+void Cursor::set_limit_min(int limit_min)
+{
+	_limit_min = limit_min;
 }
-float Cursor::get_y() const {
-	return y;
-}
-bool Cursor::get_visible() const {
-	return visible;
-}
-void Cursor::set_sprite(sf::Sprite& s) {
-	sprite = s;
-}
-void Cursor::set_x(float f) {
-	x = f;
-	sprite.setPosition(sf::Vector2f(x,y));
-}
-void Cursor::set_y(float f) {
-	buffer.loadFromFile("./DataBase/Sounds/cursor.wav");
-    sound.setBuffer(buffer);
-    sound.play();
-	y = f;
-	sprite.setPosition(sf::Vector2f(x,y));
-}
-void Cursor::set_visible(bool b) {
-	visible = b;
+void Cursor::set_limit_max(int limit_max)
+{
+	_limit_max = limit_max;
 }

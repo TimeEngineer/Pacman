@@ -5,12 +5,34 @@
 #include "cursor.hh"
 #include "woption.hh"
 
+
+
 class Window {
 	public:
 		Window(unsigned int width, unsigned int height);
 		~Window();
 		void launch();
 	private:
-		unsigned int width;
-		unsigned int height;
+	// Window Event Handlers : 
+		void key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key);
+		void draw(sf::RenderWindow& window);
+	// Key Pressed Handlers:
+		void switch_escape(sf::RenderWindow& window);
+		void switch_return(sf::RenderWindow& window);
+		void switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir);
+		void menu_selected(sf::RenderWindow& window);
+	// New screen 
+		void show_rules();
+		void show_menu();
+		void show_scores();
+		void move_cursor(sf::Keyboard::Key dir);
+		
+		void close_window(sf::RenderWindow& window);
+		Background *_background;
+		Cursor *_cursor;
+		Woption _option;
+		unsigned int _width;
+		unsigned int _height;
+		float _scale;
+		const background_option _options[5] = {bREGLES, bSCORES, bOPTIONS, bCREDITS, bQUIT};
 };
