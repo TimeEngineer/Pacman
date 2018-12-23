@@ -24,7 +24,7 @@ void Window::launch() {
 	// Init
 	sf::RenderWindow window(sf::VideoMode(_width, _height), "Pacman !", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
-
+    _background->set_sprite(bMENU);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -42,26 +42,4 @@ void Window::launch() {
             draw(window); //WinEvents.cc
         }
     }
-}
-
-void Window::menu_selected(sf::RenderWindow& window)
-{
-    int sel = _cursor->get_selection();
-    switch (sel) {
-        case JOUER:
-        case SCORES:
-        case OPTIONS:
-        case CREDITS:
-            _background->set_sprite(_options[sel]);
-            _cursor->set_visible(false);
-            break;
-        case QUITTER:
-            window.close();
-            break;
-        default:
-            break;
-    }
-}
-void Window::move_cursor(sf::Keyboard::Key dir) {
-    _cursor->move((sf::Keyboard::Up == dir ? Cursor::Direction::Up : Cursor::Direction::Down));
 }

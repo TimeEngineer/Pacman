@@ -9,7 +9,6 @@ AutoPosImage(_default_path + _bg_image_paths[bMENU], // image_path
 {
 	load_sound(_default_path + _sound_paths[sCHOICE]);
 	token = bMENU;
-	play();
 }
 
 Background::~Background() {}
@@ -22,4 +21,11 @@ void Background::set_sprite(background_option option) {
 	std::string image_path;
 	load_image(_default_path + _bg_image_paths[option]);
 	token = option;
+	if(token == bMENU) {
+		loop();
+		play();
+	}
+	else {
+		stop();
+	}
 }

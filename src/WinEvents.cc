@@ -4,12 +4,21 @@ void Window::draw(sf::RenderWindow& window)
 {
     window.clear();
     Block block("13");
-    //window.draw(_background->get_sprite());
-    //window.draw(block.get_sprite());
-    if (_cursor->get_visible()) {
-        window.draw(_cursor->get_sprite());
+
+    switch(_mode) {
+        case DrawMode::Game :
+            _map->draw(window);
+            break; 
+        case DrawMode::Bg :
+            window.draw(_background->get_sprite());
+    
+            if (_cursor->get_visible()) 
+                window.draw(_cursor->get_sprite());
+        break;
+        default:
+        break;
+            
     }
-    _map->draw(window);
     window.display();
 }
 

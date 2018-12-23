@@ -23,9 +23,9 @@ Map::Map(std::string map_file, float scale)
 
 			block_id = next_block(map_str, pos_begin, pos_end);
 			if(!block_id.compare("---")) break;
+			
 			row_data.push_back(new Block(block_id));
 			row_data.back()->set_size(col * BLOCK_WIDTH * scale, row * BLOCK_HEIGHT * scale, scale, scale);
-
 			++col;
 		}
 		++row;
