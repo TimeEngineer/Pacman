@@ -1,5 +1,5 @@
 #include "autoposimage.hh"
-
+#include <iostream>
 #define SCALE_DEFAULT 1.f
 #define SCALE_MEDIUM 2.f
 typedef unsigned int uint;
@@ -12,6 +12,5 @@ AutoPosImage::AutoPosImage(std::string image_path, uint sc_width, uint sc_height
     set_offset(offset_x * int_scale,  offset_y * int_scale);
     sprite_x = ((sc_width - (bg_width * int_scale)) >> 1);
     sprite_y = ((sc_height - (bg_hight * int_scale)) >> 1);
-
 	set_size(sprite_x, sprite_y, scale, scale);
 }

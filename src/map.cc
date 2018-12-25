@@ -24,10 +24,9 @@ _col(0)
 			std::vector<Block*> &row_data = map_data.back(); //A row of the map.
 
 			block_id = next_block(map_str, pos_begin, pos_end);
-			if(!block_id.compare("---")) break;
+			if(!block_id.compare(END_OF_MAP)) break;
 			
 			row_data.push_back(new Block(block_id));
-			//std::cout<< "["<< _col << "," <<  _row  << "]";
 			row_data.back()->set_scale(scale);
 			++_col;
 		}
@@ -41,7 +40,6 @@ void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 	Block &sample_block = *(map_data.front().front());
 	float scale = sample_block.get_scale();
 	unsigned int block_width, block_height, x, y, col, row;
-
 
 	block_width = static_cast<unsigned int>(sample_block.get_width() * scale);
 	block_height = static_cast<unsigned int>(sample_block.get_height() * scale);
@@ -68,7 +66,7 @@ std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, 
 	pos_begin = map_str.find_first_not_of(',', pos_end);
 	pos_end = map_str.find_first_of(',', pos_begin + 1);
 	if(pos_begin == STR_NPOS) 
-		return "---";
+		return END_OF_MAP;
 	len =  (pos_end == STR_NPOS ? pos_end : pos_end - pos_begin);
 	return map_str.substr(pos_begin, len);
 }

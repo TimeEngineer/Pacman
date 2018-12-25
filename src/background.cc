@@ -10,6 +10,7 @@ token(bMENU)
 {
 	load_sound(_default_path + _sound_paths[sCHOICE]);
 	play();
+	loop();
 	token = bMENU;
 }
 

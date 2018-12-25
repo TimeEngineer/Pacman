@@ -7,7 +7,8 @@ Window::Window(unsigned int width, unsigned int height)
 {
 	_width = width;
 	_height = height;
-    _scale = ((_width <= BG_WIDTH && _height <= BG_HEIGHT) ? SMALL_SCALE : MEDIUM_SCALE);
+    _scale = ((_width < BG_WIDTH * 2 || _height < BG_HEIGHT * 2) ? SMALL_SCALE : MEDIUM_SCALE);
+    std::cout << "scale:"<<_scale;
     _background = new Background(_width, _height, _scale);
     _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
     _map = new Map(_default_path + "/Map/Map.txt", width, height, _scale);
