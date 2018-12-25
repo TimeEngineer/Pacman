@@ -19,7 +19,7 @@ class Window {
 	// Window Event Handlers : 
 		void key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key);
 		void draw(sf::RenderWindow& window);
-		enum DrawMode {Bg = 0, Game = 1};
+		enum class DrawMode {Bg = 0, Game = 1};
 	// Key Pressed Handlers:
 		void switch_escape(sf::RenderWindow& window);
 		void switch_return(sf::RenderWindow& window);
@@ -35,7 +35,7 @@ class Window {
 		Background *_background;
 		Cursor *_cursor;
 		Map *_map;
-		Woption _option;
+		
 		unsigned int _width;
 		unsigned int _height;
 		float _scale;

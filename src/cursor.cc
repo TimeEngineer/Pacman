@@ -15,7 +15,7 @@ _limit_max(limit_max)
 {
 	_init_x = get_x();
 	_init_y = get_y();
-	load_sound(_default_path + _sound_paths[sCURSOR]);
+	load_sound(_default_path + _sound_paths[sound_option::sCURSOR]);
 }
 
 Cursor::~Cursor() {}

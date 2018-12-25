@@ -2,13 +2,13 @@
 
 void Window::switch_escape(sf::RenderWindow& window) {
     switch (_background->get_token()) {
-        case bJEU:
-        case bREGLES:
-        case bSCORES:
-        case bOPTIONS:
-        case bCREDITS:
+        case background_option::bJEU:
+        case background_option::bREGLES:
+        case background_option::bSCORES:
+        case background_option::bOPTIONS:
+        case background_option::bCREDITS:
             _mode = DrawMode::Bg;
-            _background->set_sprite(bMENU);
+            _background->set_sprite(background_option::bMENU);
             _cursor->set_visible(true);
             break;
         default:

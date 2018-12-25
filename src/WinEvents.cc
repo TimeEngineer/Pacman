@@ -3,7 +3,6 @@
 void Window::draw(sf::RenderWindow& window) 
 {
     window.clear();
-    Block block("13");
 
     switch(_mode) {
         case DrawMode::Game :

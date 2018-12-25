@@ -9,13 +9,19 @@ _visible(true)
 }
 
 
-void Image::load_image(std::string file_path)
+sf::Texture Image::load_texture(std::string file_path)
 {
-    sf::Vector2u size;
-    if(!_texture.loadFromFile(file_path)) {
+	sf::Texture texture;	
+    if(!texture.loadFromFile(file_path)) {
 		std::cerr<< "Invalid image." << std::endl;
 		exit(0);
 	}
+	return texture;
+}
+void Image::load_image(std::string file_path)
+{
+    sf::Vector2u size;
+	_texture = load_texture(file_path);
 	_sprite.setTexture(_texture);
     size = _texture.getSize();
     _width = size.x;
@@ -67,4 +73,28 @@ void Image::set_offset(int offset_x, int offset_y)
 {
 	_offset_x = offset_x;
 	_offset_y = offset_y;
+}
+void Image::set_texture(sf::Texture texture) 
+{
+	_texture = texture;
+}
+void Image::reload() 
+{
+    sf::Vector2u size;
+	_sprite.setTexture(_texture);
+    size = _texture.getSize();
+    _width = size.x;
+    _height = size.y;
+
+}
+void Image::set_angle(float angle) 
+{
+	_angle = angle;
+	_sprite.setRotation(_angle);
+}
+void Image::turn_clockwise()
+{
+	int angle = (static_cast<int>(_angle) + 90) % 360;
+	_angle = static_cast<float>(angle); 
+	set_angle(_angle);
 }
