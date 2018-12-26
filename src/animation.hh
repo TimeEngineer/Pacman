@@ -5,19 +5,32 @@
 class Animation : public Image
 {
 public:
-    Animation(){}
-    Animation(std::string image_path);
+    struct scene {
+        int id;
+        int begin;  
+        int end;  
+        int index;
+        int nb_frames;
+    } scene;
+    Animation(std::string file_path, 
+             int nb_frames,
+             bool transparent = false,
+             sf::Color color = sf::Color::Black);
     ~Animation();
-    void add_image(std::string image_path);
-    void insert_image(std::size_t index, std::string image_path);
+    void new_cut(int id, int begin, int nb_frames);
+    void set_scene(int id);
     void next();
     void prev();
     void reset();
 
-    std::size_t get_current_index() { return _current_index;}
-    std::size_t get_length() {return _length;}
+    std::vector<struct Animation::scene> get_scene() const {return _scenes;};
+    std::size_t get_nb_scenes() const {return _nb_scenes;}
+	void enable_origin_at_center();
 private:
-    std::vector<sf::Texture> _textures;
-    std::size_t _current_index;
-    std::size_t _length;    
+    std::vector<struct Animation::scene> _scenes;
+    int _nb_frames;
+    std::size_t _scene_index;  
+    std::size_t _nb_scenes;
+    unsigned int _frame_width;
+    unsigned int _frame_height;
 };

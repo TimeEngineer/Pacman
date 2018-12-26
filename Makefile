@@ -11,6 +11,7 @@ $(EXEC) : $(OBJ)
 
 %.o : %.cc
 	$(CC) $(CFLAGS) -c $< -o $@
+%.o : %.hh
 
 all: $(EXEC)
 

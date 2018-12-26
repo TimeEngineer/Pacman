@@ -37,6 +37,7 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key)
     case sf::Keyboard::Left:
     case sf::Keyboard::Right:
         switch_arrowkey(window, key);
+        _map->_pacman.next();
         break;
     default:
         break;

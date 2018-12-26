@@ -4,8 +4,11 @@
 class Image {
 public:
 	//constructors
-    Image(std::string file_path);
-    Image(): _scale(1.0f), _visible(true) {};
+    Image(std::string file_path, bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0));
+    Image(bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0)): _scale(1.0f), 
+																					 _visible(true),
+																					 _transparent(transparent), 
+																					 _transparent_color(transparent_color) {};
     virtual ~Image() {};
 	void load_image(std::string file_path);
 
@@ -22,8 +25,9 @@ public:
 	void set_y(int y);
 	void set_offset_x(int offset_x);
 	void set_offset_y(int offset_y);
-	void set_texture(sf::Texture texture);
+	void set_texture(const sf::Texture &texture);
 	void set_angle(float angle);
+	void set_frame_rect(const sf::IntRect &rectangle);
 	//getters
 	sf::Sprite get_sprite() const {return _sprite;}
 	bool get_visible() {return _visible;}
@@ -34,11 +38,15 @@ public:
 	float get_scale() const {return _scale;}
 	float get_scale_width() const {return _scale_width;}
 	float get_scale_height() const {return _scale_height;}
-	int get_offset_x(){return _offset_x;}
-	int get_offset_y(){return _offset_y;}
-	float get_angle() {return _angle;}
-	sf::Texture get_texture() {return _texture;}
+	int get_offset_x() const {return _offset_x;}
+	int get_offset_y() const {return _offset_y;}
+	float get_angle() const {return _angle;}
+	sf::Texture get_texture() const {return _texture;}
+	sf::IntRect get_frame_rect() const {return _sprite.getTextureRect();};
+	virtual void enable_origin_at_center();
+	void set_origin(float x, float y);
 private:
+	sf::Image _image;
 	sf::Texture _texture;
 	sf::Sprite _sprite;
 	float _scale_width;
@@ -52,6 +60,8 @@ private:
 	std::size_t _width;
 	std::size_t _height;
 	bool _visible;
+	bool _transparent;
+	sf::Color _transparent_color;
 protected:
 	sf::Texture load_texture(std::string file_path);
 };

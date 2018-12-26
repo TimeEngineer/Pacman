@@ -1,9 +1,11 @@
 #include "image.hh" 
 #include <iostream>
 
-Image::Image(std::string file_path) : 
+Image::Image(std::string file_path, bool transparent, sf::Color transparent_color) : 
 _scale(1.0f),
-_visible(true)
+_visible(true),
+_transparent(transparent), 
+_transparent_color(transparent_color)
 {
     load_image(file_path);	
 }
@@ -11,22 +13,32 @@ _visible(true)
 
 sf::Texture Image::load_texture(std::string file_path)
 {
+	sf::Vector2u size;
 	sf::Texture texture;	
-    if(!texture.loadFromFile(file_path)) {
+	sf::Image image;
+
+    if(!_image.loadFromFile(file_path)) {
 		std::cerr<< "Invalid image." << std::endl;
 		exit(0);
 	}
+	size = image.getSize();
+
+	if(_transparent)
+		_image.createMaskFromColor(sf::Color::Black, 0);
+
+	texture.loadFromImage(_image);
 	return texture;
+}
+
+void Image::set_frame_rect(const sf::IntRect &rectangle)
+{
+	_sprite.setTextureRect(rectangle);
 }
 void Image::load_image(std::string file_path)
 {
     sf::Vector2u size;
 	_texture = load_texture(file_path);
-	_sprite.setTexture(_texture);
-    size = _texture.getSize();
-    _width = size.x;
-    _height = size.y;
-    
+	reload();
 }
 void Image::set_position(int x, int y) { 
 	_x = x;
@@ -74,7 +86,7 @@ void Image::set_offset(int offset_x, int offset_y)
 	_offset_x = offset_x;
 	_offset_y = offset_y;
 }
-void Image::set_texture(sf::Texture texture) 
+void Image::set_texture(const sf::Texture &texture) 
 {
 	_texture = texture;
 }
@@ -86,6 +98,14 @@ void Image::reload()
     _width = size.x;
     _height = size.y;
 
+}
+void Image::enable_origin_at_center()
+{
+	_sprite.setOrigin(static_cast<float>(_width) / 2.f, static_cast<float>(_height) / 2.f);
+}
+void Image::set_origin(float x, float y)
+{
+	_sprite.setOrigin(x, y);
 }
 void Image::set_angle(float angle) 
 {

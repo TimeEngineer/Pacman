@@ -13,6 +13,7 @@ Window::Window(unsigned int width, unsigned int height)
     _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
     _map = new Map(_default_path + "/Map/Map.txt", width, height, _scale);
     _mode = DrawMode::Bg;
+    
 }
 
 Window::~Window() 

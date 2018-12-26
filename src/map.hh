@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "block.hh"
+#include "pacman.hh"
 
 class Map {
 public:
@@ -8,6 +9,7 @@ public:
 	~Map();
 	void draw(sf::RenderWindow& window);
 	void destroy();
+	Pacman _pacman;
 private:
 	void center_pos(unsigned int wnd_width,  unsigned int wnd_height);
 	std::vector<std::vector<Block*>> map_data;

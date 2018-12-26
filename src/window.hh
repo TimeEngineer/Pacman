@@ -6,6 +6,7 @@
 #include "woption.hh"
 #include "resources.hh"
 #include "map.hh"
+#include "pacman.hh"
 
 
 

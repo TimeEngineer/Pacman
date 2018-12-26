@@ -8,6 +8,10 @@ Block::Block(const unsigned char block_id)
 	
 	load_image(_default_path + "/Images/Carte/" + image_file + ".png");	
 	_block_id = static_cast<unsigned char>(block_id);
+	if(_block_id == 0) 
+		_status = Status::Empty;
+	else
+		_status = Status::Filled;
 }
 Block::Block(const std::string& block_id) 
 {
@@ -16,4 +20,8 @@ Block::Block(const std::string& block_id)
 		image_file = "0" + image_file;
 	load_image(_default_path + "/Images/Carte/" + image_file + ".png");	
 	_block_id = static_cast<unsigned char>(std::stoi(block_id));
+	if(_block_id == 0) 
+		_status = Status::Empty;
+	else
+		_status = Status::Filled;
 }

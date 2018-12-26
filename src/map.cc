@@ -10,7 +10,8 @@
 
 Map::Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float scale):
 _row(0),
-_col(0)
+_col(0),
+_pacman(scale)
 {
 	std::ifstream file(map_file);
 	std::string map_str, block_id;
@@ -39,6 +40,7 @@ void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 {
 	Block &sample_block = *(map_data.front().front());
 	float scale = sample_block.get_scale();
+	const int pacman_margin = 0;
 	unsigned int block_width, block_height, x, y, col, row;
 
 	block_width = static_cast<unsigned int>(sample_block.get_width() * scale);
@@ -57,7 +59,11 @@ void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 		}
 		++row;
 	}
-
+	_pacman.set_offset(x + (block_width/2), y + (block_height/2));
+	_pacman.set_position(10 * block_width, 15 * block_height);
+	_pacman.enable_origin_at_center();
+	//_pacman.next();
+	//_pacman.turn_clockwise();
 }
 	
 std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 
@@ -85,4 +91,5 @@ void Map::draw(sf::RenderWindow& window)
 	for(const auto& iter_row : map_data)
 		for(const auto& iter_col : iter_row)
 			window.draw(iter_col->get_sprite());
+	window.draw(_pacman.get_sprite());
 }

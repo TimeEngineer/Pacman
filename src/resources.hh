@@ -30,13 +30,13 @@ enum GHOST_STATUS{STAY = 0, MOVE = 1};
 }
 
 
-const std::string _pacman_paths[] = {"/Images/Creature/Pacman/Pacman",
-                                    "/Images/Creature/Pacman/DeadPacman"};
-const unsigned int _pacman_animation[][2] = {{0,3},{0,20}};
-const std::string _pacman_ext = ".png";
+const std::string _pacman_path = "/Images/Creature/Pacman/Pacman.png";
+const int _pacman_scence_index[][2] = {{0,3},{4,29}};
+const int _pacman_frames = 29;
+//const std::string _pacman_ext = ".png";
 namespace Pacman_Sprite {
 enum PACMAN_TYPE{LIVE = 0, DEAD};
-enum PACMAN_ANIMATION{BEGIN = 0, END};
+enum PACMAN_ANIM{BEGIN = 0, END};
 }
 
 const std::string _sound_paths[] = {"/Sounds/choice.wav",
