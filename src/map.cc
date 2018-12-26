@@ -10,13 +10,13 @@
 
 Map::Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float scale):
 _row(0),
-_col(0),
-_pacman(scale)
+_col(0)
 {
 	std::ifstream file(map_file);
 	std::string map_str, block_id;
 	std::size_t pos_begin = 0, pos_end = 0;
 	
+	_row = 0;
 	while(file >> map_str) {
 		map_data.push_back(std::vector<Block*>());
 		_col = pos_begin = pos_end = 0; //Init
@@ -29,41 +29,65 @@ _pacman(scale)
 			
 			row_data.push_back(new Block(block_id));
 			row_data.back()->set_scale(scale);
-			++_col;
+			row_data.back()->set_cor_x(_col);
+			row_data.back()->set_cor_y(_row);
+			_col++;
 		}
-		++_row;
+		_row++;
 	}
 	file.close();
 	center_pos(wnd_width, wnd_height);
+	link_portals();
 }
 void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 {
 	Block &sample_block = *(map_data.front().front());
 	float scale = sample_block.get_scale();
-	const int pacman_margin = 0;
-	unsigned int block_width, block_height, x, y, col, row;
 
-	block_width = static_cast<unsigned int>(sample_block.get_width() * scale);
-	block_height = static_cast<unsigned int>(sample_block.get_height() * scale);
+	_block_width = static_cast<unsigned int>(sample_block.get_width() * scale);
+	_block_height = static_cast<unsigned int>(sample_block.get_height() * scale);
 	
-	x = (wnd_width - (_col * block_width)) >> 1;
-	y = (wnd_height - (_row * block_height)) >> 1;
+	_topleft_x = (wnd_width - (_col * _block_width)) >> 1;
+	_topleft_y = (wnd_height - (_row * _block_height)) >> 1;
 	
-	row = 0;
+	_row = 0;
 	for(const auto& iter_row : map_data) {
-		col = 0;
+		_col = 0;
 		for(const auto& iter_col : iter_row) {
-			iter_col->set_offset(x, y);
-			iter_col->set_position(col * block_width, row * block_height);
-			++col;
+			iter_col->set_offset(_topleft_x, _topleft_y);
+			iter_col->set_position(_col * _block_width, _row * _block_height);
+			++_col;
 		}
-		++row;
+		++_row;
 	}
-	_pacman.set_offset(x + (block_width/2), y + (block_height/2));
-	_pacman.set_position(10 * block_width, 15 * block_height);
-	_pacman.enable_origin_at_center();
-	//_pacman.next();
-	//_pacman.turn_clockwise();
+}
+void Map::link_portals()
+{
+	bool linked1[Block::MAX_PORTAL], linked2[Block::MAX_PORTAL];
+	int nb_portals;
+	sf::Vector2i portal[Block::MAX_PORTAL][2];
+	unsigned char block_id;
+	for(const auto& iter_row : map_data) {
+		for(const auto& iter_col : iter_row) {
+			 block_id = iter_col->get_block_id();
+			 if(block_id != Block::EMPTY_BLOCK_ID && block_id <= Block::MAX_PORTAL_NUMBERING) {
+				 if( block_id % 2 == 0) { // Portals
+				 	portal[(block_id - 1) / 2][0] = sf::Vector2i(iter_col->get_cor_x(), iter_col->get_cor_y());
+					linked1[(block_id - 1) / 2] = true;
+				 }
+				 else{ // Exit
+				 	portal[block_id / 2][1] = sf::Vector2i(iter_col->get_cor_x(), iter_col->get_cor_y());
+					linked2[block_id / 2] = true;
+				 }
+			 }
+		}
+	}
+	for(int i = 0; i < Block::MAX_PORTAL; i++) {
+		if(linked1[i] && linked2[i]) {
+			map_data[portal[i][0].y][portal[i][0].x]->set_cor_x(portal[i][1].x);
+			map_data[portal[i][0].y][portal[i][0].x]->set_cor_y(portal[i][1].y);
+		}
+	}
 }
 	
 std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 
@@ -91,5 +115,9 @@ void Map::draw(sf::RenderWindow& window)
 	for(const auto& iter_row : map_data)
 		for(const auto& iter_col : iter_row)
 			window.draw(iter_col->get_sprite());
-	window.draw(_pacman.get_sprite());
+//	window.draw(_pacman.get_sprite());
+}
+Block::Status Map::get_block_status(int x, int y)
+{
+	return map_data[y][x]->get_status();
 }

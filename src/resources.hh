@@ -2,6 +2,7 @@
 #include <string>   
 
 const std::string _default_path = "./DataBase";
+const std::string _map_file = "/Map/Map.txt";
 const std::string _bg_image_paths[5] = {"/Images/Fonds/menu.png",
 									"/Images/Fonds/rules.png", 
 									"/Images/Fonds/basic_level.png", 

@@ -7,6 +7,7 @@
 #include "resources.hh"
 #include "map.hh"
 #include "pacman.hh"
+#include "game.hh"
 
 
 
@@ -20,6 +21,7 @@ class Window {
 	// Window Event Handlers : 
 		void key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key);
 		void draw(sf::RenderWindow& window);
+		void timer(sf::Clock &clock, bool &redraw);
 		enum class DrawMode {Bg = 0, Game = 1};
 	// Key Pressed Handlers:
 		void switch_escape(sf::RenderWindow& window);
@@ -42,4 +44,5 @@ class Window {
 		float _scale;
 		const background_option _options[5] = {bREGLES, bSCORES, bOPTIONS, bCREDITS, bQUIT};
 		DrawMode _mode;
+		Game *game;
 };

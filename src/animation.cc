@@ -36,7 +36,6 @@ void Animation::next()
     if(++sc.index >= sc.nb_frames) {
         reset();
     }
-    std::cout<<_frame_width * (sc.begin + sc.index)<<std::endl;
     set_frame_rect(sf::IntRect(_frame_width * (sc.begin + sc.index), 0, _frame_width, _frame_height));
     
 

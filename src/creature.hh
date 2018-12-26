@@ -4,15 +4,17 @@
 #include "animation.hh"
 #include <vector>
 #include <string>
+#include <iostream>
 class Creature : public Entity, public Animation 
 {
 public:
+    enum class Orientation{Left, Right, Bottom, Top};
     Creature(std::string file_path, int nb_frames): Animation(file_path, nb_frames, true, sf::Color::Black),
                                      _lives(1),
                                      _speed(1.0f) {}
     virtual ~Creature() {};
     //virtual void playAnimation() = 0;
-    void destroy() = 0;
+    virtual void destroy() {};
     void die() 
     {
         if(--_lives <= 0)
@@ -30,21 +32,13 @@ public:
         sounds.push_back(file_path);
         */
     }
+    
+    virtual EntityID get_entity_id() const {return EntityID::Creature;}
+    virtual void set_orientation(Creature::Orientation orientation) {_orientation = orientation;}
+    Creature::Orientation get_orientation() {return _orientation;}
 protected: 
+    Creature::Orientation _orientation;
     std::map<int, Sound> sounds;
     int _lives;
     float _speed;
-    /*
-    void add_animation(std::string prefix, std::string postfix, int begin, int end)
-    {
-        const std::size_t digits = std::to_string(end).length();
-        std::string str_num;
-
-        for (int index = begin; index <= end; index++) {
-            str_num = std::to_string(index);
-            // Correct the digit of index.
-            while(str_num.length() < digits) str_num = "0" + str_num; 
-            add_image(prefix + str_num + postfix);
-        }
-    }*/
 };

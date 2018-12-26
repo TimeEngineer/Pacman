@@ -6,7 +6,8 @@ void Window::draw(sf::RenderWindow& window)
 
     switch(_mode) {
         case DrawMode::Game :
-            _map->draw(window);
+           // _map->draw(window);
+            game->draw(window);
             break; 
         case DrawMode::Bg :
             window.draw(_background->get_sprite());
@@ -19,6 +20,14 @@ void Window::draw(sf::RenderWindow& window)
             
     }
     window.display();
+}
+void Window::timer(sf::Clock &clock, bool &redraw)
+{
+    bool bRestartClock = true;
+    
+    redraw = game->animate_pacman(clock);
+    if(redraw)
+        clock.restart();
 }
 
 void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key)
@@ -37,7 +46,7 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key)
     case sf::Keyboard::Left:
     case sf::Keyboard::Right:
         switch_arrowkey(window, key);
-        _map->_pacman.next();
+        game->move_pacman(key);
         break;
     default:
         break;

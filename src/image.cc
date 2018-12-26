@@ -118,3 +118,13 @@ void Image::turn_clockwise()
 	_angle = static_cast<float>(angle); 
 	set_angle(_angle);
 }
+void Image::flipX()
+{
+	_scale_width *= -1;
+	_sprite.setScale(-_scale_width, _scale_height);
+}
+void Image::flipY()
+{
+	_scale_height *= -1;
+	_sprite.setScale(_scale_width, _scale_height);
+}

@@ -22,6 +22,9 @@ void Window::switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir) {
         case bMENU:
             move_cursor(dir);
             break;
+        case bJEU:
+            
+            break;
         default:
             break;
     }

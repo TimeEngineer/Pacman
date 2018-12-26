@@ -27,6 +27,8 @@ public:
 	void set_offset_y(int offset_y);
 	void set_texture(const sf::Texture &texture);
 	void set_angle(float angle);
+	void flipX();
+	void flipY();
 	void set_frame_rect(const sf::IntRect &rectangle);
 	//getters
 	sf::Sprite get_sprite() const {return _sprite;}

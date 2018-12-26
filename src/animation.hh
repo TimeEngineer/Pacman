@@ -22,6 +22,8 @@ public:
     void next();
     void prev();
     void reset();
+    unsigned int get_frame_width(){return _frame_width;}
+    unsigned int get_frame_height(){return _frame_height;}
 
     std::vector<struct Animation::scene> get_scene() const {return _scenes;};
     std::size_t get_nb_scenes() const {return _nb_scenes;}
