@@ -2,19 +2,19 @@
 #include <string>   
 
 const std::string _default_path = "./DataBase";
-const std::string _map_file = "/Map/Map.txt";
-const std::string _bg_image_paths[5] = {"/Images/Fonds/menu.png",
-									"/Images/Fonds/rules.png", 
-									"/Images/Fonds/basic_level.png", 
-									"/Images/Fonds/scores.png"};
+const std::string _map_file = "./Map/Map.txt";
+const std::string _bg_image_paths[5] = {"./Images/Fonds/menu.png",
+									"./Images/Fonds/rules.png", 
+									"./Images/Fonds/basic_level.png", 
+									"./Images/Fonds/scores.png"};
                                     
-const std::string _image_paths[] = {"/Images/Divers/cursor.png"};
-const std::string _ghost_paths[] = {"/Images/Creature/Ghost/Cyan",
-                                    "/Images/Creature/Ghost/Orange",
-                                    "/Images/Creature/Ghost/Pink",
-                                    "/Images/Creature/Ghost/Red",
-                                    "/Images/Creature/Ghost/Blue",
-                                    "/Images/Creature/Ghost/Dead"};
+const std::string _image_paths[] = {"./Images/Divers/cursor.png"};
+const std::string _ghost_paths[] = {"./Images/Creature/Ghost/Cyan",
+                                    "./Images/Creature/Ghost/Orange",
+                                    "./Images/Creature/Ghost/Pink",
+                                    "./Images/Creature/Ghost/Red",
+                                    "./Images/Creature/Ghost/Blue",
+                                    "./Images/Creature/Ghost/Dead"};
                                             
 const std::string _ghost_dir[] = {"Left"
                                  "Right"
@@ -31,7 +31,7 @@ enum GHOST_STATUS{STAY = 0, MOVE = 1};
 }
 
 
-const std::string _pacman_path = "/Images/Creature/Pacman/Pacman.png";
+const std::string _pacman_path = "./Images/Creature/Pacman/Pacman.png";
 const int _pacman_scence_index[][2] = {{0,3},{4,29}};
 const int _pacman_frames = 29;
 //const std::string _pacman_ext = ".png";
@@ -40,14 +40,14 @@ enum PACMAN_TYPE{LIVE = 0, DEAD};
 enum PACMAN_ANIM{BEGIN = 0, END};
 }
 
-const std::string _sound_paths[] = {"/Sounds/choice.wav",
-                                    "/Sounds/cursor.wav",
-                                    "/Sounds/chomp.wav",
-                                    "/Sounds/death.wav",
-                                    "/Sounds/eatfruit.wav",
-                                    "/Sounds/eatghost.wav",
-                                    "/Sounds/extrapac.wav",
-                                    "/Sounds/intermission.wav"};
+const std::string _sound_paths[] = {"./Sounds/choice.wav",
+                                    "./Sounds/cursor.wav",
+                                    "./Sounds/chomp.wav",
+                                    "./Sounds/death.wav",
+                                    "./Sounds/eatfruit.wav",
+                                    "./Sounds/eatghost.wav",
+                                    "./Sounds/extrapac.wav",
+                                    "./Sounds/intermission.wav"};
 enum sound_option {sCHOICE = 0, 
                          sCURSOR = 1, 
                          sCHOMP = 2, 
