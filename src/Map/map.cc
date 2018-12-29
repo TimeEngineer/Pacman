@@ -1,4 +1,5 @@
 #include "./Map/map.hh"
+#include "./Map/edge.hh"
 #include "./Window/reposize.hh"
 #include <iostream>
 #include <fstream>
@@ -34,6 +35,19 @@ destinations(Block::MAX_PORTAL, NULL)
 	file.close();
 	center_pos(wnd_width, wnd_height);
 	link_portals();
+	for (int y = 0; y < _map_dimension.y; y++) {
+		for (int x = 0; x < _map_dimension.x; x++) {
+	
+			link_adjacent_tiles(x, y);
+		}
+	}
+	for (const auto& iter : intersections) {
+		while(!iter->is_visited()) {
+			Edge edge(iter);
+			std::cout<< "-----------" << std::endl;
+		}
+		std::cout<< "***************" << std::endl;
+	}
 }
 void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 {
@@ -47,13 +61,13 @@ void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 			block_id = map_data[row][col]->get_block_id();
 			map_data[row][col]->set_offset(_topleft.x, _topleft.y);
 			map_data[row][col]->set_screen_coordinate(col * _block_size.x, row * _block_size.y);
+
 			if (Block::is_portal(*map_data[row][col])) 
 				portals[block_id / 2 - 1] = map_data[row][col];
 			else if (Block::is_gateway(*map_data[row][col]))
 				destinations[block_id / 2] = map_data[row][col];
 			else if (Block::is_intersection(*map_data[row][col]))
 				intersections.push_back(map_data[row][col]);
-			link_adjacent_tiles(col, row);
 		}
 	}
 }
@@ -67,16 +81,30 @@ void Map::link_portals()
 }
 void Map::link_adjacent_tiles(int x, int y)
 {
-	Block *east_block, *west_block, *south_block, *north_block;
-	east_block = (x + 1 >= _map_dimension.x ? NULL : map_data[y][x + 1]);
-	west_block = (x - 1 < 0 ? NULL : map_data[y][x - 1]);
-	south_block = (y + 1 >= _map_dimension.y ? NULL : map_data[y + 1][x]);
-	north_block = (y - 1 < 0 ? NULL : map_data[y - 1][x]);
-
-	map_data[y][x]->set_adjacent_tiles((east_block != NULL && Block::is_wall(*east_block) ? NULL : east_block),
-										(west_block != NULL && Block::is_wall(*west_block) ? NULL : west_block),
-										(south_block != NULL && Block::is_wall(*south_block) ? NULL : south_block),
-										(north_block != NULL && Block::is_wall(*north_block) ? NULL : north_block));
+	if(Block::is_wall(*map_data[y][x]) || map_data[y][x]->is_linked())
+		return;
+	Block *east_block, *west_block, *south_block, *north_block, *alternative_path;
+	if(Block::is_portal(*map_data[y][x]))  {
+		alternative_path = map_data[y][x];
+		std::cout<<"Portal(" << x << " " << y <<") Links to Gateway (" << alternative_path->get_map_coordinate_x() << " "<< alternative_path->get_map_coordinate_y() << ")" << std::endl;
+	}
+	else
+		alternative_path = NULL;
+	std::cout<< x  << " " << y << "Linked" << std::endl;
+	east_block = (x + 1 >= _map_dimension.x ? alternative_path : map_data[y][x + 1]);
+	west_block = (x - 1 < 0 ? alternative_path : map_data[y][x - 1]);
+	south_block = (y + 1 >= _map_dimension.y ? alternative_path : map_data[y + 1][x]);
+	north_block = (y - 1 < 0 ? alternative_path : map_data[y - 1][x]);
+	if(east_block != NULL)
+	east_block = map_data[east_block->get_map_coordinate_y()][east_block->get_map_coordinate_x()];
+	if(west_block != NULL)
+	west_block = map_data[west_block->get_map_coordinate_y()][west_block->get_map_coordinate_x()];
+	if(south_block != NULL)
+	south_block = map_data[south_block->get_map_coordinate_y()][south_block->get_map_coordinate_x()];
+	if(north_block != NULL)
+	north_block = map_data[north_block->get_map_coordinate_y()][north_block->get_map_coordinate_x()];
+	map_data[y][x]->set_adjacent_tiles(east_block, west_block, south_block, north_block);
+	//->linked();
 }
 	
 std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 
@@ -105,29 +133,3 @@ void Map::draw(sf::RenderWindow& window)
 		for(const auto& iter_col : iter_row)
 			iter_col->draw(window);
 }
-	/*
-	bool linked1[Block::MAX_PORTAL], linked2[Block::MAX_PORTAL];
-	int nb_portals;
-	sf::Vector2i portal[Block::MAX_PORTAL][2];
-	unsigned char block_id;
-	for(const auto& iter_row : map_data) {
-		for(const auto& iter_col : iter_row) {
-			 block_id = iter_col->get_block_id();
-			 if(block_id != Block::EMPTY_BLOCK_ID && block_id <= Block::MAX_PORTAL_NUMBERING) {
-				 if( block_id % 2 == 0) { // Portals
-				 	portal[(block_id - 1) / 2][0] = sf::Vector2i(iter_col->get_cor_x(), iter_col->get_cor_y());
-					linked1[(block_id - 1) / 2] = true;
-				 }
-				 else{ // Exit
-				 	portal[block_id / 2][1] = sf::Vector2i(iter_col->get_cor_x(), iter_col->get_cor_y());
-					linked2[block_id / 2] = true;
-				 }
-			 }
-		}
-	}
-	for(int i = 0; i < Block::MAX_PORTAL; i++) {
-		if(linked1[i] && linked2[i]) {
-			map_data[portal[i][0].y][portal[i][0].x]->set_cor_x(portal[i][1].x);
-			map_data[portal[i][0].y][portal[i][0].x]->set_cor_y(portal[i][1].y);
-		}
-	}*/

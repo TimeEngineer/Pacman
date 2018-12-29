@@ -29,13 +29,14 @@ public:
 	// Returns coordinate of the map (Ex) 1th row, 7th column)
 	sf::Vector2i get_map_coordinate(sf::Vector2i map_coordinate) const {return get_map_coordinate(map_coordinate.x, map_coordinate.y);}
 	sf::Vector2i get_map_coordinate(int x, int y) const {return map_data[y][x]->get_map_coordinate();}
-
 	// Returns if the block is empty, filled or portal.
 	Block::Status get_block_status(sf::Vector2i map_coordinate) const {return get_block_status(map_coordinate.x, map_coordinate.y);}
 	Block::Status get_block_status(int x, int y) const {return map_data[y][x]->get_status();}
 
 	std::vector<Block*> get_intersections() const {return intersections;}
 private:
+	Block *get_block_at(int x, int y) const {return map_data[y][x];}
+	Block *get_real_block_at(int x, int y) const {return map_data[map_data[y][x]->get_map_coordinate_y()][map_data[y][x]->get_map_coordinate_x()];}
 	void link_adjacent_tiles(int x, int y);
 	const std::string END_OF_MAP = "EOM";
 	void measurement();

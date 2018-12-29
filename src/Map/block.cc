@@ -5,7 +5,9 @@ Mapped(_image, col, row),
 _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
-_north_block(NULL)
+_north_block(NULL),
+_visited(false),
+_linked(false)
 {	
 	std::string image_file = std::to_string(block_id);
 	while(image_file.length() < 3)
@@ -20,7 +22,9 @@ Mapped(_image, col, row),
 _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
-_north_block(NULL)
+_north_block(NULL),
+_visited(false),
+_linked(false)
 {
 	std::string image_file(block_id);
 	while(image_file.length() < 3)
@@ -32,6 +36,9 @@ _north_block(NULL)
 
 void Block::determine_status(int block_id)
 {
+	
+	//if(block_id == 9) 
+	//	_status = Status::Filled;
 	if (block_id <= MAX_PORTAL_NUMBERING) {
 		if (block_id == 0 ) 
 			_status = Status::Empty;
@@ -59,8 +66,19 @@ void Block::draw(sf::RenderWindow& window)
 }
 void Block::set_adjacent_tiles(Block *east_block, Block* west_block, Block* south_block, Block* north_block)
 {
-	_east_block = east_block;
-	_west_block = west_block;
-	_south_block = south_block;
-	_north_block = north_block;
+	_east_block = determine_path(east_block);
+	_west_block = determine_path(west_block);
+	_south_block = determine_path(south_block);
+	_north_block = determine_path(north_block);
+	_linked = true;
+}
+Block *Block::determine_path(Block *path_block)
+{
+	if(path_block == NULL || is_wall(*path_block))
+		return NULL;
+	return path_block;
+}
+void Block::set_visited(bool visited)
+{
+	_visited = visited;	
 }

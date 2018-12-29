@@ -12,7 +12,7 @@ public:
 					 Portal = 0x01,
 					 Filled = 0x00,
 					 Intersection = 0x1FF,
-					 Gateway = 0xFF};
+					 Gateway = 0x2FF};
 	friend int operator&(const Block::Status operand1, const Entity::EntityID operand2)
 	{
 	    return static_cast<int>(operand1) & static_cast<int>(operand2);
@@ -42,9 +42,15 @@ public:
 	void set_adjacent_tiles(Block *east_block, Block* west_block, Block* south_block, Block* north_block);
 	void set_visited(bool visited);
 
+	Block *get_east_block() const {return _east_block;}
+	Block *get_west_block() const {return _west_block;}
+	Block *get_south_block() const {return _south_block;}
+	Block *get_north_block() const {return _north_block;}
+
 	int get_block_id() const {return _block_id;}
 	Block::Status get_status() const {return _status;}
-	bool get_visited() const {return _visited;}
+	bool is_visited() const {return _visited;}
+	bool is_linked() const {return _linked;}
 	static bool is_wall(Block &block)  {return block.get_status() == Status::Filled;}
 	static bool is_portal(Block &block)  {return block.get_status() == Status::Portal;}
 	static bool is_gateway(Block &block)  {return block.get_status() == Status::Gateway;}
@@ -54,12 +60,14 @@ public:
 	static const int MAX_PORTAL = 4;
 	static const int EMPTY_BLOCK_ID = 0;
 private:
+	Block *determine_path(Block *path_block);
 	void operator=(const Block&){}
 	Block *_east_block;
 	Block *_west_block;
 	Block *_south_block;
 	Block *_north_block;
 	bool _visited;
+	bool _linked;
 	Image _image;
 	int _block_id;
 	Block::Status _status;

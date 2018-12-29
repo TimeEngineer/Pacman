@@ -1,0 +1,648 @@
+scale:2
+2 1Linked
+3 1Linked
+4 1Linked
+5 1Linked
+6 1Linked
+7 1Linked
+8 1Linked
+9 1Linked
+10 1Linked
+12 1Linked
+13 1Linked
+14 1Linked
+15 1Linked
+16 1Linked
+17 1Linked
+18 1Linked
+19 1Linked
+20 1Linked
+2 2Linked
+6 2Linked
+10 2Linked
+12 2Linked
+16 2Linked
+20 2Linked
+2 3Linked
+6 3Linked
+10 3Linked
+12 3Linked
+16 3Linked
+20 3Linked
+2 4Linked
+3 4Linked
+4 4Linked
+5 4Linked
+6 4Linked
+7 4Linked
+8 4Linked
+9 4Linked
+10 4Linked
+11 4Linked
+12 4Linked
+13 4Linked
+14 4Linked
+15 4Linked
+16 4Linked
+17 4Linked
+18 4Linked
+19 4Linked
+20 4Linked
+2 5Linked
+6 5Linked
+8 5Linked
+14 5Linked
+16 5Linked
+20 5Linked
+2 6Linked
+3 6Linked
+4 6Linked
+5 6Linked
+6 6Linked
+8 6Linked
+9 6Linked
+10 6Linked
+12 6Linked
+13 6Linked
+14 6Linked
+16 6Linked
+6 7Linked
+10 7Linked
+12 7Linked
+16 7Linked
+6 8Linked
+8 8Linked
+9 8Linked
+10 8Linked
+11 8Linked
+12 8Linked
+13 8Linked
+14 8Linked
+16 8Linked
+18 8Linked
+19 8Linked
+20 8Linked
+21 8Linked
+6 9Linked
+8 9Linked
+11 9Linked
+14 9Linked
+16 9Linked
+Portal(0 10) Links to Gateway (21 10)
+0 10Linked
+1 10Linked
+2 10Linked
+3 10Linked
+4 10Linked
+5 10Linked
+6 10Linked
+7 10Linked
+8 10Linked
+10 10Linked
+11 10Linked
+12 10Linked
+14 10Linked
+15 10Linked
+16 10Linked
+17 10Linked
+18 10Linked
+19 10Linked
+20 10Linked
+21 10Linked
+Portal(22 10) Links to Gateway (1 10)
+22 10Linked
+6 11Linked
+8 11Linked
+14 11Linked
+16 11Linked
+6 12Linked
+8 12Linked
+9 12Linked
+10 12Linked
+11 12Linked
+12 12Linked
+13 12Linked
+14 12Linked
+16 12Linked
+6 13Linked
+8 13Linked
+14 13Linked
+16 13Linked
+2 14Linked
+3 14Linked
+4 14Linked
+5 14Linked
+6 14Linked
+7 14Linked
+8 14Linked
+9 14Linked
+10 14Linked
+12 14Linked
+13 14Linked
+14 14Linked
+15 14Linked
+16 14Linked
+17 14Linked
+18 14Linked
+19 14Linked
+20 14Linked
+2 15Linked
+6 15Linked
+10 15Linked
+12 15Linked
+16 15Linked
+20 15Linked
+2 16Linked
+3 16Linked
+4 16Linked
+6 16Linked
+7 16Linked
+8 16Linked
+9 16Linked
+10 16Linked
+11 16Linked
+12 16Linked
+13 16Linked
+14 16Linked
+15 16Linked
+16 16Linked
+18 16Linked
+19 16Linked
+20 16Linked
+4 17Linked
+6 17Linked
+8 17Linked
+14 17Linked
+16 17Linked
+18 17Linked
+2 18Linked
+3 18Linked
+4 18Linked
+5 18Linked
+6 18Linked
+8 18Linked
+9 18Linked
+10 18Linked
+12 18Linked
+13 18Linked
+14 18Linked
+16 18Linked
+17 18Linked
+18 18Linked
+19 18Linked
+20 18Linked
+2 19Linked
+10 19Linked
+12 19Linked
+20 19Linked
+2 20Linked
+3 20Linked
+4 20Linked
+5 20Linked
+6 20Linked
+7 20Linked
+8 20Linked
+9 20Linked
+10 20Linked
+11 20Linked
+12 20Linked
+13 20Linked
+14 20Linked
+15 20Linked
+16 20Linked
+17 20Linked
+18 20Linked
+19 20Linked
+20 20Linked
+Vertice:6 , 1
+Route:7 , 1
+Route:8 , 1
+Route:9 , 1
+Route:10 , 1
+Route:10 , 2
+Route:10 , 3
+Vertice:10 , 4
+-----------
+Vertice:6 , 1
+Route:5 , 1
+Route:4 , 1
+Route:3 , 1
+Route:2 , 1
+Route:2 , 2
+Route:2 , 3
+Vertice:2 , 4
+-----------
+Vertice:6 , 1
+Route:6 , 2
+Route:6 , 3
+Vertice:6 , 4
+-----------
+Vertice:6 , 1
+-----------
+***************
+Vertice:16 , 1
+Route:17 , 1
+Route:18 , 1
+Route:19 , 1
+Route:20 , 1
+Route:20 , 2
+Route:20 , 3
+Vertice:20 , 4
+-----------
+Vertice:16 , 1
+Route:15 , 1
+Route:14 , 1
+Route:13 , 1
+Route:12 , 1
+Route:12 , 2
+Route:12 , 3
+Vertice:12 , 4
+-----------
+Vertice:16 , 1
+Route:16 , 2
+Route:16 , 3
+Vertice:16 , 4
+-----------
+Vertice:16 , 1
+-----------
+***************
+Vertice:2 , 4
+Route:3 , 4
+Route:4 , 4
+Route:5 , 4
+Vertice:6 , 4
+-----------
+Vertice:2 , 4
+Route:2 , 5
+Route:2 , 6
+Route:3 , 6
+Route:4 , 6
+Route:5 , 6
+Vertice:6 , 6
+-----------
+Vertice:2 , 4
+-----------
+***************
+Vertice:6 , 4
+Route:7 , 4
+Vertice:8 , 4
+-----------
+Vertice:6 , 4
+Route:6 , 5
+Vertice:6 , 6
+-----------
+Vertice:6 , 4
+-----------
+***************
+Vertice:8 , 4
+Route:9 , 4
+Vertice:10 , 4
+-----------
+Vertice:8 , 4
+Route:8 , 5
+Route:8 , 6
+Route:9 , 6
+Route:10 , 6
+Route:10 , 7
+Vertice:10 , 8
+-----------
+Vertice:8 , 4
+-----------
+***************
+Vertice:10 , 4
+Route:11 , 4
+Vertice:12 , 4
+-----------
+Vertice:10 , 4
+-----------
+***************
+Vertice:12 , 4
+Route:13 , 4
+Vertice:14 , 4
+-----------
+Vertice:12 , 4
+-----------
+***************
+Vertice:14 , 4
+Route:15 , 4
+Vertice:16 , 4
+-----------
+Vertice:14 , 4
+Route:14 , 5
+Route:14 , 6
+Route:13 , 6
+Route:12 , 6
+Route:12 , 7
+Vertice:12 , 8
+-----------
+Vertice:14 , 4
+-----------
+***************
+Vertice:16 , 4
+Route:17 , 4
+Route:18 , 4
+Route:19 , 4
+Vertice:20 , 4
+-----------
+Vertice:16 , 4
+Route:16 , 5
+Vertice:16 , 6
+-----------
+Vertice:16 , 4
+-----------
+***************
+Vertice:20 , 4
+Route:20 , 5
+-----------
+Vertice:20 , 4
+-----------
+***************
+Vertice:6 , 6
+Route:6 , 7
+Route:6 , 8
+Route:6 , 9
+Vertice:6 , 10
+-----------
+Vertice:6 , 6
+-----------
+***************
+Vertice:16 , 6
+Route:16 , 7
+Route:16 , 8
+Route:16 , 9
+Vertice:16 , 10
+-----------
+Vertice:16 , 6
+-----------
+***************
+Vertice:10 , 8
+Route:11 , 8
+Vertice:12 , 8
+-----------
+Vertice:10 , 8
+Route:9 , 8
+Route:8 , 8
+Route:8 , 9
+Vertice:8 , 10
+-----------
+Vertice:10 , 8
+-----------
+***************
+Vertice:12 , 8
+Route:13 , 8
+Route:14 , 8
+Route:14 , 9
+Vertice:14 , 10
+-----------
+Vertice:12 , 8
+-----------
+***************
+Vertice:6 , 10
+Route:7 , 10
+Vertice:8 , 10
+-----------
+Vertice:6 , 10
+Route:5 , 10
+Route:4 , 10
+Route:3 , 10
+Route:2 , 10
+Route:1 , 10
+Route:21 , 10
+Route:20 , 10
+Route:19 , 10
+Route:18 , 10
+Route:17 , 10
+Vertice:16 , 10
+-----------
+Vertice:6 , 10
+Route:6 , 11
+Route:6 , 12
+Route:6 , 13
+Vertice:6 , 14
+-----------
+Vertice:6 , 10
+-----------
+***************
+Vertice:8 , 10
+Route:8 , 11
+Vertice:8 , 12
+-----------
+Vertice:8 , 10
+-----------
+***************
+Vertice:14 , 10
+Route:15 , 10
+Vertice:16 , 10
+-----------
+Vertice:14 , 10
+Route:14 , 11
+Vertice:14 , 12
+-----------
+Vertice:14 , 10
+-----------
+***************
+Vertice:16 , 10
+Route:16 , 11
+Route:16 , 12
+Route:16 , 13
+Vertice:16 , 14
+-----------
+Vertice:16 , 10
+-----------
+***************
+Vertice:8 , 12
+Route:9 , 12
+Route:10 , 12
+Route:11 , 12
+Route:12 , 12
+Route:13 , 12
+Vertice:14 , 12
+-----------
+Vertice:8 , 12
+Route:8 , 13
+Vertice:8 , 14
+-----------
+Vertice:8 , 12
+-----------
+***************
+Vertice:14 , 12
+Route:14 , 13
+Vertice:14 , 14
+-----------
+Vertice:14 , 12
+-----------
+***************
+Vertice:6 , 14
+Route:7 , 14
+Vertice:8 , 14
+-----------
+Vertice:6 , 14
+Route:5 , 14
+Route:4 , 14
+Route:3 , 14
+Route:2 , 14
+Route:2 , 15
+Route:2 , 16
+Route:3 , 16
+Route:4 , 16
+Route:4 , 17
+Vertice:4 , 18
+-----------
+Vertice:6 , 14
+Route:6 , 15
+Vertice:6 , 16
+-----------
+Vertice:6 , 14
+-----------
+***************
+Vertice:8 , 14
+Route:9 , 14
+Route:10 , 14
+Route:10 , 15
+Vertice:10 , 16
+-----------
+Vertice:8 , 14
+-----------
+***************
+Vertice:14 , 14
+Route:15 , 14
+Vertice:16 , 14
+-----------
+Vertice:14 , 14
+Route:13 , 14
+Route:12 , 14
+Route:12 , 15
+Vertice:12 , 16
+-----------
+Vertice:14 , 14
+-----------
+***************
+Vertice:16 , 14
+Route:17 , 14
+Route:18 , 14
+Route:19 , 14
+Route:20 , 14
+Route:20 , 15
+Route:20 , 16
+Route:19 , 16
+Route:18 , 16
+Route:18 , 17
+Vertice:18 , 18
+-----------
+Vertice:16 , 14
+Route:16 , 15
+Vertice:16 , 16
+-----------
+Vertice:16 , 14
+-----------
+***************
+Vertice:6 , 16
+Route:7 , 16
+Vertice:8 , 16
+-----------
+Vertice:6 , 16
+Route:6 , 17
+Route:6 , 18
+Route:5 , 18
+Vertice:4 , 18
+-----------
+Vertice:6 , 16
+-----------
+***************
+Vertice:8 , 16
+Route:9 , 16
+Vertice:10 , 16
+-----------
+Vertice:8 , 16
+Route:8 , 17
+Route:8 , 18
+Route:9 , 18
+Route:10 , 18
+Route:10 , 19
+Vertice:10 , 20
+-----------
+Vertice:8 , 16
+-----------
+***************
+Vertice:10 , 16
+Route:11 , 16
+Vertice:12 , 16
+-----------
+Vertice:10 , 16
+-----------
+***************
+Vertice:12 , 16
+Route:13 , 16
+Vertice:14 , 16
+-----------
+Vertice:12 , 16
+-----------
+***************
+Vertice:14 , 16
+Route:15 , 16
+Vertice:16 , 16
+-----------
+Vertice:14 , 16
+Route:14 , 17
+Route:14 , 18
+Route:13 , 18
+Route:12 , 18
+Route:12 , 19
+Vertice:12 , 20
+-----------
+Vertice:14 , 16
+-----------
+***************
+Vertice:16 , 16
+Route:16 , 17
+Route:16 , 18
+Route:17 , 18
+Vertice:18 , 18
+-----------
+Vertice:16 , 16
+-----------
+***************
+Vertice:4 , 18
+Route:3 , 18
+Route:2 , 18
+Route:2 , 19
+Route:2 , 20
+Route:3 , 20
+Route:4 , 20
+Route:5 , 20
+Route:6 , 20
+Route:7 , 20
+Route:8 , 20
+Route:9 , 20
+Vertice:10 , 20
+-----------
+Vertice:4 , 18
+-----------
+***************
+Vertice:18 , 18
+Route:19 , 18
+Route:20 , 18
+Route:20 , 19
+Route:20 , 20
+Route:19 , 20
+Route:18 , 20
+Route:17 , 20
+Route:16 , 20
+Route:15 , 20
+Route:14 , 20
+Route:13 , 20
+Vertice:12 , 20
+-----------
+Vertice:18 , 18
+-----------
+***************
+Vertice:10 , 20
+Route:11 , 20
+Vertice:12 , 20
+-----------
+Vertice:10 , 20
+-----------
+***************
+Vertice:12 , 20
+-----------
+***************
