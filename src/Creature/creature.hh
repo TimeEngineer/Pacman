@@ -11,8 +11,7 @@ class Creature : public Entity
 public:
     enum class Orientation{Left, Right, Bottom, Top};
     Creature(std::string file_path, int nb_frames):
-                                     Entity(_anim),
-                                     _anim(file_path, nb_frames, true, sf::Color::Black),
+                                     Entity(file_path, nb_frames),
                                      _lives(1),
                                      _speed(1.0f) { }
     virtual ~Creature() {};
@@ -45,7 +44,6 @@ public:
     void next_frame() { _anim.next(); }
     void prev_frame() { _anim.prev(); }
 protected: 
-    Animation _anim;
     Creature::Orientation _orientation;
     std::map<int, Sound> sounds;
     int _lives;

@@ -10,7 +10,9 @@ class Block: public Mapped {
 public:
 	enum class Status {Empty = 0xFF,
 					 Portal = 0x01,
-					 Filled = 0x00};
+					 Filled = 0x00,
+					 Intersection = 0x1FF,
+					 Gateway = 0xFF};
 	friend int operator&(const Block::Status operand1, const Entity::EntityID operand2)
 	{
 	    return static_cast<int>(operand1) & static_cast<int>(operand2);
@@ -29,27 +31,36 @@ public:
 	    return operand2 & operand1;
 	}
 
-	Block(const unsigned char block_id);
-	Block(const std::string& block_id);
+	Block(const int block_id, int col, int row);
+	Block(const std::string& block_id, int col, int row);
 	~Block(){};
 
-	void determine_status(int block_id);
-	void set_destination(const Block &block);
-
-	unsigned char get_block_id() const {return _block_id;}
-	Block::Status get_status() const {return _status;}
-
-	bool is_portal() const { return borrow_coordinate;}
-	bool is_portal_gateway() const { return lend_coordinate;}
-	
 	void draw(sf::RenderWindow &window);
+	void determine_status(int block_id);
+
+	void set_destination(const Block &block);
+	void set_adjacent_tiles(Block *east_block, Block* west_block, Block* south_block, Block* north_block);
+	void set_visited(bool visited);
+
+	int get_block_id() const {return _block_id;}
+	Block::Status get_status() const {return _status;}
+	bool get_visited() const {return _visited;}
+	static bool is_wall(Block &block)  {return block.get_status() == Status::Filled;}
+	static bool is_portal(Block &block)  {return block.get_status() == Status::Portal;}
+	static bool is_gateway(Block &block)  {return block.get_status() == Status::Gateway;}
+	static bool is_intersection(Block &block) {return block.get_status() == Status::Intersection;}
+	sf::Vector2i operator()(int x, int y) const{return get_map_coordinate();}
 	static const int MAX_PORTAL_NUMBERING = 8;
 	static const int MAX_PORTAL = 4;
 	static const int EMPTY_BLOCK_ID = 0;
 private:
+	void operator=(const Block&){}
+	Block *_east_block;
+	Block *_west_block;
+	Block *_south_block;
+	Block *_north_block;
+	bool _visited;
 	Image _image;
-	unsigned char _block_id;
+	int _block_id;
 	Block::Status _status;
-	bool borrow_coordinate;
-	bool lend_coordinate;
 };

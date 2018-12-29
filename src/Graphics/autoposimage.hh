@@ -4,6 +4,6 @@
 
 class AutoPosImage : public Image {
 public:
-    AutoPosImage(std::string image_path, unsigned int sc_width, unsigned int sc_height, unsigned int bg_width, unsigned int bg_hight, int offset_x, int offset_y, float scale);
+    AutoPosImage(std::string image_path, int wnd_width, int wnd_height, int bg_width, int bg_height, int offset_x, int offset_y, float scale);
     ~AutoPosImage() {};
 };

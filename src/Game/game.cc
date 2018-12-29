@@ -4,13 +4,25 @@
 
 Game::Game(unsigned int wnd_width, unsigned int wnd_height, float scale):
 _map(_default_path + _map_file, wnd_width, wnd_height, scale, scale),
-_pacman(scale)
+_pacman(scale),
+_blinky(scale),
+_clyde(scale),
+_inkey(scale),
+_pinky(scale)
 {
-    _pacman.set_offset(_map.get_topleft_x() + _map.get_block_width() / 2, _map.get_topleft_y() + _map.get_block_height() / 2);
-    _pacman.set_map_coordinate(_initial_map_x, _initial_map_y);
-    _pacman.set_screen_coordinate(_map.get_screen_coordinate(_pacman.get_map_coordinate()));
-    _pacman.enable_origin_at_center();
-    
+    sf::Vector2i offset = _map.get_topleft();
+    _pacman.set_offset(offset);
+    _inkey.set_offset(offset);
+    _blinky.set_offset(offset);
+    _clyde.set_offset(offset);
+    _pinky.set_offset(offset);
+
+
+    move_creature(_pacman, _initial_map_x, _initial_map_y);
+    move_creature(_blinky, _blinky_init_x, _blinky_init_y);
+    move_creature(_clyde, _clyde_init_x, _clyde_init_y);
+    move_creature(_inkey, _inkey_init_x, _inkey_init_y);
+    move_creature(_pinky, _pinky_init_x, _pinky_init_y);
 }
 
 bool Game::move_pacman(sf::Keyboard::Key dir)
@@ -40,14 +52,17 @@ bool Game::move_pacman(sf::Keyboard::Key dir)
     if(check_mobility(_pacman, cur_pos, displacement))
         return false;
     target_pos = cur_pos + displacement;
-    _pacman.set_map_coordinate(_map.get_map_coordinate(target_pos));
-    _pacman.set_screen_coordinate(_map.get_screen_coordinate(_pacman.get_map_coordinate()));
+    move_creature(_pacman, target_pos);
     return bMovable;
 }
 void Game::draw(sf::RenderWindow &window)
 {
     _map.draw(window);
     _pacman.draw(window);
+    _blinky.draw(window);
+    _clyde.draw(window);
+    _inkey.draw(window);
+    _pinky.draw(window);
 }
 
 
@@ -61,7 +76,8 @@ bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i
         return false;
     if(target_pos.x >= _map.get_map_dimension().x || target_pos.y >= _map.get_map_dimension().y)
         return false;
-    if((_map.get_block_status(target_pos.x, target_pos.y) & creature.get_entity_id()) != 0x0)
+        
+    if((_map(target_pos.x, target_pos.y).get_status() & creature.get_entity_id()) != 0x0)
         return false;
     return true;
 }
@@ -72,6 +88,16 @@ bool Game::timer(sf::Clock &clock)
 void Game::animate_pacman(void)
 {
     _pacman.next_frame();
+}
+void Game::move_creature(Creature &creature, const sf::Vector2i &pos)
+{
+    creature.set_map_coordinate(_map.get_map_coordinate(pos.x, pos.y));
+    creature.set_screen_coordinate(_map.get_screen_coordinate(creature.get_map_coordinate()));
+
+}
+void Game::move_creature(Creature &creature, int x, int y)
+{
+   move_creature(creature, sf::Vector2i(x, y));
 }
 /*
 sf::Vector2i Game::map_to_screen_coordinate(sf::Vector2i map_coordinate)

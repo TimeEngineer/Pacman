@@ -44,16 +44,18 @@ void Image::load_image(std::string file_path)
 }
 void Image::set_position(const sf::Vector2i&  pos) { 
 	_pos = pos;
-	_sprite.setPosition(static_cast<float>(_pos.x + _offset.x), static_cast<float>(_pos.y + _offset.y));
+	_sprite.setPosition(static_cast<float>(_pos.x + _offset.x + _center.x), static_cast<float>(_pos.y + _offset.y + _center.y));
 }
 void Image::set_position(int x, int y) { 
 	set_position(sf::Vector2i(x, y));
 }
 void Image::set_scale(const sf::Vector2f&  scale) {
-	_sprite.setScale(scale);
+	set_scale(scale.x, scale.y);
 }
 void Image::set_scale(float h_scale, float v_scale) {
 	_sprite.setScale(h_scale,v_scale);
+	_center.x = static_cast<int>(_sprite.getOrigin().x * abs(h_scale));
+	_center.y = static_cast<int>(_sprite.getOrigin().y * abs(v_scale));
 }
 void Image::set_visible(bool visible) 
 {
@@ -107,11 +109,13 @@ void Image::reload()
 }
 void Image::enable_origin_at_center()
 {
-	_sprite.setOrigin(static_cast<float>(_texture.getSize().x) / 2.f, static_cast<float>(_texture.getSize().y) / 2.f);
+	set_origin(static_cast<float>(_texture.getSize().x) / 2.f, static_cast<float>(_texture.getSize().y) / 2.f);
 }
 void Image::set_origin(float x, float y)
 {
 	_sprite.setOrigin(x, y);
+	_center.x = static_cast<int>(x) * _sprite.getScale().x;
+	_center.y = static_cast<int>(y) * _sprite.getScale().y;
 }
 void Image::set_angle(float angle) 
 {

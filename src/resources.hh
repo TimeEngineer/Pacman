@@ -9,26 +9,17 @@ const std::string _bg_image_paths[5] = {"./Images/Fonds/menu.png",
 									"./Images/Fonds/scores.png"};
                                     
 const std::string _image_paths[] = {"./Images/Divers/cursor.png"};
-const std::string _ghost_paths[] = {"./Images/Creature/Ghost/Cyan",
-                                    "./Images/Creature/Ghost/Orange",
-                                    "./Images/Creature/Ghost/Pink",
-                                    "./Images/Creature/Ghost/Red",
-                                    "./Images/Creature/Ghost/Blue",
-                                    "./Images/Creature/Ghost/Dead"};
+const std::string _ghost_paths[] = {"./Images/Creature/Ghost/Blinky.png",
+                                    "./Images/Creature/Ghost/Clyde.png",
+                                    "./Images/Creature/Ghost/Inkey.png",
+                                    "./Images/Creature/Ghost/Pinky.png"};
                                             
-const std::string _ghost_dir[] = {"Left"
-                                 "Right"
-                                 "Top",
-                                 "Bottom"};
                                             
-const std::string _ghost_movement[] = {"00",
-                                      "01"};
-const std::string _ghost_ext = ".png";
 namespace Ghost_Sprite {
-enum GHOST_TYPE{CYAN = 0, ORANGE, PINK, RED, BLUE, DEAD};
-enum GHOST_DIR{LEFT = 0, RIGHT = 1, TOP = 2, BOTTOM = 3};
-enum GHOST_STATUS{STAY = 0, MOVE = 1};
-}
+    enum GHOST_TYPE{BLINKY = 0, CLYDE = 1, INKEY = 2, PINKY = 3};
+    enum GHOST_ORIENTATION{LEFT = 0, RIGHT = 2, TOP = 4, BOTTOM = 6};
+    enum GHOST_STATUS{LIVE = 0x00, BLUE = 0x10, DEAD = 0x20, GRAY = 0x30};
+};
 
 
 const std::string _pacman_path = "./Images/Creature/Pacman/Pacman.png";
@@ -36,9 +27,9 @@ const int _pacman_scence_index[][2] = {{0,3},{4,29}};
 const int _pacman_frames = 29;
 //const std::string _pacman_ext = ".png";
 namespace Pacman_Sprite {
-enum PACMAN_TYPE{LIVE = 0, DEAD};
-enum PACMAN_ANIM{BEGIN = 0, END};
-}
+    enum PACMAN_TYPE{LIVE = 0, DEAD};
+    enum PACMAN_ANIM{BEGIN = 0, END};
+};
 
 const std::string _sound_paths[] = {"./Sounds/choice.wav",
                                     "./Sounds/cursor.wav",

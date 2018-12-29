@@ -1,4 +1,5 @@
 #include "./Map/map.hh"
+#include "./Window/reposize.hh"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -24,7 +25,7 @@ destinations(Block::MAX_PORTAL, NULL)
 			block_id = next_block(map_str, pos_begin, pos_end);
 			if(!block_id.compare(END_OF_MAP)) break;
 			
-			row_data.push_back(new Block(block_id));
+			row_data.push_back(new Block(block_id, _map_dimension.x, _map_dimension.y));
 			row_data.back()->set_scale(h_scale, v_scale);
 			_map_dimension.x++;
 		}
@@ -37,35 +38,45 @@ destinations(Block::MAX_PORTAL, NULL)
 void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 {
 	int block_id;
-	Block &sample_block = *(map_data.front().front());
-	sf::Vector2f scale = sample_block.get_scale();
 
-	_block_size = sample_block.get_size();
-	_block_size = sf::Vector2i(_block_size.x * scale.x, _block_size.y * scale.y);
-	
-	_topleft.x = static_cast<int>(wnd_width - (_map_dimension.x * _block_size.x)) >> 1;
-	_topleft.y = static_cast<int>(wnd_height - (_map_dimension.y * _block_size.y)) >> 1;
+	_block_size = calc_rescaled_size(map_data[0][0]->get_size(), map_data[0][0]->get_scale());
+	_topleft = calc_topleft(sf::Vector2i(wnd_width,wnd_height), _map_dimension,  _block_size);
 	
 	for (int row = 0; row < _map_dimension.y; row++) {
 		for (int col = 0; col < _map_dimension.x; col++) {
 			block_id = map_data[row][col]->get_block_id();
 			map_data[row][col]->set_offset(_topleft.x, _topleft.y);
 			map_data[row][col]->set_screen_coordinate(col * _block_size.x, row * _block_size.y);
-			map_data[row][col]->set_map_coordinate(col,row);
-
-			if(map_data[row][col]->is_portal()) 
+			if (Block::is_portal(*map_data[row][col])) 
 				portals[block_id / 2 - 1] = map_data[row][col];
-			else if(map_data[row][col]->is_portal_gateway()) 
+			else if (Block::is_gateway(*map_data[row][col]))
 				destinations[block_id / 2] = map_data[row][col];
+			else if (Block::is_intersection(*map_data[row][col]))
+				intersections.push_back(map_data[row][col]);
+			link_adjacent_tiles(col, row);
 		}
 	}
 }
 void Map::link_portals()
 {
 	for (int index = 0; index < Block::MAX_PORTAL; index++) {
-		if(portals[index] != NULL && destinations[index] != NULL) 
+		if(portals[index] != NULL && destinations[index] != NULL) {
 			portals[index]->set_destination(*destinations[index]);
+		}
 	}
+}
+void Map::link_adjacent_tiles(int x, int y)
+{
+	Block *east_block, *west_block, *south_block, *north_block;
+	east_block = (x + 1 >= _map_dimension.x ? NULL : map_data[y][x + 1]);
+	west_block = (x - 1 < 0 ? NULL : map_data[y][x - 1]);
+	south_block = (y + 1 >= _map_dimension.y ? NULL : map_data[y + 1][x]);
+	north_block = (y - 1 < 0 ? NULL : map_data[y - 1][x]);
+
+	map_data[y][x]->set_adjacent_tiles((east_block != NULL && Block::is_wall(*east_block) ? NULL : east_block),
+										(west_block != NULL && Block::is_wall(*west_block) ? NULL : west_block),
+										(south_block != NULL && Block::is_wall(*south_block) ? NULL : south_block),
+										(north_block != NULL && Block::is_wall(*north_block) ? NULL : north_block));
 }
 	
 std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 
@@ -94,12 +105,6 @@ void Map::draw(sf::RenderWindow& window)
 		for(const auto& iter_col : iter_row)
 			iter_col->draw(window);
 }
-Block::Status Map::get_block_status(int x, int y)
-{
-	return map_data[y][x]->get_status();
-}
-
-
 	/*
 	bool linked1[Block::MAX_PORTAL], linked2[Block::MAX_PORTAL];
 	int nb_portals;

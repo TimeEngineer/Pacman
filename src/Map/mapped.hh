@@ -6,6 +6,7 @@
 class Mapped {
 public:
 	Mapped(Image &image) : _image(image) {}
+	Mapped(Image &image, int x, int y) : _image(image), _map_coordinate(x,y) {}
 	virtual ~Mapped() {}
 	virtual void set_map_coordinate(sf::Vector2i map_coordinate);
 	virtual void set_map_coordinate(int x, int y);
@@ -33,8 +34,8 @@ public:
 
 	sf::Vector2f get_scale() const {return _image.get_scale();}
 	sf::Vector2i get_size() const {return _image.get_size();}
-	
 protected:
+	Image& get_image() {return _image;}
 	Image &_image;
 	sf::Vector2i _map_coordinate;
 	sf::Vector2i _screen_coordinate;

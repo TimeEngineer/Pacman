@@ -1,17 +1,14 @@
 #include "./Graphics/autoposimage.hh"
+#include "./Window/reposize.hh"
 #include <iostream>
-#define SCALE_DEFAULT 1.f
-#define SCALE_MEDIUM 2.f
-typedef unsigned int uint;
-AutoPosImage::AutoPosImage(std::string image_path, uint sc_width, uint sc_height, uint bg_width, uint bg_hight, int offset_x, int offset_y, float scale) 
+#define INT_CAST(i) static_cast<int>(i)
+AutoPosImage::AutoPosImage(std::string image_path, int wnd_width, int wnd_height, int bg_width, int bg_height, int offset_x, int offset_y, float scale) 
 : Image(image_path) 
 {
-    int sprite_x, sprite_y;
-    int int_scale = static_cast<int>(scale);
+    sf::Vector2i topleft_pos = calc_topleft( sf::Vector2i(wnd_width, wnd_height), 
+                                            sf::Vector2i(bg_width, bg_height), 
+                                            sf::Vector2f(scale, scale));
     load_image(image_path);
-    sprite_x = ((sc_width - (bg_width * int_scale)) >> 1);
-    sprite_y = ((sc_height - (bg_hight * int_scale)) >> 1);
-    set_offset(sprite_x + offset_x * int_scale, sprite_y + offset_y * int_scale);
-    //set_pos_scale(0, 0);
+    set_offset(topleft_pos.x + INT_CAST(offset_x * scale), topleft_pos.y + INT_CAST(offset_y * scale));
 	set_scale(scale, scale);
 }

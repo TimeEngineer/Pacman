@@ -59,11 +59,13 @@ private:
 	sf::Sprite _sprite;
 	sf::Vector2i _offset;
 	sf::Vector2i _pos;
+	sf::Vector2i _center;
 	float _angle;
 	bool _visible;
 	bool _transparent;
 	sf::Color _transparent_color;
 protected:
+	bool _center_origin;
 	sf::Texture load_texture(std::string file_path);
 };
 	//void set_texture(const sf::Texture &texture);

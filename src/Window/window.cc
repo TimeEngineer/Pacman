@@ -9,7 +9,7 @@ Window::Window(unsigned int width, unsigned int height)
 	_width = width;
 	_height = height;
     _scale = ((_width < BG_WIDTH * 2 || _height < BG_HEIGHT * 2) ? SMALL_SCALE : MEDIUM_SCALE);
-    std::cout << "scale:"<<_scale;
+    std::cout << "scale:"<<_scale<<std::endl;
     _background = new Background(_width, _height, _scale);
     _cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
     _game = new Game(_width, _height, _scale);
@@ -33,7 +33,7 @@ void Window::launch() {
     sf::Event event;
     clock.restart();
     
-    register_timer_event(50,_game->animate_pacman);
+    register_timer_event(100,_game->animate_pacman);
     redraw = true;
     while (window.isOpen()) {
         timer(clock);
