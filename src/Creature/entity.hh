@@ -20,7 +20,7 @@ public:
     {
         return ~static_cast<int>(operand);
     }
-    Entity(std::string file_path, int nb_frames) : Mapped(_anim), _anim(file_path, nb_frames, true, sf::Color::Black) {enable_origin_at_center();}
+    Entity(std::string file_path, int nb_frames) : Mapped(), _anim(file_path, nb_frames, true, sf::Color::Black) {this->set_image(_anim); enable_origin_at_center();}
     void enable_origin_at_center() {_anim.enable_origin_at_center();}
     ~Entity(){}
     virtual void destroy() = 0;

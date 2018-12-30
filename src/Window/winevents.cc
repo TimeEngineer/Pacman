@@ -48,8 +48,19 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key)
     case sf::Keyboard::Down:
     case sf::Keyboard::Left:
     case sf::Keyboard::Right:
-        switch_arrowkey(window, key);
+    switch(_mode) {
+        case DrawMode::Game :
         _game->move_pacman(key);
+            break; 
+        case DrawMode::Bg :
+        switch_arrowkey(window, key);
+        break;
+        default:
+        break;
+            
+    }
+    
+
         break;
     default:
         break;

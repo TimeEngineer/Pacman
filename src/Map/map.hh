@@ -1,13 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "./Map/graph.hh"
 #include "./Map/block.hh"
 
-class Map {
+class Map : public Graph {
 public:
 	Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float h_scale, float v_scale);
 	~Map();
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window) const;
 	void destroy();
 	//getters
 	sf::Vector2i  get_map_dimension() const {return _map_dimension;}
@@ -19,30 +20,32 @@ public:
 	sf::Vector2i  get_block_size() const {return _block_size;}
 	int get_block_width() const {return _block_size.x;}
 	int get_block_height() const {return _block_size.y;}
-	const Block& operator()(int x, int y) const {return *map_data[y][x];}
+	const Block& operator()(int x, int y) const {return map_data[y][x];}
 	// Position of image on the computer screen from the map coordinate
 	sf::Vector2i get_screen_coordinate(sf::Vector2i map_coordinate) const {return get_screen_coordinate(map_coordinate.x, map_coordinate.y);}
-	sf::Vector2i get_screen_coordinate(int x, int y) const {return map_data[y][x]->get_screen_coordinate();}
+	sf::Vector2i get_screen_coordinate(int x, int y) const {return map_data[y][x].get_screen_coordinate();}
 
 	// The following methods are needed for portal blocks. 
 	// Portal doesn't not have its own coordinates and borrows one from another block.
 	// Returns coordinate of the map (Ex) 1th row, 7th column)
 	sf::Vector2i get_map_coordinate(sf::Vector2i map_coordinate) const {return get_map_coordinate(map_coordinate.x, map_coordinate.y);}
-	sf::Vector2i get_map_coordinate(int x, int y) const {return map_data[y][x]->get_map_coordinate();}
+	sf::Vector2i get_map_coordinate(int x, int y) const {return map_data[y][x].get_map_coordinate();}
 	// Returns if the block is empty, filled or portal.
 	Block::Status get_block_status(sf::Vector2i map_coordinate) const {return get_block_status(map_coordinate.x, map_coordinate.y);}
-	Block::Status get_block_status(int x, int y) const {return map_data[y][x]->get_status();}
+	Block::Status get_block_status(int x, int y) const {return map_data[y][x].get_status();}
 
+	
 	std::vector<Block*> get_intersections() const {return intersections;}
 private:
-	Block *get_block_at(int x, int y) const {return map_data[y][x];}
-	Block *get_real_block_at(int x, int y) const {return map_data[map_data[y][x]->get_map_coordinate_y()][map_data[y][x]->get_map_coordinate_x()];}
+	Block& get_apparent_block_at(int x, int y) {return map_data[y][x];}
+	Block& get_real_block_at(int x, int y) {return map_data[map_data[y][x].get_map_coordinate_y()][map_data[y][x].get_map_coordinate_x()];}
 	void link_adjacent_tiles(int x, int y);
+	void generate_graph();
 	const std::string END_OF_MAP = "EOM";
 	void measurement();
 	void center_pos(unsigned int wnd_width,  unsigned int wnd_height);
 	void link_portals();
-	std::vector<std::vector<Block*>> map_data;
+	std::vector<std::vector<Block> > map_data;
 	std::vector<Block*> portals;
 	std::vector<Block*> destinations;
 	std::vector<Block*> intersections;

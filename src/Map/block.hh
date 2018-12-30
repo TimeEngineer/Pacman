@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "./Graphics/image.hh"
 #include "./Creature/entity.hh"
 #include "./Map/mapped.hh"
@@ -30,15 +31,39 @@ public:
 	{
 	    return operand2 & operand1;
 	}
+	Block() :Mapped(),_east_block(NULL),
+	_west_block(NULL),
+	_south_block(NULL),
+	_north_block(NULL),
+	_visited(true),
+	_linked(true),
+	 _image(),
+	 _block_id(-1){
+		this->set_image(_image);
+	}
 
 	Block(const int block_id, int col, int row);
 	Block(const std::string& block_id, int col, int row);
+	Block(const Block& block):
+	Mapped(block),
+	_west_block(block._west_block),
+	_south_block(block._south_block),
+	_north_block(block._north_block),
+	_visited(block._visited),
+	_linked(block._linked),
+	_image(block._image),
+	 _block_id(block._block_id),
+	 _status(block._status)
+	 {
+		this->set_image(_image);
+	 }
+	 
 	~Block(){};
 
-	void draw(sf::RenderWindow &window);
+	void draw(sf::RenderWindow &window) const;
 	void determine_status(int block_id);
 
-	void set_destination(const Block &block);
+	void set_destination(Block &block);
 	void set_adjacent_tiles(Block *east_block, Block* west_block, Block* south_block, Block* north_block);
 	void set_visited(bool visited);
 
@@ -59,9 +84,11 @@ public:
 	static const int MAX_PORTAL_NUMBERING = 8;
 	static const int MAX_PORTAL = 4;
 	static const int EMPTY_BLOCK_ID = 0;
+	static Block null_block;
+	bool operator==(const Block& block);
+	bool operator!=(const Block& block);
 private:
 	Block *determine_path(Block *path_block);
-	void operator=(const Block&){}
 	Block *_east_block;
 	Block *_west_block;
 	Block *_south_block;

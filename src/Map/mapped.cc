@@ -17,37 +17,37 @@ void Mapped::set_map_coordinate_y(int y)
 }
 void Mapped::set_screen_coordinate(sf::Vector2i screen_coordinate)
 {
-	_image.set_position(screen_coordinate);
+	(*ptr_image).set_position(screen_coordinate);
 }
 void Mapped::set_screen_coordinate(int x, int y)
 {
-	_image.set_position(x, y);
+	(*ptr_image).set_position(x, y);
 
 }
 void Mapped::set_screen_coordinate_x(int x)
 {
-	_image.set_x(x);
+	(*ptr_image).set_x(x);
 
 }
 void Mapped::set_screen_coordinate_y(int y)
 {
-	_image.set_y(y);
+	(*ptr_image).set_y(y);
 
 }
 void Mapped::set_offset(sf::Vector2i screen_coordinate)
 {
-	_image.set_offset(screen_coordinate);
+	(*ptr_image).set_offset(screen_coordinate);
 }
 void Mapped::set_offset(int x, int y)
 {
-	_image.set_offset(x, y);
+	(*ptr_image).set_offset(x, y);
 
 }
 void Mapped::set_scale(sf::Vector2f scale)
 {
-	_image.set_scale(scale);
+	(*ptr_image).set_scale(scale);
 }
 void Mapped::set_scale(float h_scale, float v_scale)
 {
-	_image.set_scale(h_scale, v_scale);
+	(*ptr_image).set_scale(h_scale, v_scale);
 }

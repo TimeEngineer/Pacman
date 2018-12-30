@@ -5,24 +5,55 @@ Image::Image(std::string file_path, bool transparent, sf::Color transparent_colo
 _offset(0,0),
 _visible(true),
 _transparent(transparent), 
-_transparent_color(transparent_color)
+_transparent_color(transparent_color),
+_file_path(file_path)
 {
+	//std::cout<<"new"<< std::endl;
     load_image(file_path);	
+	//std::cerr<< file_path << std::endl;
 }
+Image::~Image()
+{
+	//std::cout<<"end"<< std::endl;
+}
+Image::Image(const Image& image):
+	_texture(image._texture),
+	_sprite(image._sprite),
+	_offset(image._offset),
+	_pos(image._pos),
+	_center(image._center),
+	_angle(image._angle),
+	_visible(image._visible),
+	_transparent(image._transparent),
+	_transparent_color(image._transparent_color),
+	_file_path(image._file_path),
+	_center_origin(image._center_origin)
+{
 
+	//std::cout<<"New Constructor"<< std::endl;
+	//	_sprite.setTexture(_texture);
+	//std::cerr<< _file_path << std::endl;
+	load_image(image._file_path);
+	/*if(_center_origin) {
+		set_origin(_center.x,_center.y);
+	}
+	set_position(_pos);
+	set_scale(image.get_scale());
+	set_frame_rect(image._sprite.getTextureRect());
+	set_angle(_angle);*/
+}
 
 sf::Texture Image::load_texture(std::string file_path)
 {
 	sf::Texture texture;	
 	sf::Image image;
-
     if(!image.loadFromFile(file_path)) {
 		std::cerr<< "Invalid image." << std::endl;
 		exit(0);
 	}
-
+	_file_path = file_path;
 	if(_transparent)
-		image.createMaskFromColor(sf::Color::Black, 0);
+		image.createMaskFromColor(_transparent_color, 0);
 
 	texture.loadFromImage(image);
 	return texture;
@@ -109,6 +140,7 @@ void Image::reload()
 }
 void Image::enable_origin_at_center()
 {
+	_center_origin = true;
 	set_origin(static_cast<float>(_texture.getSize().x) / 2.f, static_cast<float>(_texture.getSize().y) / 2.f);
 }
 void Image::set_origin(float x, float y)

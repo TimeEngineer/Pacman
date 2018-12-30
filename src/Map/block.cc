@@ -1,14 +1,20 @@
 #include "./Map/block.hh"
 #include <iostream>
 Block::Block(const int block_id, int col, int row) :
-Mapped(_image, col, row),
+Mapped(col, row),
 _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
 _north_block(NULL),
 _visited(false),
-_linked(false)
+_linked(false),
+_image()
 {	
+	if(block_id == -1) {
+		_status = Status::Empty;
+		return;
+	}
+	this->set_image(_image);
 	std::string image_file = std::to_string(block_id);
 	while(image_file.length() < 3)
 		image_file = "0" + image_file;
@@ -18,15 +24,17 @@ _linked(false)
 	determine_status(_block_id); 
 }
 Block::Block(const std::string& block_id, int col, int row) :
-Mapped(_image, col, row),
+Mapped( col, row),
 _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
 _north_block(NULL),
 _visited(false),
-_linked(false)
+_linked(false),
+_image()
 {
 	std::string image_file(block_id);
+	this->set_image(_image);
 	while(image_file.length() < 3)
 		image_file = "0" + image_file;
 	_image.load_image(_default_path + "./Images/Carte/" + image_file + ".png");	
@@ -55,12 +63,12 @@ void Block::determine_status(int block_id)
 	}
 		
 }
-void Block::set_destination(const Block& block)
+void Block::set_destination(Block &block)
 {
 	if (_status == Status::Portal) 
 		_map_coordinate = block._map_coordinate;
 }
-void Block::draw(sf::RenderWindow& window)
+void Block::draw(sf::RenderWindow& window) const
 {
 	window.draw(_image.get_sprite());
 }
@@ -81,4 +89,12 @@ Block *Block::determine_path(Block *path_block)
 void Block::set_visited(bool visited)
 {
 	_visited = visited;	
+}
+bool Block::operator==(const Block& block)
+{
+	return block.get_map_coordinate() == this->get_map_coordinate();
+}
+bool Block::operator!=(const Block& block)
+{
+	return block.get_map_coordinate() != this->get_map_coordinate();
 }

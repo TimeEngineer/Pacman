@@ -11,7 +11,9 @@ public:
 																					 _transparent_color(transparent_color)
 																					 {
 																					 };
-    virtual ~Image() {};
+	Image(const Image& image);
+
+    virtual ~Image();
 	void load_image(std::string file_path);
 	void reload();
 	// setters
@@ -64,6 +66,7 @@ private:
 	bool _visible;
 	bool _transparent;
 	sf::Color _transparent_color;
+	std::string _file_path;
 protected:
 	bool _center_origin;
 	sf::Texture load_texture(std::string file_path);

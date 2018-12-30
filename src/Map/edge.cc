@@ -1,51 +1,85 @@
 #include "./Map/edge.hh"
 
-Edge::Edge(Block *vertex_src) :
+
+Edge::Edge(Block &vertex_src) :
 _vertices(2, NULL),
-_weight(0)
+_weight(0),
+_visited(false)
 {
-    _vertices.front() = vertex_src;
+    _vertices.front() = &vertex_src;
     traverse(_vertices.front());
+    //std::cout<< "Mark:" << _vertices.front()->is_visited() << std::endl;
+}
+Edge::Edge(const Edge& edge) :
+_weight(edge._weight),
+_visited(edge._visited)
+{
+    //std::cout<<"Cst"<<std::endl;
+    _vertices = edge._vertices;
+    _route = edge._route;
 }
 
 #define EAST(block) block->get_east_block()
 #define WEST(block) block->get_west_block()
 #define SOUTH(block) block->get_south_block()
 #define NORTH(block) block->get_north_block()
-bool Edge::traverse(Block* departure)
+bool Edge::traverse(Block* node)
 {
-    if(departure->is_visited()) {
+    if(node->is_visited()) 
         return false;
-    }
-    if (Block::is_intersection(*departure)) {
-        std::cout<< "Vertice:" << departure->get_map_coordinate_x() << " , " << departure->get_map_coordinate_y() << std::endl;
-        if(departure != _vertices.front()) {
-            _vertices.back() = departure;
+
+    if (Block::is_intersection(*node)) {
+        //std::cout<< "Vertice:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
+        if(node != _vertices.front()) {
+            _vertices.back() = node;
             return true;
         }
     }
     else {
-		std::cout<< "Route:" << departure->get_map_coordinate_x() << " , " << departure->get_map_coordinate_y() << std::endl;
-        _route.push_back(departure);
+        //std::cout<< "Route:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
+		_route.push_back(node);
         _weight++;
-        departure->set_visited(true);
+        node->set_visited(true);
     }
 
-    if (EAST(departure) != NULL && !EAST(departure)->is_visited() && EAST(departure) != _vertices.front()) 
-        if(traverse(EAST(departure)))
-            return true;
-    
-    if (WEST(departure) != NULL && !WEST(departure)->is_visited() && WEST(departure) != _vertices.front()) 
-        if(traverse(WEST(departure)))
-            return true;
-    
-    if (SOUTH(departure) != NULL && !SOUTH(departure)->is_visited() && SOUTH(departure) != _vertices.front()) 
-        if(traverse(SOUTH(departure)))
-            return true;
-    
-    if (NORTH(departure) != NULL && !NORTH(departure)->is_visited() && NORTH(departure) != _vertices.front()) 
-        if(traverse(NORTH(departure)))
-            return true;
-    departure->set_visited(true);
+    if (EAST(node) != NULL && !EAST(node)->is_visited() && EAST(node) != _vertices.front()) 
+            if (traverse(EAST(node)))
+               return true;
+
+    if (WEST(node) != NULL && !WEST(node)->is_visited() && WEST(node) != _vertices.front()) 
+            if(traverse(WEST(node)))
+                return true;
+
+    if (SOUTH(node) != NULL && !SOUTH(node)->is_visited() && SOUTH(node) != _vertices.front()) 
+            if(traverse(SOUTH(node)))
+                return true;
+                
+    if (NORTH(node) != NULL && !NORTH(node)->is_visited() && NORTH(node) != _vertices.front()) 
+            if(traverse(NORTH(node)))
+              return true;
+
+    // Mark the first vertex as visited.
+    node->set_visited(true);
+        //std::cout<< "" << std::endl;
     return true;
+}
+void Edge::visit()
+{
+    _visited = true;
+}
+
+void Edge::unvisit()
+{
+    _visited = false;
+}
+//std::cout<< "Vertice:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
+    //std::cout<< "Route:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
+    //std::cout<<"North" << NORTH(node)->get_map_coordinate_x() << " , "<<NORTH(node)->get_map_coordinate_y() <<std::endl;
+std::ostream& operator<<(std::ostream& os, const Edge &edge)
+{
+    os <<"(" << edge._vertices.front()->get_map_coordinate_x()  << " , " << edge._vertices.front()->get_map_coordinate_y() << ")* -> ";
+    for (const auto &iter : edge._route) 
+        os <<"(" << iter->get_map_coordinate_x()  << " , " << iter->get_map_coordinate_y() << ") -> ";
+    os <<"*(" << edge._vertices.back()->get_map_coordinate_x()  << " , " << edge._vertices.back()->get_map_coordinate_y() << ")";
+    return os;
 }
