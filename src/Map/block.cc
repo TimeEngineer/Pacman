@@ -90,6 +90,22 @@ void Block::set_visited(bool visited)
 {
 	_visited = visited;	
 }
+void Block::visit()
+{
+	_visited = true;
+}
+void Block::unvisit()
+{
+	_visited = false;	
+}
+bool Block::operator==(Block& block)
+{
+	return block.get_map_coordinate() == this->get_map_coordinate();
+}
+bool Block::operator!=(Block& block)
+{
+	return block.get_map_coordinate() != this->get_map_coordinate();
+}
 bool Block::operator==(const Block& block)
 {
 	return block.get_map_coordinate() == this->get_map_coordinate();

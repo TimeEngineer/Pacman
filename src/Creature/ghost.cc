@@ -34,6 +34,7 @@ void Ghost::destroy()
 }
 void Ghost::set_orientation(Creature::Orientation orientation)
 {
+//    std::cout<<"orientation"<<std::endl;
     switch(orientation) {
         case Orientation::Left :
             _anim_orientation = GHOST_ORIENTATION::LEFT;
@@ -48,6 +49,7 @@ void Ghost::set_orientation(Creature::Orientation orientation)
             _anim_orientation = GHOST_ORIENTATION::TOP;
             break;
     }
+    _anim.set_scene(static_cast<int>(_anim_orientation));
     _orientation = orientation;
 }
 void Ghost::set_scene()

@@ -34,6 +34,7 @@ void Window::launch() {
     clock.restart();
     
     register_timer_event(100,_game->animate_pacman);
+    register_timer_event(500,_game->chase_pacman);
     redraw = true;
     while (window.isOpen()) {
         timer(clock);
@@ -55,7 +56,7 @@ void Window::launch() {
     }
 }
 
-void Window::register_timer_event(int time_ms, void (Game::*event)(void))
+void Window::register_timer_event(int time_ms, TimerFnc event)
 {
     struct timer_event *tmev = new struct timer_event;
     tmev->time_ms = time_ms;

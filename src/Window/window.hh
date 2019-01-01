@@ -11,7 +11,6 @@
 #include "resources.hh"
 
 
-
 class Window {
 	public:
 		Window(unsigned int width, unsigned int height);
@@ -19,7 +18,7 @@ class Window {
 		int get_width() const {return _width;}
 		int get_height() const {return _height;}
 		void launch();
-		void register_timer_event(int time_ms, void (Game::*event)(void));
+		void register_timer_event(int time_ms, TimerFnc event);
 	private:
 		typedef void(Game::*GameFunc)(void);
 		struct timer_event {

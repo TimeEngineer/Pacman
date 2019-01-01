@@ -66,12 +66,14 @@ public:
 	void set_destination(Block &block);
 	void set_adjacent_tiles(Block *east_block, Block* west_block, Block* south_block, Block* north_block);
 	void set_visited(bool visited);
+	void visit();
+	void unvisit();
 
 	Block *get_east_block() const {return _east_block;}
 	Block *get_west_block() const {return _west_block;}
 	Block *get_south_block() const {return _south_block;}
 	Block *get_north_block() const {return _north_block;}
-
+	std::string map_coordinate_to_string() {return " (" + std::to_string(_map_coordinate.x) + " , " + std::to_string(_map_coordinate.y) + ") ";}
 	int get_block_id() const {return _block_id;}
 	Block::Status get_status() const {return _status;}
 	bool is_visited() const {return _visited;}
@@ -85,6 +87,8 @@ public:
 	static const int MAX_PORTAL = 4;
 	static const int EMPTY_BLOCK_ID = 0;
 	static Block null_block;
+	bool operator==(Block& block);
+	bool operator!=(Block& block);
 	bool operator==(const Block& block);
 	bool operator!=(const Block& block);
 private:

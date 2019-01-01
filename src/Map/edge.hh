@@ -11,18 +11,14 @@ public:
     Edge(const Edge& edge);
     virtual ~Edge(){};
 
-    void visit();
-    void unvisit();
-
     friend std::ostream& operator<<(std::ostream& os, const Edge &edge);
     int get_weight() const {return _weight;}
-    std::list<Block*> get_vertices() const {return _vertices;}
-    std::vector<Block*> get_route() const {return _route;}
+    const std::list<Block*>& get_vertices() const {return _vertices;}
+    const std::vector<Block*>& get_route() const {return _route;}
 private:
     bool traverse(Block* node);
     std::list<Block*> _vertices;
     std::vector<Block*> _route;
     int _weight;
-    bool _visited;
     void find_route();
 };

@@ -13,7 +13,7 @@ public:
     virtual ~Graph(){};
     void generate(std::vector<Block*> &intersections);
     void associate();
-    void shortest_route(Block &departure, Block &arrival);
+    std::vector<struct Vertex::Path> shortest_route(const Block &departure, const Block &arrival);
     void prev();
     void next();
     
@@ -27,10 +27,12 @@ protected:
     std::vector<Edge> _edges;
     std::vector<Vertex> _vertices;
 private:
-    static const int INFINITY = 0xFFFFFFFF;
-    int shortest_route(Block &departure, Block &arrival, int weight);
+    static const int INFINITY = 0xFFFF;
+    int shortest_route(Vertex &departure, Vertex &arrival, int weight, int min_weight);
+    Vertex *find_vertex(const Block &block);
+    //int shortest_route(Block &departure, const Vertex &arrival, int weight, int min_weight);
     
-    Graph(const Graph&) {} // Protect copy constructor
+    Graph(const Graph&):_cst_edges(_edges),_cst_vertices(_vertices) {} // Protect copy constructor
     void operator =(const Graph&) {} // Protect assignment
     bool _lock;
     Block *prev_block;
@@ -40,4 +42,8 @@ private:
     Block *next_block;
     Block *next_intersection;
 	std::vector<struct Vertex::Path> _shortest_paths;
+
+public:
+    const std::vector<Edge> &_cst_edges;
+    const std::vector<Vertex> &_cst_vertices;
 };

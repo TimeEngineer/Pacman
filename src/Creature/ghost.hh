@@ -1,11 +1,12 @@
 #pragma once
+#include "./Creature/autorouted.hh"
 #include "./Creature/creature.hh"
 #include "./Map/map.hh"
 #include "resources.hh"
 #include <iostream>
 
 
-class Ghost : public Creature
+class Ghost : public Creature, public AutoRouted
 {
 public:
     Ghost(std::string file_path, float scale);

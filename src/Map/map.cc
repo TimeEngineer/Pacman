@@ -98,14 +98,20 @@ void Map::generate_graph()
 	}
 	this->generate(intersections);
 	this->associate();
-	for (const auto& iter : this->_edges) {
+	/*
+	for (const auto& iter : this->_cst_edges) {
 		std::cout << iter << std::endl;
 	}
 	std::cout << "Now:" << std::endl;
-	for (const auto& viter : this->_vertices) {
+	for (const auto& viter : this->_cst_vertices) {
 		for (const auto& eiter : viter.get_paths()) 
 			std::cout << *(eiter.edge) << std::endl;
-	}
+	}*/
+	//std::cout << "Shortest route?" << std::endl;
+	//sf::Clock clock;
+//	clock.restart(); 
+	//std::cout << shortest_route(*intersections.back(), *intersections.front())<< std::endl;
+	//std::cout << clock.getElapsedTime().asMilliseconds() << "ms" << std::endl;
 }
 
 std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 

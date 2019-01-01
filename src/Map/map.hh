@@ -35,7 +35,7 @@ public:
 	Block::Status get_block_status(int x, int y) const {return map_data[y][x].get_status();}
 
 	
-	std::vector<Block*> get_intersections() const {return intersections;}
+	const std::vector<Block*> &get_intersections() const {return intersections;}
 private:
 	Block& get_apparent_block_at(int x, int y) {return map_data[y][x];}
 	Block& get_real_block_at(int x, int y) {return map_data[map_data[y][x].get_map_coordinate_y()][map_data[y][x].get_map_coordinate_x()];}
