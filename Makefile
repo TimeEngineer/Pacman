@@ -6,16 +6,18 @@ SRC= $(wildcard ./src/*/*.cc) $(wildcard ./src/*.cc)
 DEPS= $(wildcard ./src/*/*.hh) $(wildcard ./src/*.hh)
 OBJ=$(SRC:.cc=.o)
 SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system 
+INC_DIR = -I./src -I./src/Audio -I./src/Creature -I./src/Game -I./src/Graphics -I./src/Map -I./src/Window
 
 
 $(EXEC) : $(OBJ) 
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) $(SFML) -o $(EXEC)
+	$(CC) $(OBJ) $(SFML) $(CFLAGS) -o $(EXEC)
 
-%.o : %.cc $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@
-%.o : %.hh
-
-all: $(EXEC)
+%.o : %.cc
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+	
+.depend: $(SRC)
+	g++ -std=c++11 -MM $(SRC)  > .depend
+-include .depend
 
 .PHONY: clean mrproper
 
