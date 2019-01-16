@@ -1,4 +1,4 @@
-#include "./Map/block.hh"
+#include "block.hh"
 #include <iostream>
 Block::Block(const int block_id, int col, int row) :
 Mapped(col, row),

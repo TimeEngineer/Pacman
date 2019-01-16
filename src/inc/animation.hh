@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "./Graphics/image.hh"
+#include "image.hh"
 class Animation : public Image
 {
 public:

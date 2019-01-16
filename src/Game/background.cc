@@ -1,4 +1,4 @@
-#include "./Game/background.hh"
+#include "background.hh"
 
 Background::Background(unsigned int width, unsigned int height, float _scale) :
 _image(_default_path + _bg_image_paths[background_option::bMENU], // image_path

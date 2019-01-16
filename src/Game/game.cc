@@ -1,4 +1,4 @@
-#include "./Game/game.hh"
+#include "game.hh"
 #include <iostream>
 #include <cmath>
 #include<cstdlib>

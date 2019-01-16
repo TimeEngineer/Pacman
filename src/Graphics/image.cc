@@ -1,4 +1,4 @@
-#include "./Graphics/image.hh" 
+#include "image.hh" 
 #include <iostream>
 
 Image::Image(std::string file_path, bool transparent, sf::Color transparent_color) :

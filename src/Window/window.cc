@@ -1,4 +1,4 @@
-#include "./Window/window.hh"    
+#include "window.hh"    
 #include <iostream>
 // background texture size : 420x460
 #define BG_WIDTH Background::bg_width
@@ -33,8 +33,9 @@ void Window::launch() {
     sf::Event event;
     clock.restart();
     
-    register_timer_event(100,_game->animate_pacman);
-    register_timer_event(500,_game->chase_pacman);
+    register_timer_event(100,[&]() {_game->animate_pacman();});
+    register_timer_event(200,[&]() {_game->chase_pacman();});
+    //register_timer_event(500,_game->chase_pacman);
     redraw = true;
     while (window.isOpen()) {
         timer(clock);
@@ -56,7 +57,7 @@ void Window::launch() {
     }
 }
 
-void Window::register_timer_event(int time_ms, TimerFnc event)
+void Window::register_timer_event(int time_ms, CallbackFunction event)
 {
     struct timer_event *tmev = new struct timer_event;
     tmev->time_ms = time_ms;

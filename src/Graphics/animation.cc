@@ -1,4 +1,4 @@
-#include "./Graphics/animation.hh"
+#include "animation.hh"
 #include <iostream>
 #include <cstdlib>
 

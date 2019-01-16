@@ -3,10 +3,9 @@ CC=g++
 CFLAGS=-Wall -g -I$(INC_DIR) -std=c++11
 EXEC=main
 SRC= $(wildcard ./src/*/*.cc) $(wildcard ./src/*.cc)
-DEPS= $(wildcard ./src/*/*.hh) $(wildcard ./src/*.hh)
 OBJ=$(SRC:.cc=.o)
 SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system 
-INC_DIR = -I./src -I./src/Audio -I./src/Creature -I./src/Game -I./src/Graphics -I./src/Map -I./src/Window
+INC_DIR = -I./src/inc/
 
 
 $(EXEC) : $(OBJ) 
@@ -16,7 +15,7 @@ $(EXEC) : $(OBJ)
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 	
 .depend: $(SRC)
-	g++ -std=c++11 -MM $(SRC)  > .depend
+	g++ -std=c++11 -MM $(SRC) $(INC_DIR)  > .depend
 -include .depend
 
 .PHONY: clean mrproper

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <list>
-#include "./Map/block.hh"
-#include "./Map/edge.hh"
+#include "block.hh"
+#include "edge.hh"
 
 class Vertex{
 public:

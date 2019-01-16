@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <list>
-#include "./Map/block.hh"
-#include "./Map/edge.hh"
-#include "./Map/vertex.hh"
+#include "block.hh"
+#include "edge.hh"
+#include "vertex.hh"
 
 
 

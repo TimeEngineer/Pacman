@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "./Graphics/autoposimage.hh"
-#include "./Audio/sound.hh"
+#include "autoposimage.hh"
+#include "sound.hh"
 #include "resources.hh"
 
 

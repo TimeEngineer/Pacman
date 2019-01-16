@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "./Graphics/image.hh"
-#include "./Creature/entity.hh"
-#include "./Map/mapped.hh"
+#include "image.hh"
+#include "entity.hh"
+#include "mapped.hh"
 #include "resources.hh"
 
 

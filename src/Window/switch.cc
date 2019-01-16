@@ -1,4 +1,4 @@
-#include "./Window/window.hh"
+#include "window.hh"
 
 void Window::switch_escape(sf::RenderWindow& window) {
     switch (_background->get_token()) {

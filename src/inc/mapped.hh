@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "./Graphics/image.hh"
+#include "image.hh"
 
 class Mapped {
 public:

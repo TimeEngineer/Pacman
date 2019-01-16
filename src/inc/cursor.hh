@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "./Graphics/autoposimage.hh"
-#include "./Audio/sound.hh"
-#include "./Game/background.hh"
+#include "autoposimage.hh"
+#include "sound.hh"
+#include "background.hh"
 #include "resources.hh"
 
 

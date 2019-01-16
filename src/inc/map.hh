@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "./Map/graph.hh"
-#include "./Map/block.hh"
+#include "graph.hh"
+#include "block.hh"
 
 class Map : public Graph {
 public:

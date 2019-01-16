@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "./Creature/entity.hh"
-#include "./Audio/sound.hh"
-#include "./Graphics/animation.hh"
+#include "entity.hh"
+#include "sound.hh"
+#include "animation.hh"
 #include <vector>
 #include <string>
 #include <iostream>

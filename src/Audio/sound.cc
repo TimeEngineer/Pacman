@@ -1,4 +1,4 @@
-#include "./Audio/sound.hh" 
+#include "sound.hh" 
 #include <iostream>
 Sound::Sound(std::string file_path)
 {

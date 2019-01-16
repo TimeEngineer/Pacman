@@ -1,5 +1,5 @@
 
-#include "Creature/pacman.hh"
+#include "pacman.hh"
 #include <string>
 
 Pacman::Pacman(float scale) :

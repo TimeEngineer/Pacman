@@ -1,5 +1,5 @@
-#include "./Graphics/autoposimage.hh"
-#include "./Window/reposize.hh"
+#include "autoposimage.hh"
+#include "reposize.hh"
 #include <iostream>
 #define INT_CAST(i) static_cast<int>(i)
 AutoPosImage::AutoPosImage(std::string image_path, int wnd_width, int wnd_height, int bg_width, int bg_height, int offset_x, int offset_y, float scale) 

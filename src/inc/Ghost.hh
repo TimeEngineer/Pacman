@@ -1,7 +1,7 @@
 #pragma once
-#include "./Creature/autorouted.hh"
-#include "./Creature/creature.hh"
-#include "./Map/map.hh"
+#include "autorouted.hh"
+#include "creature.hh"
+#include "map.hh"
 #include "resources.hh"
 #include <iostream>
 

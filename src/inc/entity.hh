@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "./Graphics/animation.hh"
-#include "./Map/mapped.hh"
+#include "animation.hh"
+#include "mapped.hh"
 
 class Entity : public Mapped{
 public:

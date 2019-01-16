@@ -1,4 +1,4 @@
-#include "./Creature/autorouted.hh"
+#include "autorouted.hh"
 #include <iostream>
 
 void AutoRouted::set_path(std::vector<struct Vertex::Path> paths)

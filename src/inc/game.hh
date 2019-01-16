@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "./Creature/pacman.hh"
-#include "./Creature/ghost.hh"
-#include "./Map/map.hh"
+#include "pacman.hh"
+#include "ghost.hh"
+#include "map.hh"
 #include "resources.hh"
 class Game 
 {

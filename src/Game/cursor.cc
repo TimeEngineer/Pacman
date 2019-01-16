@@ -1,4 +1,4 @@
-#include "./Game/cursor.hh"
+#include "cursor.hh"
 #include <iostream>
 
 Cursor::Cursor(unsigned int width, unsigned int height, float scale, int selection, int limit_min, int limit_max) :

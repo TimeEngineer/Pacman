@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <list>
-#include "./Map/block.hh"
-#include "./Map/vertex.hh"
-#include "./Map/edge.hh"
+#include "block.hh"
+#include "vertex.hh"
+#include "edge.hh"
 
 class AutoRouted {
 public:

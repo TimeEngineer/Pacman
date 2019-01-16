@@ -1,16 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <functional>
 #include <vector>
-#include "./Game/game.hh"
-#include "./Game/cursor.hh"
-#include "./Game/background.hh"
-#include "./Map/map.hh"
-#include "./Creature/pacman.hh"
+#include "game.hh"
+#include "cursor.hh"
+#include "background.hh"
+#include "map.hh"
+#include "pacman.hh"
 #include "menu.hh"
 #include "woption.hh"
 #include "resources.hh"
 
-
+typedef std::function<void(void)> CallbackFunction;
 class Window {
 	public:
 		Window(unsigned int width, unsigned int height);
@@ -18,11 +19,11 @@ class Window {
 		int get_width() const {return _width;}
 		int get_height() const {return _height;}
 		void launch();
-		void register_timer_event(int time_ms, TimerFnc event);
+		void register_timer_event(int time_ms,  CallbackFunction event);
 	private:
-		typedef void(Game::*GameFunc)(void);
+		//typedef void(Game::*GameFunc)(void);
 		struct timer_event {
-			GameFunc event;
+			CallbackFunction event;
 			int time_ms;
 			sf::Time timer;
 		};

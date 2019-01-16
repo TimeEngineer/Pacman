@@ -1,4 +1,4 @@
-#include "./Map/mapped.hh"
+#include "mapped.hh"
 void Mapped::set_map_coordinate(sf::Vector2i map_coordinate)
 {
 	_map_coordinate = map_coordinate;	

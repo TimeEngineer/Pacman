@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "./Window/window.hh"
+#include "window.hh"
 #include <thread>
 #include <iostream>
 /* RESOLUTION tested

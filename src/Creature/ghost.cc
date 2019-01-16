@@ -1,6 +1,6 @@
 
-#include "./Creature/ghost.hh"
-#include "./Creature/pacman.hh"
+#include "../inc/ghost.hh"
+#include "../inc/pacman.hh"
 #include <string>
 
 Ghost::Ghost(std::string file_path,  float scale) :

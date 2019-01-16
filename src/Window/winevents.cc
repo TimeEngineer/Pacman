@@ -1,4 +1,4 @@
-#include "./Window/window.hh"
+#include "window.hh"
 #include <functional>
 void Window::draw(sf::RenderWindow& window) 
 {
@@ -27,7 +27,8 @@ void Window::timer(sf::Clock &clock)
     for(const auto &tmev : timer_events) {
         if(chrono.asMilliseconds() - tmev->timer.asMilliseconds() >= tmev->time_ms) 
         {
-            std::__invoke(tmev->event, *_game);
+            tmev->event();
+            //std::__invoke(tmev->event, *_game);
             tmev->timer = clock.getElapsedTime();
         }
     }

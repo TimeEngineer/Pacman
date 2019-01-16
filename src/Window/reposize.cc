@@ -1,4 +1,4 @@
-#include "./Window/reposize.hh"
+#include "reposize.hh"
 
 sf::Vector2i calc_topleft(const sf::Vector2i& wnd_size, const sf::Vector2i& obj_size, const sf::Vector2f& scale)
 {

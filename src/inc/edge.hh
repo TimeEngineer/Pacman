@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include "./Map/block.hh"
+#include "block.hh"
 
 class Edge{
 public:

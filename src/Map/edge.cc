@@ -1,4 +1,4 @@
-#include "./Map/edge.hh"
+#include "edge.hh"
 
 
 Edge::Edge(Block &vertex_src) :

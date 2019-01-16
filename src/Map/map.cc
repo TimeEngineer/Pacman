@@ -1,6 +1,6 @@
-#include "./Map/map.hh"
-#include "./Map/edge.hh"
-#include "./Window/reposize.hh"
+#include "map.hh"
+#include "edge.hh"
+#include "reposize.hh"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

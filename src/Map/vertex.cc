@@ -1,4 +1,4 @@
-#include "./Map/vertex.hh"
+#include "vertex.hh"
 
 void Vertex::add_path(Edge &edge, bool reversed)
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "./Creature/creature.hh"
+#include "creature.hh"
 #include "resources.hh"
 #include <iostream>
 
