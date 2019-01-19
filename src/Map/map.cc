@@ -1,14 +1,6 @@
 #include "map.hh"
-#include "edge.hh"
-#include "reposize.hh"
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <vector>
 
-#define STR_NPOS std::string::npos
-
-Map::Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float h_scale, float v_scale):
+Map::Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float h_scale, float v_scale) :
 Graph(),
 portals(Block::MAX_PORTAL, NULL),
 destinations(Block::MAX_PORTAL, NULL)
@@ -37,14 +29,9 @@ destinations(Block::MAX_PORTAL, NULL)
 	center_pos(wnd_width, wnd_height);
 	link_portals();
 	generate_graph();
-	
 }
-Map::~Map() 
-{
-	
-}
-void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
-{
+Map::~Map() {}
+void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height) {
 	int block_id;
 
 	_block_size = calc_rescaled_size(map_data[0][0].get_size(), map_data[0][0].get_scale());
@@ -65,16 +52,14 @@ void Map::center_pos(unsigned int wnd_width,  unsigned int wnd_height)
 		}
 	}
 }
-void Map::link_portals()
-{
+void Map::link_portals() {
 	for (int index = 0; index < Block::MAX_PORTAL; index++) {
 		if(portals[index] != NULL && destinations[index] != NULL) {
 			portals[index]->set_destination(*destinations[index]);
 		}
 	}
 }
-void Map::link_adjacent_tiles(int x, int y)
-{
+void Map::link_adjacent_tiles(int x, int y) {
 	if(Block::is_wall(map_data[y][x]) || map_data[y][x].is_linked())
 		return;
 		
@@ -89,13 +74,10 @@ void Map::link_adjacent_tiles(int x, int y)
 
 	map_data[y][x].set_adjacent_tiles(east_block, west_block, south_block, north_block);
 }
-void Map::generate_graph()
-{
-	for (int y = 0; y < _map_dimension.y; y++) {
-		for (int x = 0; x < _map_dimension.x; x++) {
+void Map::generate_graph() {
+	for (int y = 0; y < _map_dimension.y; y++)
+		for (int x = 0; x < _map_dimension.x; x++)
 			link_adjacent_tiles(x, y);
-		}
-	}
 	this->generate(intersections);
 	this->associate();
 	/*
@@ -114,8 +96,7 @@ void Map::generate_graph()
 	//std::cout << clock.getElapsedTime().asMilliseconds() << "ms" << std::endl;
 }
 
-std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) 
-{
+std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end)  {
 	std::size_t len = 0;
 	pos_begin = map_str.find_first_not_of(',', pos_end);
 	pos_end = map_str.find_first_of(',', pos_begin + 1);
@@ -124,14 +105,12 @@ std::string Map::next_block(const std::string& map_str, std::size_t& pos_begin, 
 	len =  (pos_end == STR_NPOS ? pos_end : pos_end - pos_begin);
 	return map_str.substr(pos_begin, len);
 }
-void Map::destroy()
-{
+void Map::destroy() {
 	//for(const auto& iter_row : map_data)
 	//	for(const auto& iter_col : iter_row)
 	//		delete iter_col;	
 }
-void Map::draw(sf::RenderWindow& window) const
-{
+void Map::draw(sf::RenderWindow& window) const {
 	for(const auto& iter_row : map_data)
 		for(const auto& iter_col : iter_row)
 			iter_col.draw(window);

@@ -1,6 +1,4 @@
 #include "animation.hh"
-#include <iostream>
-#include <cstdlib>
 
 Animation::Animation(std::string file_path, int nb_frames, bool transparent, sf::Color color):
 Image(file_path, transparent, color), 

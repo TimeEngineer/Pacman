@@ -1,8 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
 #include <vector>
 #include "graph.hh"
 #include "block.hh"
+#include "edge.hh"
+#include "reposize.hh"
+
+#define STR_NPOS std::string::npos
 
 class Map : public Graph {
 public:
