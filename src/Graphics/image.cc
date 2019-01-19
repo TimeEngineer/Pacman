@@ -1,5 +1,4 @@
 #include "image.hh" 
-#include <iostream>
 
 Image::Image(std::string file_path, bool transparent, sf::Color transparent_color) :
 _offset(0,0),
@@ -12,10 +11,8 @@ _file_path(file_path)
     load_image(file_path);	
 	//std::cerr<< file_path << std::endl;
 }
-Image::~Image()
-{
-	//std::cout<<"end"<< std::endl;
-}
+Image::~Image() {}
+
 Image::Image(const Image& image):
 	_texture(image._texture),
 	_sprite(image._sprite),

@@ -5,7 +5,6 @@
 #include "sound.hh"
 #include "resources.hh"
 
-
 class Background {
 	public:
 		Background(unsigned int width, unsigned int height, float scale);
@@ -14,7 +13,7 @@ class Background {
 		void set_sprite(background_option option);
 		static const int bg_width = 420;
 		static const int bg_height = 460;
-    	void draw(sf::RenderWindow& window) {window.draw(_image.get_sprite());}
+		void draw(sf::RenderWindow& window) {window.draw(_image.get_sprite());}
 	private:
 		AutoPosImage _image;
 		background_option _token;

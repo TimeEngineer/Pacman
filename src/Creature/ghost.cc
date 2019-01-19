@@ -1,7 +1,4 @@
-
-#include "../inc/ghost.hh"
-#include "../inc/pacman.hh"
-#include <string>
+#include "ghost.hh"
 
 Ghost::Ghost(std::string file_path,  float scale) :
 Creature(file_path, 26)
@@ -24,16 +21,10 @@ Creature(file_path, 26)
     _anim.set_scale(scale, scale);
 }
 
+Ghost::~Ghost() {}
 
-Ghost::~Ghost()
-{}
-
-void Ghost::destroy()
-{
-
-}
-void Ghost::set_orientation(Creature::Orientation orientation)
-{
+void Ghost::destroy() {}
+void Ghost::set_orientation(Creature::Orientation orientation) {
 //    std::cout<<"orientation"<<std::endl;
     switch(orientation) {
         case Orientation::Left :
@@ -52,8 +43,4 @@ void Ghost::set_orientation(Creature::Orientation orientation)
     _anim.set_scene(static_cast<int>(_anim_orientation));
     _orientation = orientation;
 }
-void Ghost::set_scene()
-{
-
-
-}
+void Ghost::set_scene() {}

@@ -1,11 +1,8 @@
-
 #include "pacman.hh"
-#include <string>
 
 Pacman::Pacman(float scale) :
 Creature(_default_path + _pacman_path, _pacman_frames)
 {
-
     _anim.new_cut(TYPE::LIVE, 0, 4);
     _anim.new_cut(TYPE::DEAD, 4, 25);
     _anim.set_scene(TYPE::LIVE);
@@ -13,15 +10,11 @@ Creature(_default_path + _pacman_path, _pacman_frames)
 }
 
 
-Pacman::~Pacman()
-{}
+Pacman::~Pacman() {}
 
-void Pacman::destroy()
-{
+void Pacman::destroy() {}
 
-}
-void Pacman::set_orientation(Creature::Orientation orientation)
-{
+void Pacman::set_orientation(Creature::Orientation orientation) {
     sf::Vector2f scale = _anim.get_scale();
     scale.x = abs(scale.x);
     scale.y = abs(scale.y);

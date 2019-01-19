@@ -10,6 +10,7 @@
 #include "menu.hh"
 #include "woption.hh"
 #include "resources.hh"
+#include <iostream>
 
 typedef std::function<void(void)> CallbackFunction;
 class Window {
@@ -28,17 +29,17 @@ class Window {
 			sf::Time timer;
 		};
 		std::vector<struct timer_event*> timer_events; //timer events
-	// Window Event Handlers : 
+		// Window Event Handlers : 
 		void key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key);
 		void draw(sf::RenderWindow& window);
 		void timer(sf::Clock &clock);
 		enum class DrawMode {Bg = 0, Game = 1};
-	// Key Pressed Handlers:
+		// Key Pressed Handlers:
 		void switch_escape(sf::RenderWindow& window);
 		void switch_return(sf::RenderWindow& window);
 		void switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir);
 		void menu_selected(sf::RenderWindow& window);
-	// New screen 
+		// New screen 
 		void show_rules();
 		void show_menu();
 		void show_scores();

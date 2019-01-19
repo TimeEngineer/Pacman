@@ -1,11 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Image {
 public:
 	//constructors
-    Image(std::string file_path, bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0));
-    Image(bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0)): _offset(0,0),
+	Image(std::string file_path, bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0));
+	Image(bool transparent = false, sf::Color transparent_color = sf::Color(0,0,0)): _offset(0,0),
 																					 _visible(true),
 																					 _transparent(transparent), 
 																					 _transparent_color(transparent_color)
@@ -13,7 +14,7 @@ public:
 																					 };
 	Image(const Image& image);
 
-    virtual ~Image();
+	virtual ~Image();
 	void load_image(std::string file_path);
 	void reload();
 	// setters
