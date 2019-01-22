@@ -96,12 +96,11 @@ bool Game::move_pacman(sf::Keyboard::Key dir) {
     pacman_dst_pos = _map.get_map_coordinate(cur_pos + displacement);
     //move(_pacman, cur_pos + displacement);
 
-
     return bMovable;
 }
 void Game::draw(sf::RenderWindow &window) {
     sf::Font font;
-    font.loadFromFile(_font_paths[FONT_TYPE::PACMAN]);
+    font.loadFromFile(_default_path + _font_paths[FONT_TYPE::COMIC]);
     sf::Text text("Score:" + std::to_string(_pacman.get_score()), font);
     text.setCharacterSize(30);
     text.setStyle(sf::Text::Bold);
@@ -142,10 +141,20 @@ void Game::animate_pacman(void) {
     _clyde.next_frame();
     _pinky.next_frame();
 }
-void Game::make_transistion()
-{
-    if(_pacman_transition) {
+void Game::make_transistion() {
+    sf::Vector2i displacement, src_screen_pos, dst_screen_pos;
+    src_screen_pos = _pacman.get_screen_coordinate();
+    dst_screen_pos = _map.get_screen_coordinate(pacman_dst_pos);
 
+    if(src_screen_pos == dst_screen_pos) {
+        _pacman.set_map_coordinate(_map.get_map_coordinate(pacman_dst_pos.x, pacman_dst_pos.y));
+        _pacman_transition = false;
+    }
+    else if(_pacman_transition) {
+        displacement = dst_screen_pos - src_screen_pos;
+        displacement.x /= 8;
+        displacement.y /= 8;
+        _pacman.set_screen_coordinate(src_screen_pos + displacement);
     }
 }
 void Game::move(Entity &creature, const sf::Vector2i &pos) {
@@ -267,5 +276,4 @@ Entity& Game::collision() {
     /*for (auto &fruit : _energizers)
         if(fruit.get_map_coordinate() == _pacman.get_map_coordinate()) return fruit;*/
     return _pacman;
-
 }

@@ -1,7 +1,8 @@
 #include "pacman.hh"
 
 Pacman::Pacman(float scale) :
-Creature(_default_path + _pacman_path, _pacman_frames)
+Creature(_default_path + _pacman_path, _pacman_frames),
+_score(0)
 {
     _anim.new_cut(TYPE::LIVE, 0, 4);
     _anim.new_cut(TYPE::DEAD, 4, 25);
