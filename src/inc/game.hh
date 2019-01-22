@@ -50,7 +50,7 @@ class Game {
         bool _pacman_transition;
         sf::Vector2i pacman_src_pos;
         sf::Vector2i pacman_dst_pos;
-        const int moving_step = 2;
+        const int moving_step = 4;
         Map _map;
         Pacman _pacman;
         Blinky _blinky;

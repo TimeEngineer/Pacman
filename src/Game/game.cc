@@ -14,7 +14,8 @@ _pacman(scale),
 _blinky(scale),
 _clyde(scale),
 _inkey(scale),
-_pinky(scale)
+_pinky(scale),
+_pacman_transition(false)
 {
     sf::Vector2i offset = _map.get_topleft();
     _pacman.set_offset(offset);
@@ -152,8 +153,8 @@ void Game::make_transistion() {
     }
     else if(_pacman_transition) {
         displacement = dst_screen_pos - src_screen_pos;
-        displacement.x = moving_step * (displacement.x < 0 ? -1 : 1);
-        displacement.y = moving_step * (displacement.y < 0 ? -1 : 1);
+        displacement.x = moving_step * (displacement.x == 0 ? 0 : (displacement.x < 0 ? -1 : 1));
+        displacement.y = moving_step * (displacement.y == 0 ? 0 : (displacement.y < 0 ? -1 : 1));
         _pacman.set_screen_coordinate(src_screen_pos + displacement);
     }
 }
