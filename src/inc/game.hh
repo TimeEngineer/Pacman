@@ -54,7 +54,7 @@ class Game  {
         Pinky _pinky;
         std::vector<Point> _points;
         const int _initial_map_x = 11;
-        const int _initial_map_y = 16;
+        const int _initial_map_y = 17;
         const int _inkey_init_x = 10;
         const int _inkey_init_y = 10;
         const int _pinky_init_x = 11;
