@@ -31,9 +31,9 @@ _pinky(scale)
     move(_inkey, _inkey_init_x, _inkey_init_y);
     move(_pinky, _pinky_init_x, _pinky_init_y);
     std::vector<std::pair<int, int> > test;
-    test.push_back(std::pair<int, int>(2,1));
-    test.push_back(std::pair<int, int>(3,1));
     test.push_back(std::pair<int, int>(4,1));
+    test.push_back(std::pair<int, int>(3,1));
+    test.push_back(std::pair<int, int>(2,1));
     fill_points(test, scale, offset);
 }
 bool Game::move_ghost(Ghost &ghost, const sf::Vector2i &pos) {
@@ -94,6 +94,8 @@ void Game::draw(sf::RenderWindow &window) {
     _clyde.draw(window);
     _inkey.draw(window);
     _pinky.draw(window);
+    for(auto &iter : _points)
+        iter.draw(window);
 }
 
 bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i displacement) {
@@ -202,8 +204,8 @@ bool Game::exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type) {
 void Game::fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset) {
     for (auto & iter: coordinates) {
         Point point(scale);
-        point.set_offset(offset);
-        _points.push_back(Point(scale));
-    //    move(_points.back(), iter.first, iter.second);
+        _points.push_back(point);
+        _points.back().set_offset(offset);
+        move(_points.back(), iter.first, iter.second);
     }
 }
