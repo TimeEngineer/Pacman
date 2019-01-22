@@ -9,7 +9,6 @@ Creature(_default_path + _pacman_path, _pacman_frames)
     _anim.set_scale(scale, scale);
 }
 
-
 Pacman::~Pacman() {}
 
 void Pacman::destroy() {}
