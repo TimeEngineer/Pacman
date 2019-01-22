@@ -10,8 +10,10 @@ class Pacman : public Creature {
         virtual EntityID get_entity_id() const { return EntityID::Pacman;}
         virtual void set_orientation(Creature::Orientation orientation);
         void set_scene(int index_scene) {_anim.set_scene(index_scene);}
-
+        void add_score(int score) {_score += score;}
+        int get_score() {return _score;}
     private:
+        int _score;
         typedef Pacman_Sprite::PACMAN_TYPE TYPE;
         typedef Pacman_Sprite::PACMAN_ANIM ANIM;
 };

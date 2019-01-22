@@ -11,7 +11,7 @@
 typedef Ghost_Sprite::GHOST_TYPE GHOST_TYPE;
 #define WHICH_GHOST(i) (i == GHOST_TYPE::BLINKY ? static_cast<Ghost&>(_blinky) : (i == GHOST_TYPE::CLYDE ? static_cast<Ghost&>(_clyde) : (i == GHOST_TYPE::INKEY ? static_cast<Ghost&>(_inkey) : static_cast<Ghost&>(_pinky))));
 
-class Game  {
+class Game {
     public:
         enum class GhostBehavior{Chase, Random, Ambush, Patrol, Scatter,Frightened};
     	//typedef void (Game::*time_func) (void);
@@ -37,7 +37,7 @@ class Game  {
         sf::Vector2i closest_intersection_to_pacman();
         void fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
         void fill_energizers(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
-
+        void make_transistion();
         //sf::Vector2i map_to_screen_coordinate(sf::Vector2i map_coordinate);
         //sf::Vector2i map_to_screen_coordinate(int x, int y);
         //sf::Vector2i screen_to_map_coordinate(sf::Vector2i screen_coordinate);
@@ -47,7 +47,10 @@ class Game  {
         bool is_clyde_out;
         bool is_inkey_out;
         bool is_pinky_out;
-
+        bool _pacman_transition;
+        sf::Vector2i pacman_src_pos;
+        sf::Vector2i pacman_dst_pos;
+        const int moving_step = 2;
         Map _map;
         Pacman _pacman;
         Blinky _blinky;
@@ -66,5 +69,5 @@ class Game  {
         const int _blinky_init_y = 9;
         const int _clyde_init_x = 12;
         const int _clyde_init_y = 10;
-
+        int _score;
 };

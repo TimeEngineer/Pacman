@@ -91,7 +91,7 @@ void Map::generate_graph() {
 	}
 	this->generate(intersections);
 	this->associate();
-
+/*
 	for (const auto& iter : this->_cst_edges) {
 		std::cout << iter << std::endl;
 	}
@@ -100,6 +100,7 @@ void Map::generate_graph() {
 		for (const auto& eiter : viter.get_paths())
 			std::cout << *(eiter.edge) << std::endl;
 	}
+	*/
 	//std::cout << "Shortest route?" << std::endl;
 	//sf::Clock clock;
 //	clock.restart();

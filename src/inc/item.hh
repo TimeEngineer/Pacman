@@ -11,5 +11,10 @@ class Item : public Entity {
         virtual void destroy() {};
 
         virtual EntityID get_entity_id() const {return EntityID::Item;}
-        void draw(sf::RenderWindow& window) {window.draw(_anim.get_sprite());}
+        void draw(sf::RenderWindow& window) {
+            if(get_visible())
+                window.draw(_anim.get_sprite());
+        }
+        void set_visible(bool is_visible) {_anim.set_visible(is_visible);}
+        bool get_visible() {return _anim.get_visible();}
 };

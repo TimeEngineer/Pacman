@@ -66,6 +66,7 @@ bool Game::move_ghost(Ghost &ghost, const sf::Vector2i &pos) {
 }
 bool Game::move_pacman(sf::Keyboard::Key dir) {
     bool bMovable = false;
+    // cur = current
     sf::Vector2i displacement, cur_pos(_pacman.get_map_coordinate()),target_pos;
     switch(dir) {
         case sf::Keyboard::Up :
@@ -90,14 +91,22 @@ bool Game::move_pacman(sf::Keyboard::Key dir) {
     if(!check_mobility(_pacman, cur_pos, displacement))
         return false;
     is_pacman_moved = true;
-    move(_pacman, cur_pos + displacement);
-    if(&(collision()) == &(_energizers.back())){
-        std::cerr<<"Energizer"<<std::endl;
+    _pacman_transition = true;
+    pacman_src_pos = _pacman.get_map_coordinate();
+    pacman_dst_pos = _map.get_map_coordinate(cur_pos + displacement);
+    //move(_pacman, cur_pos + displacement);
 
-    }
+
     return bMovable;
 }
 void Game::draw(sf::RenderWindow &window) {
+    sf::Font font;
+    font.loadFromFile(_font_paths[FONT_TYPE::PACMAN]);
+    sf::Text text("Score:" + std::to_string(_pacman.get_score()), font);
+    text.setCharacterSize(30);
+    text.setStyle(sf::Text::Bold);
+    text.setFillColor(sf::Color::White);
+    window.draw(text);
     _map.draw(window);
     for(auto &iter : _points)
         iter.draw(window);
@@ -108,7 +117,6 @@ void Game::draw(sf::RenderWindow &window) {
     _clyde.draw(window);
     _inkey.draw(window);
     _pinky.draw(window);
-
 }
 
 bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i displacement) {
@@ -134,11 +142,23 @@ void Game::animate_pacman(void) {
     _clyde.next_frame();
     _pinky.next_frame();
 }
+void Game::make_transistion()
+{
+    if(_pacman_transition) {
+
+    }
+}
 void Game::move(Entity &creature, const sf::Vector2i &pos) {
+    // Cela ne change pas la position de l'image.
     creature.set_map_coordinate(_map.get_map_coordinate(pos.x, pos.y));
+    // Cela change la position de l'image.
     creature.set_screen_coordinate(_map.get_screen_coordinate(creature.get_map_coordinate()));
 }
 
+/*    // Cela ne change pas la position de l'image.
+    creature.set_map_coordinate(_map.get_map_coordinate(pos.x, pos.y));
+    // Cela change la position de l'image.
+    creature.set_screen_coordinate(_map.get_screen_coordinate(creature.get_map_coordinate()));*/
 void Game::move(Entity &creature, int x, int y) {
    move(creature, sf::Vector2i(x, y));
 }
@@ -235,9 +255,15 @@ Entity& Game::collision() {
     if(_clyde.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
     if(_pinky.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
     for (auto &point : _points)
-        if(point.get_map_coordinate() == _pacman.get_map_coordinate()) return point;
+        if(point.get_map_coordinate() == _pacman.get_map_coordinate()) {
+            point.set_visible(false);
+            return point;
+        }
     for (auto &energizer : _energizers)
-        if(energizer.get_map_coordinate() == _pacman.get_map_coordinate()) return energizer;
+        if(energizer.get_map_coordinate() == _pacman.get_map_coordinate()) {
+            energizer.set_visible(false);
+            return energizer;
+        }
     /*for (auto &fruit : _energizers)
         if(fruit.get_map_coordinate() == _pacman.get_map_coordinate()) return fruit;*/
     return _pacman;

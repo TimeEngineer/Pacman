@@ -13,6 +13,8 @@ const std::string _ghost_paths[] = {"Images/Creature/Ghost/Blinky.png",
                                     "Images/Creature/Ghost/Clyde.png",
                                     "Images/Creature/Ghost/Inkey.png",
                                     "Images/Creature/Ghost/Pinky.png"};
+enum FONT_TYPE {COMIC = 0, PACMAN};
+const std::string _font_paths[] = {"Fonts/comic.ttf","Fonts/pacman.ttf"};
 
 namespace Ghost_Sprite {
     enum GHOST_TYPE{BLINKY = 0, CLYDE = 1, INKEY = 2, PINKY = 3};
