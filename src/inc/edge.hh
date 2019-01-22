@@ -5,6 +5,11 @@
 #include <list>
 #include "block.hh"
 
+#define EAST(block) block->get_east_block()
+#define WEST(block) block->get_west_block()
+#define SOUTH(block) block->get_south_block()
+#define NORTH(block) block->get_north_block()
+
 class Edge{
 public:
     Edge(Block &vertex_src);
