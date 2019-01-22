@@ -204,6 +204,6 @@ void Game::fill_points(std::vector<std::pair<int,int> > coordinates, float scale
         Point point(scale);
         point.set_offset(offset);
         _points.push_back(Point(scale));
-        move(_points.back(), iter.first, iter.second);
+    //    move(_points.back(), iter.first, iter.second);
     }
 }
