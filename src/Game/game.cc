@@ -31,8 +31,8 @@ _pinky(scale)
     move_creature(_inkey, _inkey_init_x, _inkey_init_y);
     move_creature(_pinky, _pinky_init_x, _pinky_init_y);
 
-    _blinky.set_path(_map.shortest_route(*_map.get_intersections().front(),*_map.get_intersections().back()));
-    move_creature(_blinky, _blinky.get_cur_block());
+    //_blinky.set_path(_map.shortest_route(*_map.get_intersections().front(),*_map.get_intersections().back()));
+    //move_creature(_blinky, _blinky.get_cur_block());
 
    
 }
@@ -40,7 +40,7 @@ bool Game::move_ghost(Ghost &ghost, const sf::Vector2i &pos)
 {
     sf::Vector2i displacement, cur_pos(ghost.get_map_coordinate());
     displacement = pos - cur_pos;
-    std::cout<<"Move:"<<displacement.x << " " <<displacement.y <<std::endl;
+    //std::cout<<"Move:"<<displacement.x << " " <<displacement.y <<std::endl;
     
     if (abs(displacement.x) + abs(displacement.y) > 1 || !is_pacman_moved)
         return false;
@@ -88,11 +88,8 @@ bool Game::move_pacman(sf::Keyboard::Key dir)
         return false;
     is_pacman_moved = true;
     move_creature(_pacman, cur_pos + displacement);
-    std::cout<<"Ghost";
-    exit_ghost_house(Ghost_Sprite::CLYDE);
-
-  // sf::Vector2i intersect = closest_intersection_to_pacman();
-    //std::cout <<intersect.x << " , " << intersect.y << std::endl;
+    //std::cout<<"Ghost";
+    //exit_ghost_house(Ghost_Sprite::CLYDE);
     return bMovable;
 }
 void Game::draw(sf::RenderWindow &window)
@@ -149,8 +146,7 @@ void Game::chase_pacman(void)
 {
     if(!is_pacman_moved)
         return;
-    //Vector2i pos = _blinky.get_map_coordinate();
-    //if(_blinky.get_cur_block() == _blinky.get_cur_intersection()) {
+    
     for(auto const &iter : _map._cst_vertices) {
         if(iter.get_vertex_block().get_map_coordinate() == _blinky.get_map_coordinate()){
             order_ghost(Ghost_Sprite::BLINKY, Game::GhostBehavior::Chase);
@@ -195,8 +191,7 @@ void Game::order_ghost(Ghost_Sprite::GHOST_TYPE ghost_type, Game::GhostBehavior 
 {   
     Ghost &ghost = WHICH_GHOST(ghost_type);
     sf::Vector2i intersection_pos = closest_intersection_to_pacman();
-//    Block block0(999,ghost.get_map_coordinate_x(), ghost.get_map_coordinate_y());
-    //Block block1(999, intersection_pos.x, intersection_pos.y);
+
     if(mode == GhostBehavior::Chase) {
        ghost.set_path(_map.shortest_route(_map(ghost.get_map_coordinate().x, ghost.get_map_coordinate().y), _map(intersection_pos.x, intersection_pos.y)));
     }

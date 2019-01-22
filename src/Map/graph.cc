@@ -3,9 +3,11 @@
 Graph::Graph() : _lock(false),
 _cst_edges(_edges),
 _cst_vertices(_vertices)
-{}
+{
 
-void Graph::generate(std::vector<Block*> &intersections) {
+}
+void Graph::generate(std::vector<Block*> &intersections)
+{
 	if(_lock)
 		return;
 		
@@ -19,7 +21,8 @@ void Graph::generate(std::vector<Block*> &intersections) {
 	}
 	_lock = true;
 }
-void Graph::associate() {
+void Graph::associate()
+{	
 	bool is_v1_found = false, is_v2_found = false;
 	if(!_lock) 
 		return;
@@ -45,13 +48,17 @@ void Graph::associate() {
 	}
 }
 
-Vertex *Graph::find_vertex(const Block &block) {
-	for(auto& vertex : _vertices)
+Vertex *Graph::find_vertex(const Block &block)
+{
+	for(auto& vertex : _vertices) {
 		if(vertex() == block)
 			return &vertex;
+	}
 	return NULL;
+
 }
-int Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_weight) {
+int  Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_weight)
+{
 	Vertex *new_depart = NULL;
 	//Back tracking
 	int route_weight = 0;
@@ -77,7 +84,8 @@ int Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_w
 	return min_weight;
 }
 
-std::vector<struct Vertex::Path>  Graph::shortest_route(const Block &depart, const Block &arrival) {
+std::vector<struct Vertex::Path>  Graph::shortest_route(const Block &depart, const Block &arrival)
+{
 	//int weight;
 	Vertex *vertex_depart = find_vertex(depart);
 	Vertex *vertex_arrival = find_vertex(arrival);
@@ -93,5 +101,11 @@ std::vector<struct Vertex::Path>  Graph::shortest_route(const Block &depart, con
 	std::cout<<"End:" << (*path->edge->get_route().end())->map_coordinate_to_string() << std::endl;*/
 	return _shortest_paths;
 }
-void Graph::prev() {}
-void Graph::next() {}
+void Graph::prev() 
+{
+
+}
+void Graph::next()
+{
+
+}

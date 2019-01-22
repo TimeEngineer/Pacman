@@ -1,5 +1,4 @@
 #include "image.hh" 
-
 Image::Image(std::string file_path, bool transparent, sf::Color transparent_color) :
 _offset(0,0),
 _visible(true),

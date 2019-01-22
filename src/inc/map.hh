@@ -1,15 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
 #include <vector>
 #include "graph.hh"
 #include "block.hh"
-#include "edge.hh"
-#include "reposize.hh"
-
-#define STR_NPOS std::string::npos
 
 class Map : public Graph {
 public:
@@ -49,6 +42,7 @@ private:
 	void link_adjacent_tiles(int x, int y);
 	void generate_graph();
 	const std::string END_OF_MAP = "EOM";
+	const std::string END_OF_ROW = "EOR";
 	void measurement();
 	void center_pos(unsigned int wnd_width,  unsigned int wnd_height);
 	void link_portals();

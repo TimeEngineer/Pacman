@@ -1,6 +1,6 @@
 INC_DIR = ./src/
 CC=g++
-CFLAGS=-Wall -g -I$(INC_DIR) -std=c++11
+CFLAGS=-Wall -g -std=c++11
 EXEC=main
 SRC= $(wildcard ./src/*/*.cc) $(wildcard ./src/*.cc)
 OBJ=$(SRC:.cc=.o)
