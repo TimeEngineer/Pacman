@@ -37,9 +37,9 @@ _pinky(scale)
     test.push_back(std::pair<int, int>(2,1));
     fill_points(test, scale, offset);
     std::vector<std::pair<int, int> > test2;
-    test.push_back(std::pair<int, int>(5,1));
-    test.push_back(std::pair<int, int>(6,1));
-    test.push_back(std::pair<int, int>(7,1));
+    test2.push_back(std::pair<int, int>(5,1));
+    test2.push_back(std::pair<int, int>(6,1));
+    test2.push_back(std::pair<int, int>(7,1));
     fill_energizers(test2, scale, offset);
 }
 bool Game::move_ghost(Ghost &ghost, const sf::Vector2i &pos) {
@@ -91,18 +91,24 @@ bool Game::move_pacman(sf::Keyboard::Key dir) {
         return false;
     is_pacman_moved = true;
     move(_pacman, cur_pos + displacement);
+    if(&(collision()) == &(_energizers.back())){
+        std::cerr<<"Energizer"<<std::endl;
+
+    }
     return bMovable;
 }
 void Game::draw(sf::RenderWindow &window) {
     _map.draw(window);
+    for(auto &iter : _points)
+        iter.draw(window);
+    for(auto &iter : _energizers)
+        iter.draw(window);
     _pacman.draw(window);
     _blinky.draw(window);
     _clyde.draw(window);
     _inkey.draw(window);
     _pinky.draw(window);
-    for(auto &iter : _points) {
-        iter.draw(window);
-    }
+
 }
 
 bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i displacement) {

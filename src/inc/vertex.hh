@@ -5,8 +5,8 @@
 #include "edge.hh"
 
 /*
-/* Nodes in graph.
-*/
+ * Nodes in graph.
+ */
 class Vertex{
 public:
     struct Path {

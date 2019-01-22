@@ -23,7 +23,7 @@ namespace Ghost_Sprite {
 
 const std::string _pacman_path = "Images/Creature/Pacman/Pacman.png";
 const std::string _point_path = "Images/Points/point.png";
-const std::string _energizer_path = "Images/Points/energizer.png";
+const std::string _energizer_path = "Images/Points/pilule.png";
 const int _pacman_scence_index[][2] = {{0,3},{4,29}};
 const int _pacman_frames = 29;
 //const std::string _pacman_ext = ".png";
