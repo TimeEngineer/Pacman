@@ -7,12 +7,10 @@ _weight(0)
 {
     _vertices.front() = &vertex_src;
     traverse(_vertices.front());
-    //std::cout<< "Mark:" << _vertices.front()->is_visited() << std::endl;
 }
 Edge::Edge(const Edge& edge) :
 _weight(edge._weight)
 {
-    //std::cout<<"Cst"<<std::endl;
     _vertices = edge._vertices;
     _route = edge._route;
 }
@@ -23,14 +21,12 @@ bool Edge::traverse(Block* node) {
 
 
     if (Block::is_intersection(*node)) {
-        //std::cout<< "Vertice:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
         if(node != _vertices.front()) {
             _vertices.back() = node;
             return true;
         }
     }
     else {
-        //std::cout<< "Route:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
 		_route.push_back(node);
         _weight++;
         node->visit();
@@ -60,6 +56,10 @@ std::ostream& operator<<(std::ostream& os, const Edge &edge) {
     os <<"*(" << edge._vertices.back()->get_map_coordinate_x()  << " , " << edge._vertices.back()->get_map_coordinate_y() << ")";
     return os;
 }
+    //std::cout<<"Cst"<<std::endl;
+//std::cout<< "Mark:" << _vertices.front()->is_visited() << std::endl;
+    //std::cout<< "Vertice:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
+    //std::cout<< "Route:" << node->get_map_coordinate_x() << " , " << node->get_map_coordinate_y() << std::endl;
 //std::cout<<"East"<<std::endl;
 //std::cout<<"West"<<std::endl;
 //std::cout<<"South"<<std::endl;
