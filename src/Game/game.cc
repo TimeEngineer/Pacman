@@ -94,7 +94,7 @@ bool Game::move_pacman(sf::Keyboard::Key dir) {
     is_pacman_moved = true;
     _pacman_transition = true;
     pacman_src_pos = _pacman.get_map_coordinate();
-    pacman_dst_pos = _map.get_map_coordinate(cur_pos + displacement);
+    pacman_dst_pos = cur_pos + displacement;
     //move(_pacman, cur_pos + displacement);
 
     return bMovable;
@@ -147,11 +147,19 @@ void Game::make_transistion() {
     src_screen_pos = _pacman.get_screen_coordinate();
     dst_screen_pos = _map.get_screen_coordinate(pacman_dst_pos);
 
-    if(src_screen_pos == dst_screen_pos) {
-        _pacman.set_map_coordinate(_map.get_map_coordinate(pacman_dst_pos.x, pacman_dst_pos.y));
-        _pacman_transition = false;
-    }
-    else if(_pacman_transition) {
+    if(_pacman_transition) {
+        if(src_screen_pos == dst_screen_pos) {
+            _pacman_transition = false;
+            if(_map.get_block_status(pacman_dst_pos) == Block::Status::Portal) {
+                sf::Vector2i real_dst_pos = _map.get_map_coordinate(pacman_dst_pos);
+                _pacman.set_map_coordinate(real_dst_pos);
+                _pacman.set_screen_coordinate(_map.get_screen_coordinate(real_dst_pos));
+                return;
+            }
+            _pacman.set_map_coordinate(pacman_dst_pos);
+            _pacman_transition = false;
+
+        }
         displacement = dst_screen_pos - src_screen_pos;
         displacement.x = moving_step * (displacement.x == 0 ? 0 : (displacement.x < 0 ? -1 : 1));
         displacement.y = moving_step * (displacement.y == 0 ? 0 : (displacement.y < 0 ? -1 : 1));

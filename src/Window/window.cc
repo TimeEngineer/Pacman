@@ -29,7 +29,7 @@ void Window::launch() {
 	clock.restart();
 
 	register_timer_event(100,[&]() {_game->animate_pacman();});
-	 register_timer_event(10,[&]() {_game->make_transistion();});
+	register_timer_event(10,[&]() {_game->make_transistion();});
 	//register_timer_event(500,_game->chase_pacman);
 	redraw = true;
 	while (window.isOpen()) {
@@ -40,7 +40,8 @@ void Window::launch() {
 					window.close();
 					break;
 				case sf::Event::KeyPressed:
-					key_pressed(window, event.key.code);
+					if(!_game->is_pacman_moving())
+						key_pressed(window, event.key.code);
 					break;
 				default:
 					break;
