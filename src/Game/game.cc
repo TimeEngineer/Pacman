@@ -152,8 +152,8 @@ void Game::make_transistion() {
     }
     else if(_pacman_transition) {
         displacement = dst_screen_pos - src_screen_pos;
-        displacement.x /= 8;
-        displacement.y /= 8;
+        displacement.x = moving_step * (displacement.x < 0 ? -1 : 1);
+        displacement.y = moving_step * (displacement.y < 0 ? -1 : 1);
         _pacman.set_screen_coordinate(src_screen_pos + displacement);
     }
 }
