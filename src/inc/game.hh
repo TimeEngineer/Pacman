@@ -34,7 +34,7 @@ class Game  {
         void order_ghost(Ghost_Sprite::GHOST_TYPE ghost_type, Game::GhostBehavior mode);
         bool exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type);
         sf::Vector2i closest_intersection_to_pacman();
-        void fill_points(std::vector<std::pair<int,int> > coordinates, float scale);
+        void fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
 
         //sf::Vector2i map_to_screen_coordinate(sf::Vector2i map_coordinate);
         //sf::Vector2i map_to_screen_coordinate(int x, int y);

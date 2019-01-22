@@ -49,12 +49,12 @@ autoposimage.o: src/Graphics/autoposimage.cc src/inc/autoposimage.hh \
 animation.o: src/Graphics/animation.cc src/inc/animation.hh \
  src/inc/image.hh
 image.o: src/Graphics/image.cc src/inc/image.hh
-autorouted.o: src/Creature/autorouted.cc src/inc/autorouted.hh \
- src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
- src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh
 pacman.o: src/Creature/pacman.cc src/inc/pacman.hh src/inc/creature.hh \
  src/inc/entity.hh src/inc/animation.hh src/inc/image.hh \
  src/inc/mapped.hh src/inc/sound.hh src/inc/resources.hh
+autorouted.o: src/Creature/autorouted.cc src/inc/autorouted.hh \
+ src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
+ src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh
 ghost.o: src/Creature/ghost.cc src/inc/ghost.hh src/inc/autorouted.hh \
  src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
  src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh \

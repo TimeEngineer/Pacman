@@ -1,18 +1,18 @@
 #pragma once
 #include <string>
 
-const std::string _default_path = "./DataBase";
-const std::string _map_file = "./Map/Map.txt";
-const std::string _bg_image_paths[5] = {"./Images/Fonds/menu.png",
-									"./Images/Fonds/rules.png",
-									"./Images/Fonds/basic_level.png",
-									"./Images/Fonds/scores.png"};
+const std::string _default_path = "DataBase/";
+const std::string _map_file = "Map/Map.txt";
+const std::string _bg_image_paths[5] = {"Images/Fonds/menu.png",
+									"Images/Fonds/rules.png",
+									"Images/Fonds/basic_level.png",
+									"Images/Fonds/scores.png"};
 
-const std::string _image_paths[] = {"./Images/Divers/cursor.png"};
-const std::string _ghost_paths[] = {"./Images/Creature/Ghost/Blinky.png",
-                                    "./Images/Creature/Ghost/Clyde.png",
-                                    "./Images/Creature/Ghost/Inkey.png",
-                                    "./Images/Creature/Ghost/Pinky.png"};
+const std::string _image_paths[] = {"Images/Divers/cursor.png"};
+const std::string _ghost_paths[] = {"Images/Creature/Ghost/Blinky.png",
+                                    "Images/Creature/Ghost/Clyde.png",
+                                    "Images/Creature/Ghost/Inkey.png",
+                                    "Images/Creature/Ghost/Pinky.png"};
 
 namespace Ghost_Sprite {
     enum GHOST_TYPE{BLINKY = 0, CLYDE = 1, INKEY = 2, PINKY = 3};
@@ -21,8 +21,8 @@ namespace Ghost_Sprite {
 };
 
 
-const std::string _pacman_path = "./Images/Creature/Pacman/Pacman.png";
-const std::string _point_path = "./Images/Points/point.png";
+const std::string _pacman_path = "Images/Creature/Pacman/Pacman.png";
+const std::string _point_path = "Images/Points/point.png";
 const int _pacman_scence_index[][2] = {{0,3},{4,29}};
 const int _pacman_frames = 29;
 //const std::string _pacman_ext = ".png";
@@ -31,14 +31,14 @@ namespace Pacman_Sprite {
     enum PACMAN_ANIM{BEGIN = 0, END};
 };
 
-const std::string _sound_paths[] = {"./Sounds/choice.wav",
-                                    "./Sounds/cursor.wav",
-                                    "./Sounds/chomp.wav",
-                                    "./Sounds/death.wav",
-                                    "./Sounds/eatfruit.wav",
-                                    "./Sounds/eatghost.wav",
-                                    "./Sounds/extrapac.wav",
-                                    "./Sounds/intermission.wav"};
+const std::string _sound_paths[] = {"Sounds/choice.wav",
+                                    "Sounds/cursor.wav",
+                                    "Sounds/chomp.wav",
+                                    "Sounds/death.wav",
+                                    "Sounds/eatfruit.wav",
+                                    "Sounds/eatghost.wav",
+                                    "Sounds/extrapac.wav",
+                                    "Sounds/intermission.wav"};
 enum sound_option {  sCHOICE = 0,
 	                 sCURSOR = 1,
 	                 sCHOMP = 2,
