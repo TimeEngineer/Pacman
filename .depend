@@ -1,4 +1,10 @@
+fruit.o: src/Points/fruit.cc src/inc/fruit.hh src/inc/item.hh \
+ src/inc/entity.hh src/inc/animation.hh src/inc/image.hh \
+ src/inc/mapped.hh src/inc/resources.hh
 point.o: src/Points/point.cc src/inc/point.hh src/inc/item.hh \
+ src/inc/entity.hh src/inc/animation.hh src/inc/image.hh \
+ src/inc/mapped.hh src/inc/resources.hh
+energizer.o: src/Points/energizer.cc src/inc/energizer.hh src/inc/item.hh \
  src/inc/entity.hh src/inc/animation.hh src/inc/image.hh \
  src/inc/mapped.hh src/inc/resources.hh
 mapped.o: src/Map/mapped.cc src/inc/mapped.hh src/inc/image.hh
@@ -24,37 +30,37 @@ window.o: src/Window/window.cc src/inc/window.hh src/inc/game.hh \
  src/inc/animation.hh src/inc/image.hh src/inc/mapped.hh src/inc/sound.hh \
  src/inc/resources.hh src/inc/ghost.hh src/inc/autorouted.hh \
  src/inc/block.hh src/inc/vertex.hh src/inc/edge.hh src/inc/map.hh \
- src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/cursor.hh \
- src/inc/autoposimage.hh src/inc/background.hh src/inc/menu.hh \
- src/inc/woption.hh
+ src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/energizer.hh \
+ src/inc/cursor.hh src/inc/autoposimage.hh src/inc/background.hh \
+ src/inc/menu.hh src/inc/woption.hh
 reposize.o: src/Window/reposize.cc src/inc/reposize.hh
 winevents.o: src/Window/winevents.cc src/inc/window.hh src/inc/game.hh \
  src/inc/pacman.hh src/inc/creature.hh src/inc/entity.hh \
  src/inc/animation.hh src/inc/image.hh src/inc/mapped.hh src/inc/sound.hh \
  src/inc/resources.hh src/inc/ghost.hh src/inc/autorouted.hh \
  src/inc/block.hh src/inc/vertex.hh src/inc/edge.hh src/inc/map.hh \
- src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/cursor.hh \
- src/inc/autoposimage.hh src/inc/background.hh src/inc/menu.hh \
- src/inc/woption.hh
+ src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/energizer.hh \
+ src/inc/cursor.hh src/inc/autoposimage.hh src/inc/background.hh \
+ src/inc/menu.hh src/inc/woption.hh
 switch.o: src/Window/switch.cc src/inc/window.hh src/inc/game.hh \
  src/inc/pacman.hh src/inc/creature.hh src/inc/entity.hh \
  src/inc/animation.hh src/inc/image.hh src/inc/mapped.hh src/inc/sound.hh \
  src/inc/resources.hh src/inc/ghost.hh src/inc/autorouted.hh \
  src/inc/block.hh src/inc/vertex.hh src/inc/edge.hh src/inc/map.hh \
- src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/cursor.hh \
- src/inc/autoposimage.hh src/inc/background.hh src/inc/menu.hh \
- src/inc/woption.hh
+ src/inc/graph.hh src/inc/point.hh src/inc/item.hh src/inc/energizer.hh \
+ src/inc/cursor.hh src/inc/autoposimage.hh src/inc/background.hh \
+ src/inc/menu.hh src/inc/woption.hh
 autoposimage.o: src/Graphics/autoposimage.cc src/inc/autoposimage.hh \
  src/inc/image.hh src/inc/reposize.hh
 animation.o: src/Graphics/animation.cc src/inc/animation.hh \
  src/inc/image.hh
 image.o: src/Graphics/image.cc src/inc/image.hh
-autorouted.o: src/Creature/autorouted.cc src/inc/autorouted.hh \
- src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
- src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh
 pacman.o: src/Creature/pacman.cc src/inc/pacman.hh src/inc/creature.hh \
  src/inc/entity.hh src/inc/animation.hh src/inc/image.hh \
  src/inc/mapped.hh src/inc/sound.hh src/inc/resources.hh
+autorouted.o: src/Creature/autorouted.cc src/inc/autorouted.hh \
+ src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
+ src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh
 ghost.o: src/Creature/ghost.cc src/inc/ghost.hh src/inc/autorouted.hh \
  src/inc/block.hh src/inc/image.hh src/inc/entity.hh src/inc/animation.hh \
  src/inc/mapped.hh src/inc/resources.hh src/inc/vertex.hh src/inc/edge.hh \
@@ -67,7 +73,7 @@ game.o: src/Game/game.cc src/inc/game.hh src/inc/pacman.hh \
  src/inc/image.hh src/inc/mapped.hh src/inc/sound.hh src/inc/resources.hh \
  src/inc/ghost.hh src/inc/autorouted.hh src/inc/block.hh \
  src/inc/vertex.hh src/inc/edge.hh src/inc/map.hh src/inc/graph.hh \
- src/inc/point.hh src/inc/item.hh
+ src/inc/point.hh src/inc/item.hh src/inc/energizer.hh
 background.o: src/Game/background.cc src/inc/background.hh \
  src/inc/autoposimage.hh src/inc/image.hh src/inc/sound.hh \
  src/inc/resources.hh
@@ -76,6 +82,6 @@ main.o: src/main.cc src/inc/window.hh src/inc/game.hh src/inc/pacman.hh \
  src/inc/image.hh src/inc/mapped.hh src/inc/sound.hh src/inc/resources.hh \
  src/inc/ghost.hh src/inc/autorouted.hh src/inc/block.hh \
  src/inc/vertex.hh src/inc/edge.hh src/inc/map.hh src/inc/graph.hh \
- src/inc/point.hh src/inc/item.hh src/inc/cursor.hh \
+ src/inc/point.hh src/inc/item.hh src/inc/energizer.hh src/inc/cursor.hh \
  src/inc/autoposimage.hh src/inc/background.hh src/inc/menu.hh \
  src/inc/woption.hh
