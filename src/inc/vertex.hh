@@ -4,6 +4,9 @@
 #include "block.hh"
 #include "edge.hh"
 
+/*
+/* Nodes in graph.
+*/
 class Vertex{
 public:
     struct Path {
@@ -12,7 +15,7 @@ public:
     }Path;
     Vertex(Block &_vertex_block) : _vertex_block(_vertex_block) {};
     Vertex(const Vertex& v) : _vertex_block(v._vertex_block) {_paths = v._paths;}
-    virtual ~Vertex(){}; 
+    virtual ~Vertex(){};
 
     void add_path(Edge &_edge, bool reverse);
     Block& get_vertex_block() const {return _vertex_block;}
@@ -24,5 +27,5 @@ public:
 private:
     Block& _vertex_block;
     std::vector<struct Vertex::Path> _paths;
-    
+
 };

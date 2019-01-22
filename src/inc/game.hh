@@ -10,7 +10,6 @@
 typedef Ghost_Sprite::GHOST_TYPE GHOST_TYPE;
 #define WHICH_GHOST(i) (i == GHOST_TYPE::BLINKY ? static_cast<Ghost&>(_blinky) : (i == GHOST_TYPE::CLYDE ? static_cast<Ghost&>(_clyde) : (i == GHOST_TYPE::INKEY ? static_cast<Ghost&>(_inkey) : static_cast<Ghost&>(_pinky))));
 
-
 class Game  {
     public:
         enum class GhostBehavior{Chase, Random, Ambush, Patrol, Scatter,Frightened};

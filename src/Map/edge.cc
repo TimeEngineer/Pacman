@@ -14,7 +14,7 @@ _weight(edge._weight)
     _vertices = edge._vertices;
     _route = edge._route;
 }
-
+//Recursive search in order to find the next path available to the neighboring vertex(node).
 bool Edge::traverse(Block* node) {
     if(node->is_visited())
         return false;

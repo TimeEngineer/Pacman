@@ -6,7 +6,7 @@
 class Item : public Entity {
     public:
         Item(std::string file_path):
-            Entity(file_path, 1){}
+            Entity(file_path){}
         virtual ~Item() {};
         virtual void destroy() {};
 
