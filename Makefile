@@ -4,16 +4,16 @@ CFLAGS=-Wall -g -std=c++11
 EXEC=main
 SRC= $(wildcard ./src/*/*.cc) $(wildcard ./src/*.cc)
 OBJ=$(SRC:.cc=.o)
-SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system 
+SFML=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 INC_DIR = -I./src/inc/
 
 
-$(EXEC) : $(OBJ) 
+$(EXEC) : $(OBJ)
 	$(CC) $(OBJ) $(SFML) $(CFLAGS) -o $(EXEC)
 
 %.o : %.cc
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
-	
+
 .depend: $(SRC)
 	g++ -std=c++11 -MM $(SRC) $(INC_DIR)  > .depend
 -include .depend
@@ -29,6 +29,6 @@ del:
 	del .\src\Map\*.o
 	del .\src\Audio\*.o
 	del .\src\Window\*.o
+	del .\src\Points\*.o
 	del .\src\*.o
-	del $(EXEC).exe 
-	
+	del $(EXEC).exe
