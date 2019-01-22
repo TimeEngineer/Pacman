@@ -30,11 +30,17 @@ _pinky(scale)
     move(_clyde, _clyde_init_x, _clyde_init_y);
     move(_inkey, _inkey_init_x, _inkey_init_y);
     move(_pinky, _pinky_init_x, _pinky_init_y);
+
     std::vector<std::pair<int, int> > test;
     test.push_back(std::pair<int, int>(4,1));
     test.push_back(std::pair<int, int>(3,1));
     test.push_back(std::pair<int, int>(2,1));
     fill_points(test, scale, offset);
+    std::vector<std::pair<int, int> > test2;
+    test.push_back(std::pair<int, int>(5,1));
+    test.push_back(std::pair<int, int>(6,1));
+    test.push_back(std::pair<int, int>(7,1));
+    fill_energizers(test2, scale, offset);
 }
 bool Game::move_ghost(Ghost &ghost, const sf::Vector2i &pos) {
     sf::Vector2i displacement, cur_pos(ghost.get_map_coordinate());
@@ -65,21 +71,21 @@ bool Game::move_pacman(sf::Keyboard::Key dir) {
         case sf::Keyboard::Up :
             displacement.y = -1;
             _pacman.set_orientation(Creature::Orientation::Top);
-        break;
+            break;
         case sf::Keyboard::Down :
             displacement.y = 1;
             _pacman.set_orientation(Creature::Orientation::Bottom);
-        break;
+            break;
         case sf::Keyboard::Left :
             displacement.x = -1;
             _pacman.set_orientation(Creature::Orientation::Left);
-        break;
+            break;
         case sf::Keyboard::Right :
             displacement.x = 1;
             _pacman.set_orientation(Creature::Orientation::Right);
-        break;
+            break;
         default:
-        break;
+            break;
     }
     if(!check_mobility(_pacman, cur_pos, displacement))
         return false;
@@ -94,8 +100,9 @@ void Game::draw(sf::RenderWindow &window) {
     _clyde.draw(window);
     _inkey.draw(window);
     _pinky.draw(window);
-    for(auto &iter : _points)
+    for(auto &iter : _points) {
         iter.draw(window);
+    }
 }
 
 bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i displacement) {
@@ -107,9 +114,8 @@ bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i
     if(target_pos.x >= _map.get_map_dimension().x || target_pos.y >= _map.get_map_dimension().y)
         return false;
 
-    if((_map(target_pos.x, target_pos.y).get_status() & creature.get_entity_id()) == 0x0) {
+    if((_map(target_pos.x, target_pos.y).get_status() & creature.get_entity_id()) == 0x0)
         return false;
-    }
     return true;
 }
 bool Game::timer(sf::Clock &clock) {
@@ -174,9 +180,8 @@ void Game::order_ghost(Ghost_Sprite::GHOST_TYPE ghost_type, Game::GhostBehavior 
     Ghost &ghost = WHICH_GHOST(ghost_type);
     sf::Vector2i intersection_pos = closest_intersection_to_pacman();
 
-    if(mode == GhostBehavior::Chase) {
+    if(mode == GhostBehavior::Chase)
        ghost.set_path(_map.shortest_route(_map(ghost.get_map_coordinate().x, ghost.get_map_coordinate().y), _map(intersection_pos.x, intersection_pos.y)));
-    }
 }
 bool Game::exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type) {
     Ghost &ghost = WHICH_GHOST(ghost_type);
@@ -190,9 +195,8 @@ bool Game::exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type) {
     else
         y = displacement;
 
-    if(ghost.get_map_coordinate_y() <= exit_pos.y) {
+    if(ghost.get_map_coordinate_y() <= exit_pos.y)
         y = -abs(y);
-    }
 
     move_ghost(ghost, ghost.get_map_coordinate() + sf::Vector2i(x, y));
 
@@ -202,10 +206,34 @@ bool Game::exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type) {
 }
 
 void Game::fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset) {
-    for (auto & iter: coordinates) {
-        Point point(scale);
-        _points.push_back(point);
-        _points.back().set_offset(offset);
-        move(_points.back(), iter.first, iter.second);
+    int nb_points = static_cast<int>(coordinates.size());
+    _points = std::vector<Point>(nb_points, Point(scale));
+    for (int i = 0; i < nb_points; i++) {
+        _points[i].set_offset(offset);
+        move(_points[i], coordinates[i].first, coordinates[i].second);
     }
+}
+
+void Game::fill_energizers(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset) {
+    int nb_energizers = static_cast<int>(coordinates.size());
+    _energizers = std::vector<Energizer>(nb_energizers, Energizer(scale));
+    for (int i = 0; i < nb_energizers; i++) {
+        _energizers[i].set_offset(offset);
+        move(_energizers[i], coordinates[i].first, coordinates[i].second);
+    }
+}
+
+Entity& Game::collision() {
+    if(_inkey.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
+    if(_blinky.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
+    if(_clyde.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
+    if(_pinky.get_map_coordinate() == _pacman.get_map_coordinate()) return _inkey;
+    for (auto &point : _points)
+        if(point.get_map_coordinate() == _pacman.get_map_coordinate()) return point;
+    for (auto &energizer : _energizers)
+        if(energizer.get_map_coordinate() == _pacman.get_map_coordinate()) return energizer;
+    /*for (auto &fruit : _energizers)
+        if(fruit.get_map_coordinate() == _pacman.get_map_coordinate()) return fruit;*/
+    return _pacman;
+
 }

@@ -23,7 +23,7 @@ void Window::switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir) {
 			move_cursor(dir);
 			break;
 		case bJEU:
-			
+
 			break;
 		default:
 			break;
@@ -44,8 +44,7 @@ void Window::switch_return(sf::RenderWindow& window) {
 			break;
 	}
 }
-void Window::menu_selected(sf::RenderWindow& window)
-{
+void Window::menu_selected(sf::RenderWindow& window) {
 	int sel = _cursor->get_selection();
 	switch (sel) {
 		case JOUER:
@@ -58,7 +57,7 @@ void Window::menu_selected(sf::RenderWindow& window)
 			break;
 			/*_mode = DrawMode::Game;*/
 			// Don't draw game screen until rules aren't read.
-			
+
 
 		case QUITTER:
 			window.close();

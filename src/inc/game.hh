@@ -4,6 +4,7 @@
 #include "pacman.hh"
 #include "ghost.hh"
 #include "point.hh"
+#include "energizer.hh"
 #include "map.hh"
 #include "resources.hh"
 
@@ -30,10 +31,12 @@ class Game  {
     	void animate_pinky(void);
         void move(Entity &entity, const sf::Vector2i& pos);
         void move(Entity &entity, int x, int y);
+        Entity& collision();
         void order_ghost(Ghost_Sprite::GHOST_TYPE ghost_type, Game::GhostBehavior mode);
         bool exit_ghost_house(Ghost_Sprite::GHOST_TYPE ghost_type);
         sf::Vector2i closest_intersection_to_pacman();
         void fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
+        void fill_energizers(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
 
         //sf::Vector2i map_to_screen_coordinate(sf::Vector2i map_coordinate);
         //sf::Vector2i map_to_screen_coordinate(int x, int y);
@@ -52,6 +55,7 @@ class Game  {
         Inkey _inkey;
         Pinky _pinky;
         std::vector<Point> _points;
+        std::vector<Energizer> _energizers;
         const int _initial_map_x = 11;
         const int _initial_map_y = 17;
         const int _inkey_init_x = 10;
@@ -62,5 +66,5 @@ class Game  {
         const int _blinky_init_y = 9;
         const int _clyde_init_x = 12;
         const int _clyde_init_y = 10;
+
 };
-		typedef void (Game::*TimerFnc)(void);
