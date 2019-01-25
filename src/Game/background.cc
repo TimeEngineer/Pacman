@@ -13,7 +13,9 @@ _token(background_option::bMENU) {
 	_token = background_option::bMENU;
 }
 
-Background::~Background() {}
+Background::~Background() {
+	
+}
 
 background_option Background::get_token() const {
 	return _token;

@@ -6,7 +6,8 @@ _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
 _north_block(NULL),
-_visited(false),
+_visited_vertex(false),
+_visited_edge(false),
 _linked(false),
 _image()
 {
@@ -29,7 +30,8 @@ _east_block(NULL),
 _west_block(NULL),
 _south_block(NULL),
 _north_block(NULL),
-_visited(false),
+_visited_vertex(false),
+_visited_edge(false),
 _linked(false),
 _image()
 {
@@ -83,14 +85,22 @@ Block *Block::determine_path(Block *path_block) {
 		return NULL;
 	return path_block;
 }
+/*
 void Block::set_visited(bool visited) {
 	_visited = visited;
+}*/
+
+void Block::visit_edge() {
+	_visited_edge = true;
 }
-void Block::visit() {
-	_visited = true;
+void Block::unvisit_edge() {
+	_visited_edge = false;
 }
-void Block::unvisit() {
-	_visited = false;
+void Block::visit_vertex() {
+	_visited_vertex = true;
+}
+void Block::unvisit_vertex() {
+	_visited_vertex = false;
 }
 bool Block::operator==(Block& block) {
 	return block.get_map_coordinate() == this->get_map_coordinate();

@@ -4,7 +4,8 @@ Animation::Animation(std::string file_path, int nb_frames, bool transparent, sf:
 Image(file_path, transparent, color), 
 _nb_frames(nb_frames),
 _scene_index(0),
-_nb_scenes(1) 
+_nb_scenes(1),
+_loop(true)
 {
 	_frame_width = get_width() / nb_frames;
 	_frame_height = get_height();
@@ -29,16 +30,24 @@ void Animation::new_cut(int id, int begin, int nb_frames) {
 void Animation::next() {
 	struct scene &sc = _scenes[_scene_index];
 	
-	if(++sc.index >= sc.nb_frames) {
-		reset();
+	++sc.index;
+	if(sc.index >= sc.nb_frames) {
+		if(_loop)
+			reset();
+		else
+			return;
 	}
 	set_frame_rect(_frame_width * (sc.begin + sc.index), 0, _frame_width, _frame_height);
 }
 void Animation::prev() {
 	struct scene &sc = _scenes[_scene_index];
 	
-	if(--sc.index <= sc.begin) {
-		sc.index = sc.end;
+	--sc.index;
+	if(sc.index >= sc.nb_frames) {
+		if(_loop)
+			sc.index = sc.end;
+		else
+			return;
 	}
 	set_frame_rect(_frame_width * (sc.begin + sc.index),0,_frame_width,_frame_height);
 }

@@ -28,6 +28,7 @@ public:
     std::vector<struct Animation::scene> get_scene() const {return _scenes;};
     std::size_t get_nb_scenes() const {return _nb_scenes;}
 	virtual void enable_origin_at_center();
+    void set_loop(bool loop) {_loop = loop;};
 private:
     std::vector<struct Animation::scene> _scenes;
     int _nb_frames;
@@ -35,4 +36,5 @@ private:
     std::size_t _nb_scenes;
     unsigned int _frame_width;
     unsigned int _frame_height;
+    bool _loop;
 };

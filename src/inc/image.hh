@@ -24,6 +24,10 @@ class Image {
     	void set_position(int x, int y);
     	void set_x(int x);
     	void set_y(int y);
+    	void set_float_position(const sf::Vector2f& pos);
+    	void set_float_position(float x, float y);
+    	void set_float_x(float x);
+    	void set_float_y(float y);
 
     	void set_scale(const sf::Vector2f& scale);
     	void set_scale(float h_scale, float v_scale);
@@ -44,8 +48,11 @@ class Image {
     	int get_width() const {return static_cast<int>(_texture.getSize().x);}
     	int get_height() const {return static_cast<int>(_texture.getSize().y);}
     	sf::Vector2i  get_position() const {return sf::Vector2i(get_x(), get_y());}
-    	int get_x() const {return _pos.x;}
-    	int get_y() const {return _pos.y;}
+    	int get_x() const {return static_cast<int>(_pos.x);}
+    	int get_y() const {return static_cast<int>(_pos.y);}
+    	sf::Vector2f  get_float_position() const {return sf::Vector2f(get_float_x(), get_float_y());}
+    	float get_float_x() const {return _pos.x;}
+    	float get_float_y() const {return _pos.y;}
     	sf::Vector2f get_scale() const {return _sprite.getScale();}
     	float get_vertical_scale() const {return _sprite.getScale().x;}
     	float get_horizontal_scale() const {return _sprite.getScale().y;}
@@ -61,7 +68,7 @@ class Image {
     	sf::Texture _texture;
     	sf::Sprite _sprite;
     	sf::Vector2i _offset;
-    	sf::Vector2i _pos;
+    	sf::Vector2f _pos;
     	sf::Vector2i _center;
     	float _angle;
     	bool _visible;

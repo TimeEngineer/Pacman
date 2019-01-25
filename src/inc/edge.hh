@@ -15,6 +15,9 @@ public:
     Edge(Block &vertex_src);
     Edge(const Edge& edge);
     virtual ~Edge(){};
+    bool operator ==(const Edge &edge) const;
+    bool operator !=(const Edge &edge) const;
+    
 
     friend std::ostream& operator<<(std::ostream& os, const Edge &edge);
     int get_weight() const {return _weight;}

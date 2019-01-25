@@ -1,4 +1,5 @@
 #include "window.hh"
+#include <thread>
 // background texture size : 420x460
 #define BG_WIDTH Background::bg_width
 #define BG_HEIGHT Background::bg_height
@@ -29,8 +30,8 @@ void Window::launch() {
 	clock.restart();
 
 	register_timer_event(100,[&]() {_game->animate_pacman();});
-	register_timer_event(10,[&]() {_game->make_transistion();});
-	//register_timer_event(500,_game->chase_pacman);
+	register_timer_event(10,[&]() {_game->loop();});
+	
 	redraw = true;
 	while (window.isOpen()) {
 		timer(clock);
@@ -40,8 +41,7 @@ void Window::launch() {
 					window.close();
 					break;
 				case sf::Event::KeyPressed:
-					if(!_game->is_pacman_moving())
-						key_pressed(window, event.key.code);
+					key_pressed(window, event.key.code);
 					break;
 				default:
 					break;

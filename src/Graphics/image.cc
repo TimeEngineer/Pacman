@@ -65,12 +65,20 @@ void Image::load_image(std::string file_path) {
 	_texture = load_texture(file_path);
 	reload();
 }
-void Image::set_position(const sf::Vector2i&  pos) { 
-	_pos = pos;
-	_sprite.setPosition(static_cast<float>(_pos.x + _offset.x + _center.x), static_cast<float>(_pos.y + _offset.y + _center.y));
+void Image::set_position(const sf::Vector2i&  pos) {
+	_pos = sf::Vector2f(pos.x,pos.y);
+	_sprite.setPosition(_pos.x + static_cast<float>(_offset.x + _center.x), _pos.y + static_cast<float>(_offset.y + _center.y));
 }
 void Image::set_position(int x, int y) { 
-	set_position(sf::Vector2i(x, y));
+	_pos = sf::Vector2f(x,y);
+	_sprite.setPosition(_pos.x + static_cast<float>(_offset.x + _center.x), _pos.y + static_cast<float>(_offset.y + _center.y));
+}
+void Image::set_float_position(const sf::Vector2f&  pos) { 
+	_pos = pos;
+	_sprite.setPosition(_pos.x + static_cast<float>(_offset.x + _center.x), _pos.y + static_cast<float>(_offset.y + _center.y));
+}
+void Image::set_float_position(float x, float y) { 
+	set_float_position(sf::Vector2f(x, y));
 }
 void Image::set_scale(const sf::Vector2f&  scale) {
 	set_scale(scale.x, scale.y);
@@ -93,6 +101,12 @@ void Image::set_x(int x)  {
 void Image::set_y(int y)  {
 	set_position(_pos.x, y);
 }
+void Image::set_float_x(float x)  {
+	set_float_position(x, _pos.y);
+}
+void Image::set_float_y(float y)  {
+	set_float_position(_pos.x, y);
+}
 void Image::set_offset_x(int offset_x) {
 	_offset.x = offset_x;
 	set_offset(_offset);
@@ -105,7 +119,7 @@ void Image::set_offset(int offset_x, int offset_y) {
 	//set_offset(offset_x, offset_y);
 	_offset.x = offset_x;
 	_offset.y = offset_y;
-	set_position(_pos);
+	set_float_position(_pos);
 }
 void Image::set_offset(const sf::Vector2i& offset) {
 	_offset = offset;

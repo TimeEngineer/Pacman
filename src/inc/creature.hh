@@ -20,7 +20,6 @@ class Creature : public Entity {
         }
         void extra_life(){++_lives;}
         void set_lives(int lives) {_lives = lives;}
-        void set_speed(float speed) {_speed = speed;}
         float get_speed() {return _speed;}
         int get_lives() {return _lives;}
         void add_sound(std::string file_path)
@@ -39,6 +38,8 @@ class Creature : public Entity {
         void draw(sf::RenderWindow& window) {window.draw(_anim.get_sprite());}
         void next_frame() {_anim.next();}
         void prev_frame() {_anim.prev();}
+        void set_speed(float speed){_speed = speed * get_scale().x;}
+        float get_speed_x(){return _speed;}
     protected:
         Creature::Orientation _orientation;
         std::map<int, Sound> sounds;

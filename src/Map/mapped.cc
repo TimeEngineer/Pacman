@@ -23,6 +23,21 @@ void Mapped::set_screen_coordinate_x(int x) {
 void Mapped::set_screen_coordinate_y(int y) {
 	(*ptr_image).set_y(y);
 }
+
+	
+void Mapped::set_screen_float_coordinate(sf::Vector2f screen_coordinate){
+	(*ptr_image).set_float_position(screen_coordinate);
+}
+void Mapped::set_screen_float_coordinate(float x, float y) {
+	(*ptr_image).set_float_position(x, y);
+}
+void Mapped::set_screen_float_coordinate_x(float x) {
+	(*ptr_image).set_float_x(x);
+}
+void Mapped::set_screen_float_coordinate_y(float y) {
+	(*ptr_image).set_float_y(y);
+}
+	
 void Mapped::set_offset(sf::Vector2i screen_coordinate) {
 	(*ptr_image).set_offset(screen_coordinate);
 }

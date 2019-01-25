@@ -21,9 +21,12 @@ public:
 	int get_block_width() const {return _block_size.x;}
 	int get_block_height() const {return _block_size.y;}
 	const Block& operator()(int x, int y) const {return map_data[y][x];}
+	const Block& operator()(sf::Vector2i pos) const {return map_data[pos.y][pos.x];}
 	// Position of image on the computer screen from the map coordinate
 	sf::Vector2i get_screen_coordinate(sf::Vector2i map_coordinate) const {return get_screen_coordinate(map_coordinate.x, map_coordinate.y);}
 	sf::Vector2i get_screen_coordinate(int x, int y) const {return map_data[y][x].get_screen_coordinate();}
+	sf::Vector2f get_screen_float_coordinate(sf::Vector2i map_coordinate) const {return get_screen_float_coordinate(map_coordinate.x, map_coordinate.y);}
+	sf::Vector2f get_screen_float_coordinate(int x, int y) const {return map_data[y][x].get_screen_float_coordinate();}
 
 	// The following methods are needed for portal blocks. 
 	// Portal doesn't not have its own coordinates and borrows one from another block.
@@ -36,6 +39,15 @@ public:
 
 	
 	const std::vector<Block*> &get_intersections() const {return intersections;}
+
+	int get_house_index_blinky() const {return _house_index[House::Blinky];}
+	int get_house_index_door() const {return _house_index[House::Door];}
+	int get_house_index_pinky() const {return _house_index[House::Pinky];}
+	int get_house_index_clyde() const {return _house_index[House::Clyde];}
+	int get_house_index_inkey() const {return _house_index[House::Inkey];}
+	int get_house_index_end() const {return _house_index[House::End];}
+	const sf::Vector2i& ghost_house_at(int index) const {return _ghost_house[index];}
+	enum House {Blinky = 0, Door, Pinky, Inkey, Clyde, End};
 private:
 	Block& get_apparent_block_at(int x, int y) {return map_data[y][x];}
 	Block& get_real_block_at(int x, int y) {return map_data[map_data[y][x].get_map_coordinate_y()][map_data[y][x].get_map_coordinate_x()];}
@@ -50,9 +62,15 @@ private:
 	std::vector<Block*> portals;
 	std::vector<Block*> destinations;
 	std::vector<Block*> intersections;
-	std::string next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
+	std::vector<sf::Vector2i> _ghost_house;
+	std::string parse_next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
+	sf::Vector2i parse_next_coordinate(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
 	sf::Vector2i _map_dimension;
 	sf::Vector2i _block_size;
 	sf::Vector2i _topleft;
 	sf::Vector2f _scale;
+
+	void load_map(std::ifstream &file, float h_scale, float v_scale);
+	void register_ghost_house(std::ifstream &file);
+	int _house_index[6];
 };

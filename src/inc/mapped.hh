@@ -18,6 +18,12 @@ public:
 	virtual void set_screen_coordinate(int x, int y);
 	virtual void set_screen_coordinate_x(int x);
 	virtual void set_screen_coordinate_y(int y);
+	
+	virtual void set_screen_float_coordinate(sf::Vector2f screen_coordinate);
+	virtual void set_screen_float_coordinate(float x, float y);
+	virtual void set_screen_float_coordinate_x(float x);
+	virtual void set_screen_float_coordinate_y(float y);
+
 	virtual void set_offset(sf::Vector2i screen_coordinate);
 	virtual void set_offset(int x, int y);
 
@@ -29,8 +35,11 @@ public:
 	int get_map_coordinate_x() const {return _map_coordinate.x;}
 	int get_map_coordinate_y() const {return _map_coordinate.y;}
 	sf::Vector2i get_screen_coordinate() const {return (*ptr_image).get_position();}
+	sf::Vector2f get_screen_float_coordinate() const {return (*ptr_image).get_float_position();}
 	int get_screen_coordinate_x() const {return (*ptr_image).get_x();}
+	int get_screen_coordinate_float_x() const {return (*ptr_image).get_float_x();}
 	int get_screen_coordinate_y() const {return (*ptr_image).get_y();}
+	int get_screen_coordinate_float_y() const {return (*ptr_image).get_float_y();}
 	
 
 	sf::Vector2f get_scale() const {return (*ptr_image).get_scale();}
