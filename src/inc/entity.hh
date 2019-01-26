@@ -32,6 +32,6 @@ class Entity : public Mapped{
     	void set_loop(bool loop) {_anim.set_loop(loop);};
 	protected:
 		Animation _anim;
-	//private:
-		//Entity::EntityID _entity_id;
+	private:
+		Entity::EntityID _entity_id;
 };
