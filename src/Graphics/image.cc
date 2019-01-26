@@ -85,8 +85,8 @@ void Image::set_scale(const sf::Vector2f&  scale) {
 }
 void Image::set_scale(float h_scale, float v_scale) {
 	_sprite.setScale(h_scale,v_scale);
-	_center.x = static_cast<int>(_sprite.getOrigin().x * abs(h_scale));
-	_center.y = static_cast<int>(_sprite.getOrigin().y * abs(v_scale));
+	_center.x = static_cast<int>(_sprite.getOrigin().x * std::abs(h_scale));
+	_center.y = static_cast<int>(_sprite.getOrigin().y * std::abs(v_scale));
 }
 void Image::set_visible(bool visible) {
 	_visible = visible;
