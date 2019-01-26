@@ -42,14 +42,22 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key) {
 		case sf::Keyboard::Return:
 			switch_return(window);
 			break;
+		case sf::Keyboard::P:
+			if (_mode == DrawMode::Game) {
+				if(_game->is_game_started())
+					_game->pause();
+			}
+			break;
 		case sf::Keyboard::Up:
 		case sf::Keyboard::Down:
 		case sf::Keyboard::Left:
 		case sf::Keyboard::Right:
 			switch(_mode) {
 				case DrawMode::Game :
-					_game->move_pacman(key);
-						break;
+					if(_game->is_game_started()) {
+						_game->move_pacman(key);
+					}
+					break;
 				case DrawMode::Bg :
 					switch_arrowkey(window, key);
 					break;

@@ -22,15 +22,16 @@ Window::~Window() {
 
 void Window::launch() {
 	// Init
-	sf::RenderWindow window(sf::VideoMode(_width, _height), "Pacman !", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(_width, _height), "(Poly)Pacman !", sf::Style::Fullscreen);
 	window.setFramerateLimit(60);
 	bool redraw;
 	sf::Clock clock;
 	sf::Event event;
 	clock.restart();
 
-	register_timer_event(100,[&]() {_game->animate_pacman();});
+	register_timer_event(100,[&]() {_game->animate();});
 	register_timer_event(1,[&]() {_game->loop();});
+	
 	
 	redraw = true;
 	while (window.isOpen()) {

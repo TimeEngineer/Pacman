@@ -36,20 +36,34 @@ void Window::switch_return(sf::RenderWindow& window) {
 			menu_selected(window);
 			break;
 		case bREGLES:
-			_mode = DrawMode::Game;
+			if(_mode == DrawMode::Game) {
+				std::cout<< "start";
+				if(!_game->is_game_started()) {
+					_game->start();
+					_game->reset();
+				}
+				_game->unpause();
+
+			}
+			else {
+				_mode = DrawMode::Game;
+				_game->reset();
+				_game->game_reset();
+			}
 			break;
 		case bSCORES:
 			break;
 		default:
 			break;
 	}
+
 }
 void Window::menu_selected(sf::RenderWindow& window) {
 	int sel = _cursor->get_selection();
 	switch (sel) {
-		case JOUER:
 		case SCORES:
-		case OPTIONS:
+		case OPTIONS: break;
+		case JOUER:
 		case CREDITS:
 			_mode = DrawMode::Bg;
 			_background->set_sprite(_options[sel]);

@@ -1,7 +1,9 @@
 #include "ghost.hh"
 
+
+//Set the animation scenes for ghosts.
 Ghost::Ghost(std::string file_path,  float scale) :
-Creature(file_path, 26)
+Creature(file_path, 32)
 {
     GHOST_STATUS status[3] = {GHOST_STATUS::LIVE,
                              GHOST_STATUS::BLUE,
@@ -23,8 +25,8 @@ Creature(file_path, 26)
 Ghost::~Ghost() {}
 
 void Ghost::destroy() {}
+//Rotate ghost.
 void Ghost::set_orientation(Creature::Orientation orientation) {
-//    std::cout<<"orientation"<<std::endl;
     switch(orientation) {
         case Orientation::Left :
             _anim_orientation = GHOST_ORIENTATION::LEFT;

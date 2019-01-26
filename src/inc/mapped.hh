@@ -42,6 +42,7 @@ public:
 	int get_screen_coordinate_float_y() const {return (*ptr_image).get_float_y();}
 	
 
+    sf::IntRect get_frame_rect() const {return (*ptr_image).get_frame_rect();};
 	sf::Vector2f get_scale() const {return (*ptr_image).get_scale();}
 	sf::Vector2i get_size() const {return (*ptr_image).get_size();}
 	void set_image(Image& image) {ptr_image = &image;}

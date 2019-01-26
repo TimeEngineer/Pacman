@@ -7,6 +7,7 @@ _vect_of_shortest_paths(1,std::vector<sf::Vector2i>(0, sf::Vector2i(-1,-1))),
 _lock(false)
 {}
 
+// Generate creates the meaningful topology data to find the shortest route
 void Graph::generate(std::vector<Block*> &intersections) {
 	if(_lock)
 		return;
@@ -24,8 +25,8 @@ void Graph::generate(std::vector<Block*> &intersections) {
 		}			
 	}
 	_lock = true;
-	//std::cerr<<"end"<<std::endl;
 }
+//Take the intersections from map and make them into graph vertices.
 void Graph::convert_intersections_to_vertices() {
 	bool is_v1_found = false, is_v2_found = false;
 	if(!_lock)
@@ -52,6 +53,7 @@ void Graph::convert_intersections_to_vertices() {
 	}
 }
 
+//Find vertices from map's coordinate
 Vertex *Graph::find_vertex(const sf::Vector2i &pos) {
 	for(auto& vertex : _vertices) {
 		if(vertex().get_map_coordinate() == pos)
@@ -60,6 +62,7 @@ Vertex *Graph::find_vertex(const sf::Vector2i &pos) {
 	return NULL;
 
 }
+//Find vertices from a block.
 Vertex *Graph::find_vertex(const Block &block) {
 	for(auto& vertex : _vertices) {
 		if(vertex() == block)
@@ -67,7 +70,7 @@ Vertex *Graph::find_vertex(const Block &block) {
 	}
 	return NULL;
 }
-
+// Convert the path structure to the vector of coordniates
 std::vector<sf::Vector2i> Graph::paths_to_coordinates(std::vector<struct Vertex::Path> &paths) {
 	std::vector<sf::Vector2i> vpath;
 	sf::Vector2i front, back;
@@ -88,7 +91,7 @@ std::vector<sf::Vector2i> Graph::paths_to_coordinates(std::vector<struct Vertex:
 	}
 	return vpath;
 }
-
+// Recursive method to find the shortest path.
 int  Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_weight) {
 	Vertex *new_depart = NULL;
 	
@@ -98,12 +101,19 @@ int  Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_
 		_shortest_paths.clear();
 		return weight;
 	}
+	// Mark the departure visited so that the function won't go backward.
 	depart().visit_vertex();
+	// Search all the neighboring paths.
 	for(const auto& path : depart.get_paths()) {
 		Edge *edge = path.edge;
+		// The other end of the neighboring paths will be the new departure.
 		new_depart = find_vertex(*(path.reversed ? edge->get_vertices().front() : edge->get_vertices().back()));
+		// Check that it isn't visited nor the total weight is greater than the smallest weight found so far.
 		if(!(*new_depart)().is_visited_vertex() && weight + edge->get_weight() < min_weight) {
+			// Call recursively to search. repeat the process above.
 			route_weight = shortest_route(*new_depart, arrival, weight + edge->get_weight(), min_weight);
+			// Reached the destination and check the path's weight.
+			//if the weight's the smaller than the previous path, replace it with the old one.
 			if(min_weight > route_weight) {
 				_shortest_paths.insert(_shortest_paths.begin(), path);
 				min_weight = route_weight;
@@ -111,6 +121,7 @@ int  Graph::shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_
 		}
 
 	}
+	// Un mark the departure visited so we can use the shortest path search again.
 	depart().unvisit_vertex();
 	return min_weight;
 }
@@ -131,7 +142,7 @@ const std::vector<sf::Vector2i>& Graph::shortest_route(const sf::Vector2i &depar
 		
 	}
 	// If there isn't any shortest path registered, start searching :
-	shortest_route(*vertex_depart, *vertex_arrival, 0, Graph::INFINITY);
+	shortest_route(*vertex_depart, *vertex_arrival, 0, Graph::INFINITE_WEIGHT);
 	vpath = paths_to_coordinates(_shortest_paths);
 	// Reversed the order and register it as well.
 	for(const auto& iter : vpath){
@@ -141,6 +152,7 @@ const std::vector<sf::Vector2i>& Graph::shortest_route(const sf::Vector2i &depar
 	_vect_of_shortest_paths.push_back(vpath);
 	return _vect_of_shortest_paths.back();
 }
+// Find the route to the other end of intersection of the edge at which pacman is located.
 const std::vector<sf::Vector2i> Graph::specified_route(const sf::Vector2i &depart, const sf::Vector2i &arrival) {
 	Vertex *vertex_depart = find_vertex(depart);
 	Vertex *vertex_arrival = NULL;
@@ -156,50 +168,6 @@ const std::vector<sf::Vector2i> Graph::specified_route(const sf::Vector2i &depar
 		}
 
 	}
-	vpath =  paths_to_coordinates(_shortest_paths);
-		
+	vpath =  paths_to_coordinates(_shortest_paths);		
 	return vpath;
 }
-
-/*
-const std::vector<sf::Vector2i>& Graph::shortest_route(const Block &depart, const Block &arrival) {
-	std::vector<sf::Vector2i> vpath, vpath_reverse;
-	Vertex *vertex_depart = find_vertex(depart);
-	Vertex *vertex_arrival = find_vertex(arrival);
-	sf::Vector2i depart_pos, arrival_pos;
-
-	depart_pos = (*vertex_depart)().get_map_coordinate();
-	arrival_pos = (*vertex_arrival)().get_map_coordinate();
-
-	if(depart_pos == arrival_pos)
-		return _vect_of_shortest_paths.front();
-	// Look through registered shortest paths first.
-	for(const auto &iter : _vect_of_shortest_paths) {
-		if(iter.size() >= 2 && iter.front() == depart_pos && iter.back() == arrival_pos)
-			return iter;
-		
-	}
-	// If there isn't any shortest path registered, start searching :
-	shortest_route(*vertex_depart, *vertex_arrival, 0, Graph::INFINITY);
-	vpath = paths_to_coordinates(_shortest_paths);
-	// Reversed the order and register it as well.
-	for(const auto& iter : vpath){
-		vpath_reverse.insert(vpath_reverse.begin(), iter);
-	}
-	_vect_of_shortest_paths.push_back(vpath_reverse);
-	_vect_of_shortest_paths.push_back(vpath);
-	
-	
-	//int weight;
-	
-	std::cout<< "Search : " <<(*vertex_depart)().map_coordinate_to_string() << "->" << (*vertex_arrival)().map_coordinate_to_string()<<std::endl;
-	int weight = 0;
-	for(auto &iter : _shortest_paths) {
-		std::cout<< *iter.edge <<std::endl;
-		weight += iter.edge->get_weight();
-	}
-	std::cout<< "Weight:" << weight <<std::endl;
-	
-	return _vect_of_shortest_paths.back();
-}
-*/

@@ -14,6 +14,7 @@ Pacman::~Pacman() {}
 
 void Pacman::destroy() {}
 
+// Rotate Pacman
 void Pacman::set_orientation(Creature::Orientation orientation) {
     sf::Vector2f scale = _anim.get_scale();
     scale.x = abs(scale.x);

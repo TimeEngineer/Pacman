@@ -62,6 +62,7 @@ void Animation::set_scene(int id) {
 			break;
 		++_scene_index;
 	}
+	reset();
 }
 void Animation::enable_origin_at_center() {
 	this->set_origin(static_cast<float>(_frame_width) / 2.f,

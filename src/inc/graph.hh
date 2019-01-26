@@ -28,7 +28,7 @@ private:
 	Graph(const Graph&):_cst_edges(_edges),_cst_vertices(_vertices) {} // Protect copy constructor
 	void operator =(const Graph&) {} // Protect assignment
 
-	static const int INFINITY = 0xFFFF;
+	const int INFINITE_WEIGHT = 0xFFFF;
 	// Find the shortest route between departing point and arriving point:
 	int shortest_route(Vertex &depart, Vertex &arrival, int weight, int min_weight);
 	// Convert the path structure to the vector of coordinates:

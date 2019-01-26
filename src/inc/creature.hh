@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "entity.hh"
 #include "sound.hh"
 #include "animation.hh"
@@ -9,7 +10,7 @@ class Creature : public Entity {
         enum class Orientation{Left, Right, Bottom, Top};
         Creature(std::string file_path, int nb_frames):
             Entity(file_path, nb_frames),
-            _lives(1),
+            _lives(3),
             _speed(1.0f) { }
         virtual ~Creature() {};
         //virtual void playAnimation() = 0;
@@ -38,8 +39,8 @@ class Creature : public Entity {
         void draw(sf::RenderWindow& window) {window.draw(_anim.get_sprite());}
         void next_frame() {_anim.next();}
         void prev_frame() {_anim.prev();}
-        void set_speed(float speed){_speed = speed * get_scale().x;}
-        float get_speed_x(){return _speed;}
+        void set_speed(float speed){_speed = speed * std::fabs(get_scale().x);}
+        
     protected:
         Creature::Orientation _orientation;
         std::map<int, Sound> sounds;
