@@ -25,7 +25,7 @@ _clyde(scale),
 _inkey(scale),
 _pinky(scale),
 _play_sound(false),
-_score_count(0),
+_target_score(0),
 _level(0),
 _scale(scale)
 {
@@ -292,6 +292,7 @@ void Game::collision() {
 	const int nb_ghosts = 4;
 	Creature *ghosts[nb_ghosts] = {&_blinky, &_inkey, &_pinky, &_clyde};
 	sf::Vector2i dist;
+	// Collision between ghosts and pacman
 	for (int i = 0; i < nb_ghosts; i++) {
 		dist = ghosts[i]->get_screen_coordinate() - _pacman.get_screen_coordinate();
 		if(alive && std::hypot(dist.x, dist.y) < (_pacman.get_frame_rect().width / 2) ) {
@@ -309,15 +310,18 @@ void Game::collision() {
 
 	for (auto &point : _points) {
 		if (point.get_map_coordinate() == _pacman.get_map_coordinate() && point.get_visible()) {
+			// Make dots invisible, add score, play sound.
 			point.set_visible(false);
 			_pacman.add_score(10);
 			_score_count += 10;
 			_chomp_sound->play();
-			if (_pacman.get_score() > 0 && (_pacman.get_score() % (static_cast<int>(_points.size())*10)) == 0) {
+			
+			// Pacman ate all, then level up : 
+			if (_pacman.get_score() > 0 && _pacman.get_score() % _target_score == 0) {
 				level_up();
 			}
-			if (_score_count >= 500) {
-				_score_count = 0;
+			// Add life for each 500 points.
+			if (_pacman.get_score() > 0 && _pacman.get_score() % 500 == 0) {
 				_pacman.extra_life();
 				_extra_life_sound->play();
 			}
@@ -328,18 +332,6 @@ void Game::collision() {
 void Game::level_up() {
 	_game_start = false;
 	_level++;
-	for (auto &point : _points) {
-		point.set_visible(true);
-	}
-	
-}
-void Game::game_reset() {
-	_game_start = false;
-	_game_over = false;
-	_game_pause = false;
-	_level = 0;
-	_pacman.set_lives(2);
-	
 	std::vector<std::pair<int,int> > energy_pos;
 	_points.clear();
 	for (int y = 0; y < _map.get_map_row(); y++) {
@@ -349,17 +341,30 @@ void Game::game_reset() {
 			}
 		}
 	}
-	unsigned int size = energy_pos.size(), i = 0;
-	while(energy_pos.size() > size / 3) {
+	unsigned int size = energy_pos.size(), factor, i = 0;
+	factor = (_level <= 15 ? 17 - _level : 2);
+	//Retirer les gommees aleatoirement jusqu'a ce qu'il en reste assez pour le niveau.
+	while(energy_pos.size() > size / factor) {
 		i = std::rand() % energy_pos.size();
 		energy_pos.erase((energy_pos.begin() + i));
 	}
-
+	_target_score += static_cast<int>(energy_pos.size()) * 10	;
 	fill_points(energy_pos, _scale, _offset);
 
 	for (auto &point : _points) {
 		point.set_visible(true);
-	}
+	}	
+}
+void Game::game_reset() {
+	_game_start = false;
+	_game_over = false;
+	_game_pause = false;
+	_target_score = 0;
+	_level = -1;
+	level_up();
+	_pacman.set_lives(2);
+	_pacman.set_score(0);
+	
 }
 void Game::reset() {
 	std::vector<sf::Vector2i> null_path(0, sf::Vector2i(-1,-1));

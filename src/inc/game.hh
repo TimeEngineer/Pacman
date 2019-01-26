@@ -117,8 +117,9 @@ class Game {
         Sound *_chomp_sound;
         Sound *_death_sound;
         Sound *_extra_life_sound;
-
-        int _score_count;    
+ 
+        int _target_score;
+        int _score_count;   
         int _level;    
 
         float _scale;

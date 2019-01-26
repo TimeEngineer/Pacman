@@ -8,6 +8,9 @@ void Window::switch_escape(sf::RenderWindow& window) {
 		case background_option::bOPTIONS:
 		case background_option::bCREDITS:
 			_mode = DrawMode::Bg;
+			_game->stop();
+			_game->reset();
+			_game->game_reset();
 			_background->set_sprite(background_option::bMENU);
 			_cursor->set_visible(true);
 			break;
