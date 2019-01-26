@@ -118,7 +118,8 @@ void Map::generate_graph() {
 		}
 	}
 	this->generate(intersections);
-	this->associate_map_and_graph();
+	this->convert_intersections_to_vertices();
+	
 /*
 	for (const auto& iter : this->_cst_edges) {
 		std::cout << iter << std::endl;

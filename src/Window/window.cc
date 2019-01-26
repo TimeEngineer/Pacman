@@ -30,7 +30,7 @@ void Window::launch() {
 	clock.restart();
 
 	register_timer_event(100,[&]() {_game->animate_pacman();});
-	register_timer_event(10,[&]() {_game->loop();});
+	register_timer_event(1,[&]() {_game->loop();});
 	
 	redraw = true;
 	while (window.isOpen()) {

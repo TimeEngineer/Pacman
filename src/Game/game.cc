@@ -199,13 +199,14 @@ void Game::loop() {
 		}
 		else {
 			
-			if(!make_transition(_pinky, _pinky_arrival_pos))
-				ambush_pacman(_pinky, _pinky_arrival_pos);
-			if(!make_transition(_blinky, _blinky_arrival_pos))
-				chase_pacman(_blinky, _blinky_arrival_pos);
-			if(!make_transition(_inkey, _inkey_arrival_pos)) 
+			//if(!make_transition(_pinky, _pinky_arrival_pos))
+			//	ambush_pacman(_pinky, _pinky_arrival_pos);
+			//if(!make_transition(_blinky, _blinky_arrival_pos))
+				chase(_pinky, _pinky_arrival_pos, _pacman, true);
+				chase(_blinky, _blinky_arrival_pos, _pacman, false);
+			//if(!make_transition(_inkey, _inkey_arrival_pos)) 
 				patrol(_inkey, _inkey_arrival_pos);
-			if(!make_transition(_clyde, _clyde_arrival_pos)) 
+			//if(!make_transition(_clyde, _clyde_arrival_pos)) 
 				random_destination(_clyde, _clyde_arrival_pos);
 				
 		}
@@ -293,7 +294,7 @@ void Game::fill_energizers(std::vector<std::pair<int,int> > coordinates, float s
 }
 
 Entity& Game::collision() {
-	
+	/*
 	if(alive && (_inkey.get_map_coordinate() == _pacman.get_map_coordinate() ||
 	_blinky.get_map_coordinate() == _pacman.get_map_coordinate() ||
 	_clyde.get_map_coordinate() == _pacman.get_map_coordinate()||
@@ -305,7 +306,7 @@ Entity& Game::collision() {
 		alive = false;
 	 	return _inkey;
 	}
-
+*/
 	for (auto &point : _points)
 		if(point.get_map_coordinate() == _pacman.get_map_coordinate() && point.get_visible()) {
 			point.set_visible(false);

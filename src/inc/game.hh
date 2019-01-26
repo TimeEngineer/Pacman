@@ -27,8 +27,8 @@ class Game {
         void draw(sf::RenderWindow &window);
     	bool timer(sf::Clock &clock);
 
-    	void ambush_pacman(Ghost &ghost, sf::Vector2i &arrival_pos);
-    	void chase_pacman(Ghost &ghost, sf::Vector2i &arrival_pos);
+        void ghost_transition_phase(Ghost &ghost);
+    	void chase(Ghost &ghost, sf::Vector2i &arrival_pos, Creature &creature, bool ambush = false);
     	void random_destination(Ghost &ghost, sf::Vector2i &arrival_pos);
     	void patrol(Ghost &ghost, sf::Vector2i &arrival_pos);
     	void scatter(Ghost &ghost, sf::Vector2i &arrival_pos);

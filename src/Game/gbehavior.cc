@@ -3,70 +3,81 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <map>
+
+void Game::ghost_transition_phase(Ghost &ghost) {
+	sf::Vector2f screen_displacement, src_screen_pos, dst_screen_pos;
+
+	
+	src_screen_pos = ghost.get_screen_float_coordinate();
+	dst_screen_pos = _map.get_screen_float_coordinate(ghost.get_cur_pos());
+
+	if(std::fabs(src_screen_pos.x - dst_screen_pos.x) <= 2.f && std::fabs(src_screen_pos.y - dst_screen_pos.y) <= 2.f) { 
+		// Calibrate screen pos.
+		ghost.set_screen_coordinate(_map.get_screen_coordinate(ghost.get_map_coordinate()));
+    	ghost.next();
+		ghost.set_map_coordinate(_map.get_map_coordinate(ghost.get_cur_pos()));
+	}
+	else {
+		screen_displacement = dst_screen_pos - src_screen_pos;
+		screen_displacement.x = ghost.get_speed() * (std::fabs(screen_displacement.x) < 0.1f ? 0 : (screen_displacement.x < 0 ? -1 : 1));
+		screen_displacement.y = ghost.get_speed() * (std::fabs(screen_displacement.y) < 0.1f ? 0 : (screen_displacement.y < 0 ? -1 : 1));
+		ghost.set_screen_float_coordinate(src_screen_pos + screen_displacement);
+	}
+}
 void Game::random_destination(Ghost &ghost, sf::Vector2i &arrival_pos) {
 	sf::Vector2i cur_pos = ghost.get_map_coordinate(), arrival;
     
-	if(!is_pacman_moved || arrival_pos != cur_pos)
-		return;
+	
 	bool arrived = true, again = false;
     int i = 0;
 
     if (_map(cur_pos).is_intersection()) {
-        if (ghost.get_path().size() > 0) {
-            if (cur_pos != ghost.get_path().back())
+		// If there is a path but the ghost hasn't arrived yet, don't set the arrive flag.
+        if (ghost.get_path().size() > 0 && cur_pos != ghost.get_path().back())
                 arrived = false;
-        }
-
+		// If arrive flag is set, set the new path for the ghost 
         if (arrived) {
             do {
+				again = false;
+				//Choose a random destination
                 i = std::rand() % _map._cst_vertices.size();
                 arrival = _map._cst_vertices[i].get_vertex_block().get_map_coordinate();
-                if (arrival != cur_pos)
-                    again = false;
-                for (i = 0; i < _map.get_house_index_end() - 1; i++) {
+				//Avoid ghost house
+                for (i = 0; i < _map.get_house_index_end(); i++) {
                     if (arrival == _map.ghost_house_at(i))
                         again = true;
                 }
-            } while (again);
-
-            std::vector<struct Vertex::Path> &spaths = _map.shortest_route(_map(cur_pos), _map(arrival));
-			
-            ghost.set_path(spaths);
+            } while (arrival == cur_pos || again); // Rechoose if arrival point is depart point / ghost house.
+            ghost.set_path(_map.shortest_route(cur_pos, arrival));
         }
     }
-
-    sf::Vector2i displacement = ghost.get_cur_pos();
-    ghost.next();
-    displacement = ghost.get_cur_pos() - displacement;
-	move_creature(ghost, displacement, arrival_pos);
+	ghost_transition_phase(ghost);
+}
+void Game::chase(Ghost &ghost, sf::Vector2i &arrival_pos, Creature &creature, bool ambush) {
+	//Ambush mode chooses the second closest intersection to the pacman.
+	sf::Vector2i cur_pos = ghost.get_map_coordinate();
+	// Routing is done at each intersection in order to keep up with pacman.
+	if(_map(cur_pos).is_intersection()) {
+			// Choose the closest intersection.
+		sf::Vector2i target_intersection = arriving_intersection_of(creature, !ambush);
+		if(cur_pos != target_intersection) {
+			ghost.set_path(_map.shortest_route(cur_pos, target_intersection));
+		}
+		else {
+			// The closest intersection is reached. traverse the edge at which the pacman is.
+			target_intersection = arriving_intersection_of(creature, ambush);
+			if(target_intersection != cur_pos) {
+				ghost.set_path(_map.specified_route(cur_pos, target_intersection));
+			}
+		}			
+	}
+	ghost_transition_phase(ghost);
 }
 void Game::patrol(Ghost &ghost, sf::Vector2i &arrival_pos) {
-	sf::Vector2i cur_pos = ghost.get_map_coordinate();
-    if(!is_pacman_moved && cur_pos == arrival_pos)
-		return;
-	if(_map(cur_pos).is_intersection() && cur_pos == arrival_pos) {
-        for(auto const &iter : _map._cst_vertices) {
-            if(iter.get_vertex_block().get_map_coordinate() == cur_pos){
-                sf::Vector2i target_intersection = arriving_intersection_of(_blinky, false);
-                if(cur_pos != target_intersection) {
-                    std::vector<struct Vertex::Path> &spaths = _map.shortest_route(iter.get_vertex_block(), _map(target_intersection));
-                    ghost.set_path(spaths);
-                }
-                else {
-                    target_intersection = arriving_intersection_of(_blinky, true);
-                    if(target_intersection != cur_pos) {
-                        std::vector<struct Vertex::Path> &spaths = _map.specified_route(iter.get_vertex_block(), _map(target_intersection));
-                        ghost.set_path(spaths);
-                    }
-                }
-            }
-        }
-    }
-	sf::Vector2i displacement = ghost.get_cur_pos();
-	ghost.next();
-	displacement = ghost.get_cur_pos() - displacement;
-	//std::cerr<<displacement.x << " " << displacement.y<< std::endl;
-	move_creature(ghost, displacement, arrival_pos);
+	// Patroling is revolves around blinky.
+	// It is similar to ambushing blinky.
+	chase(ghost, _blinky_arrival_pos, _blinky, true);
 }
 void Game::scatter(Ghost &ghost, sf::Vector2i &arrival_pos) {
 
@@ -74,6 +85,7 @@ void Game::scatter(Ghost &ghost, sf::Vector2i &arrival_pos) {
 bool Game::back_and_forth(Ghost &ghost) {
 	int i = 0, begin, end;
 	bool *is_reversed;
+	
 	if(ghost.get_entity_id() == Entity::EntityID::Pinky) {
 		i = Map::House::Pinky;
 		begin = _map.get_house_index_pinky();
@@ -102,95 +114,29 @@ bool Game::back_and_forth(Ghost &ghost) {
 	
 	return true;	
 }
-void Game::ambush_pacman(Ghost &ghost, sf::Vector2i &arrival_pos) {
-	sf::Vector2i cur_pos = ghost.get_map_coordinate();
-    if(!is_pacman_moved && cur_pos == arrival_pos)
-		return;
 
-	if(_map(cur_pos).is_intersection() && cur_pos == arrival_pos) {
-        for(auto const &iter : _map._cst_vertices) {
-            if(iter.get_vertex_block().get_map_coordinate() == cur_pos){
-                sf::Vector2i target_intersection = arriving_intersection_of(_pacman, false);
-                if(cur_pos != target_intersection) {
-                    std::vector<struct Vertex::Path> &spaths = _map.shortest_route(iter.get_vertex_block(), _map(target_intersection));
-                    ghost.set_path(spaths);
-                }
-                else {
-                    target_intersection = arriving_intersection_of(_pacman, true);
-                    if(target_intersection != cur_pos) {
-                        std::vector<struct Vertex::Path> &spaths = _map.specified_route(iter.get_vertex_block(), _map(target_intersection));
-                        ghost.set_path(spaths);
-                    }
-                }
-            }
-        }
-    }
-	sf::Vector2i displacement = ghost.get_cur_pos();
-	ghost.next();
-	displacement = ghost.get_cur_pos() - displacement;
-	//std::cerr<<displacement.x << " " << displacement.y<< std::endl;
-	move_creature(ghost, displacement, arrival_pos);
-}
-void Game::chase_pacman(Ghost &ghost, sf::Vector2i &arrival_pos) {
-	sf::Vector2i cur_pos = ghost.get_map_coordinate();
-    if(!is_pacman_moved && cur_pos == arrival_pos)
-		return;
-
-
-	if(_map(cur_pos).is_intersection()) {
-		for(auto const &iter : _map._cst_vertices) {
-			if(iter.get_vertex_block().get_map_coordinate() == cur_pos && cur_pos == arrival_pos){
-				sf::Vector2i target_intersection = arriving_intersection_of(_pacman, true);
-				if(cur_pos != target_intersection) {
-					std::vector<struct Vertex::Path> &spaths = _map.shortest_route(iter.get_vertex_block(), _map(target_intersection));
-					ghost.set_path(spaths);
-				}
-				else {
-					target_intersection = arriving_intersection_of(_pacman, false);
-					if(target_intersection != cur_pos) {
-						std::vector<struct Vertex::Path> &spaths = _map.specified_route(iter.get_vertex_block(), _map(target_intersection));
-						ghost.set_path(spaths);
-					}
-				}			
-				break;
-			}
-		}
-	}
-	sf::Vector2i displacement = ghost.get_cur_pos();
-	ghost.next();
-	displacement = ghost.get_cur_pos() - displacement;
-	move_creature(ghost, displacement, arrival_pos);
-}
 sf::Vector2i Game::arriving_intersection_of(const Creature &creature,bool closest) {
-	sf::Vector2i creature_pos = creature.get_map_coordinate();
-	sf::Vector2i v1, v2, closest_v, second_closest_v;
+	sf::Vector2i creature_pos, v1, v2;
+
+	creature_pos = creature.get_map_coordinate();
 
 	for(const auto& edge_iter : _map._cst_edges) {
 		v1 = edge_iter.get_vertices().front()->get_map_coordinate();
 		v2 = edge_iter.get_vertices().back()->get_map_coordinate();
-		if(v1 == creature_pos)
-			return creature_pos;
-		if(v2 == creature_pos)
-			return creature_pos;
+
+		if (v1 == creature_pos) 
+			return (closest ? v1 : v2);
+		if (v2 == creature_pos)
+			return (closest ? v2 : v1);
 
 		for(const auto& block_iter : edge_iter.get_route()) {
 			if(block_iter->get_map_coordinate() == creature_pos) {
-				v1 -= creature_pos;
-				v2 -= creature_pos;
+				// Compare the distance bewteen first intersection and second intersection between which the pacman is.
+				if(std::hypot((v1 - creature_pos).x, (v1 - creature_pos).y) <= std::hypot((v2 - creature_pos).x, (v2 - creature_pos).y))
+					return  (closest ? v1 : v2);
+				else 
+					return  (closest ? v2 : v1);
 				
-				if(std::hypot(v1.x, v1.y) <= std::hypot(v2.x, v2.y)) {
-					closest_v = v1 + creature_pos;
-					second_closest_v = v2 + creature_pos;
-				}
-				else {
-					closest_v = v2 + creature_pos;
-					second_closest_v = v1 + creature_pos;
-				}
-
-				if (closest)
-					return closest_v;
-				else
-					return second_closest_v;
 			}
 		}
 	}
