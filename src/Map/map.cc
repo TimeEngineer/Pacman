@@ -28,7 +28,7 @@ void Map::load_map(std::ifstream &file, float h_scale, float v_scale) {
 	std::string map_str, block_id;
 	std::size_t pos_begin = 0, pos_end = 0;
 	bool eom_flag = false;
-	while(file >> map_str) {
+	while(getline(file, map_str)) {
 		map_data.push_back(std::vector<Block>());
 		_map_dimension.x = pos_begin = pos_end = 0; //Init
 

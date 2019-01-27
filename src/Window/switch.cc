@@ -5,8 +5,6 @@ void Window::switch_escape(sf::RenderWindow& window) {
 		case background_option::bJEU:
 		case background_option::bREGLES:
 		case background_option::bSCORES:
-		case background_option::bOPTIONS:
-		case background_option::bCREDITS:
 			_mode = DrawMode::Bg;
 			_game->stop();
 			_game->reset();
@@ -25,9 +23,6 @@ void Window::switch_arrowkey(sf::RenderWindow& window, sf::Keyboard::Key dir) {
 		case bMENU:
 			move_cursor(dir);
 			break;
-		case bJEU:
-
-			break;
 		default:
 			break;
 	}
@@ -40,13 +35,14 @@ void Window::switch_return(sf::RenderWindow& window) {
 			break;
 		case bREGLES:
 			if(_mode == DrawMode::Game) {
-				std::cout<< "start";
-				if(!_game->is_game_started()) {
-					_game->start();
-					_game->reset();
+				if(_game->is_entering_name()) {
+					_game->name_is_entered();
+				}
+				else if(!_game->is_game_started()) {
+						_game->start();
+						_game->reset();
 				}
 				_game->unpause();
-
 			}
 			else {
 				_mode = DrawMode::Game;
@@ -55,6 +51,9 @@ void Window::switch_return(sf::RenderWindow& window) {
 			}
 			break;
 		case bSCORES:
+			_mode = DrawMode::Bg;
+			_background->set_sprite(background_option::bMENU);
+			_cursor->set_visible(true);
 			break;
 		default:
 			break;
@@ -63,19 +62,19 @@ void Window::switch_return(sf::RenderWindow& window) {
 }
 void Window::menu_selected(sf::RenderWindow& window) {
 	int sel = _cursor->get_selection();
+	_background->set_sprite(_options[sel]);
 	switch (sel) {
-		case SCORES:
-		case OPTIONS: break;
 		case JOUER:
-		case CREDITS:
 			_mode = DrawMode::Bg;
-			_background->set_sprite(_options[sel]);
+			_cursor->set_visible(false);
+			break;
+		case SCORES:
+			_leaderboard.reopen();
+			_mode = DrawMode::Leaderboard;
 			_cursor->set_visible(false);
 			break;
 			/*_mode = DrawMode::Game;*/
 			// Don't draw game screen until rules aren't read.
-
-
 		case QUITTER:
 			window.close();
 			break;

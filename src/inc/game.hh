@@ -8,8 +8,6 @@
 #include "map.hh"
 #include "resources.hh"
 
-typedef Ghost_Sprite::GHOST_TYPE GHOST_TYPE;
-#define WHICH_GHOST(i) (i == GHOST_TYPE::BLINKY ? static_cast<Ghost&>(_blinky) : (i == GHOST_TYPE::CLYDE ? static_cast<Ghost&>(_clyde) : (i == GHOST_TYPE::INKEY ? static_cast<Ghost&>(_inkey) : static_cast<Ghost&>(_pinky))));
 
 class Game {
     typedef sf::Vector2i (*router_fnc)(bool closest);
@@ -21,10 +19,11 @@ class Game {
 
         //////////////////////////////////////////////////
         // Initialization 
-        void start() {_game_start = true;}
-        void stop() {_game_start = false;}
+        void start() {_game_start = true; _bg_sound->loop(); _bg_sound->play();}
+        void stop() {_game_start = false; _bg_sound->stop();}
         void pause() {_game_pause = true;}
         void unpause() {_game_pause = false;}
+        void name_is_entered();
         void game_reset();
         bool back_and_forth(Ghost &ghost);
         void fill_points(std::vector<std::pair<int,int> > coordinates, float scale, sf::Vector2i offset);
@@ -62,26 +61,32 @@ class Game {
         bool is_game_started() {return _game_start;}
         bool is_game_paused() {return _game_pause;}
         bool is_game_over() {return _game_over;}
-        
-        
+        bool is_entering_name() {return _enter_name;}
+        void append_char_to_name(char ch);
+        void backspace_to_name();
     private:
         //////////////////////////////////////////////////
-        // Function related to the game managing
+        // Functions related to the game managing
         void level_up();
         //////////////////////////////////////////////////
-        // Function related to the movement
+        // Functions related to the movement
         sf::Vector2i orientation_to_displacement(Creature::Orientation orientation);
         Creature::Orientation displacement_to_orientation(sf::Vector2i displacement);
         bool pacman_transition_phase(sf::Vector2i arrival_pos);
         
+        //////////////////////////////////////////////////
+        // Draw
+        void draw_center_text(sf::RenderWindow &window, std::string line1, std::string line2, int font_size, sf::Color text_color, sf::Color outline_color, float thickness);
         bool _game_start;
         bool _game_pause;
         bool _game_over;
+        bool _enter_name;
+        std::string _name;
         const unsigned int _wnd_width;
         const unsigned int _wnd_height;
 
         bool alive;
-       
+
         Creature::Orientation _pacman_orientation;
         bool _is_pacman_moved;
         /*bool _is_clyde_out;
@@ -117,6 +122,8 @@ class Game {
         Sound *_chomp_sound;
         Sound *_death_sound;
         Sound *_extra_life_sound;
+        Sound *_bg_sound;
+        Sound *_alert_sound;
  
         int _target_score;
         int _score_count;   
@@ -124,4 +131,7 @@ class Game {
 
         float _scale;
         sf::Vector2i _offset;
+        sf::Font _font;
+        bool _alert;
+
 };

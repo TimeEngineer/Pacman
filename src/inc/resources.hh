@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+const std::string _leaderboard_filename = "leaderboard";
 const std::string _default_path = "./DataBase/";
 const std::string _map_file = "./Map/Map.txt";
 const std::string _bg_image_paths[5] = {"Images/Fonds/menu.png",
@@ -41,7 +42,8 @@ const std::string _sound_paths[] = {"Sounds/choice.wav",
                                     "Sounds/eatfruit.wav",
                                     "Sounds/eatghost.wav",
                                     "Sounds/extrapac.wav",
-                                    "Sounds/intermission.wav"};
+                                    "Sounds/intermission.wav",
+                                    "Sounds/alert.wav"};
 enum sound_option {  sCHOICE = 0,
 	                 sCURSOR = 1,
 	                 sCHOMP = 2,
@@ -49,7 +51,8 @@ enum sound_option {  sCHOICE = 0,
 	                 sEATFRUIT = 4,
 	                 sEATGHOST = 5,
 	                 sEXTRAPACMAN = 6,
-	                 sINTERMISSION = 7};
+	                 sINTERMISSION = 7,
+                     sALERT = 8};
 
 enum image_option { iCURSOR  = 0 };
 
@@ -57,6 +60,4 @@ enum background_option { bMENU = 0,
                          bREGLES = 1,
                          bJEU = 2,
                          bSCORES = 3,
-                         bOPTIONS = 4,
-                         bCREDITS = 5,
-                         bQUIT = 6 };
+                         bQUIT = 4 };

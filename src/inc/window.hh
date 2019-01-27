@@ -10,6 +10,7 @@
 #include "menu.hh"
 #include "woption.hh"
 #include "resources.hh"
+#include "leaderboard.hh"
 
 typedef std::function<void(void)> CallbackFunction;
 class Window {
@@ -32,7 +33,7 @@ class Window {
 		void key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key);
 		void draw(sf::RenderWindow& window);
 		void timer(sf::Clock &clock);
-		enum class DrawMode {Bg = 0, Game = 1};
+		enum class DrawMode {Bg = 0, Game = 1, Leaderboard = 2};
 	// Key Pressed Handlers:
 		void switch_escape(sf::RenderWindow& window);
 		void switch_return(sf::RenderWindow& window);
@@ -45,14 +46,17 @@ class Window {
 		void move_cursor(sf::Keyboard::Key dir);
 		
 		void close_window(sf::RenderWindow& window);
-		Background *_background;
-		Cursor *_cursor;
-		Map *_map;
 		
 		int _width;
 		int _height;
 		float _scale;
-		const background_option _options[5] = {bREGLES, bSCORES, bOPTIONS, bCREDITS, bQUIT};
-		DrawMode _mode;
+		Background *_background;
+		Cursor *_cursor;
+		Map *_map;
 		Game *_game;
+		Leaderboard _leaderboard;
+		DrawMode _mode;
+
+		
+		const background_option _options[5] = {bREGLES, bSCORES, bQUIT};
 };

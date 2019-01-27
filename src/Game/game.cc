@@ -1,5 +1,6 @@
 #include "game.hh"
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -8,6 +9,8 @@ Game::Game(unsigned int wnd_width, unsigned int wnd_height, float scale):
 _game_start(false),
 _game_pause(false),
 _game_over(false),
+_enter_name(false),
+_name(""),
 _wnd_width(wnd_width),
 _wnd_height(wnd_height),
 alive(true),
@@ -27,12 +30,16 @@ _pinky(scale),
 _play_sound(false),
 _target_score(0),
 _level(0),
-_scale(scale)
+_scale(scale),
+_alert(false)
 {
+	_font.loadFromFile(_default_path + _font_paths[FONT_TYPE::COMIC]);
 	_chomp_sound = new Sound(_default_path + _sound_paths[sound_option::sCHOMP]);
 	_death_sound = new Sound(_default_path + _sound_paths[sound_option::sDEATH]);
 	_extra_life_sound  = new Sound(_default_path + _sound_paths[sound_option::sEXTRAPACMAN]);
-
+    _bg_sound = new Sound(_default_path + _sound_paths[sound_option::sINTERMISSION]);
+    _alert_sound = new Sound(_default_path + _sound_paths[sound_option::sALERT]);
+	
 	_house_index[Map::House::Blinky] = _map.get_house_index_blinky();
 	_house_index[Map::House::Clyde] = _map.get_house_index_clyde();
 	_house_index[Map::House::Pinky] = _map.get_house_index_pinky();
@@ -192,23 +199,48 @@ void Game::loop() {
 			
 		}
 		else {
+			int close_range = 4;
+			sf::Vector2i dist0, dist1, dist2, dist3;
 			chase(_pinky, _pacman, true);
 			chase(_blinky, _pacman, false);
 			patrol(_inkey);
 			random_destination(_clyde);
-				
+			dist0 = _pacman.get_map_coordinate() - _pinky.get_map_coordinate();
+			dist1 = _pacman.get_map_coordinate() - _blinky.get_map_coordinate();
+			dist2 = _pacman.get_map_coordinate() - _inkey.get_map_coordinate();
+			dist3 = _pacman.get_map_coordinate() - _clyde.get_map_coordinate();
+			// Send alert if ghosts are close
+			if(std::hypot(dist0.x, dist0.y) <  close_range ||
+			std::hypot(dist1.x, dist1.y) < close_range ||
+			std::hypot(dist2.x, dist2.y) < close_range ||
+			std::hypot(dist3.x, dist3.y) < close_range) {
+				if(!_alert) {
+					_alert_sound->loop();
+					_alert_sound->play();
+				}
+				_alert = true;
+			}
+			else if(std::hypot(dist0.x, dist0.y) > close_range &&
+			std::hypot(dist1.x, dist1.y) > close_range &&
+			std::hypot(dist2.x, dist2.y) > close_range &&
+			std::hypot(dist3.x, dist3.y) > close_range) {
+				if(_alert) {
+					_alert_sound->stop();
+				}
+				_alert = false;
+			}			
 		}
 	}
 }
 
 void Game::draw(sf::RenderWindow &window) {
-	sf::Font font;
-	font.loadFromFile(_default_path + _font_paths[FONT_TYPE::COMIC]);
-	sf::Text text("Score : " + std::to_string(_pacman.get_score()) + "   Life : " +  std::to_string(_pacman.get_lives()), font);
+
+	sf::Text text("Score : " + std::to_string(_pacman.get_score()) + "   Life : " +  std::to_string(_pacman.get_lives()), _font);
 	text.setCharacterSize(30);
 	text.setStyle(sf::Text::Bold);
 	text.setFillColor(sf::Color::White);
 	window.draw(text);
+
 	_map.draw(window);
 	for (auto &iter : _points)
 		iter.draw(window);
@@ -225,41 +257,44 @@ void Game::draw(sf::RenderWindow &window) {
 	if (!alive)
 		_pacman.draw(window);
 	if(_game_over) {
-		text.setFillColor(sf::Color::Black);
-		text.setOutlineColor(sf::Color::Red);
-		text.setOutlineThickness(2.0f);
-		text.setString("GAME OVER");
-		text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, (_wnd_height - text.getLocalBounds().height*3) / 2);
-		window.draw(text);
-		text.setString("ECHAPPE POUR RETOURNER AU MENU");
-		text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, (_wnd_height - text.getLocalBounds().height) / 2);
-		window.draw(text);
+		if(_enter_name) {
+			draw_center_text(window, "GAME OVER. Votre nom ? (Entrez)", _name ,30, sf::Color::White, sf::Color::Black, 2.0f);	
+		}
+		else {
+			draw_center_text(window, "GAME OVER", "ECHAPPE POUR RETOURNER AU MENU",30, sf::Color::Black, sf::Color::Red, 2.0f);	
+		}
 		reset();
 		_level = 0;
 		return;
 	}
 	if (!_game_start) {
-		text.setFillColor(sf::Color::Red);
-		text.setOutlineColor(sf::Color::White);
-		text.setOutlineThickness(2.0f);
-
-		text.setString("NIVEAU " + std::to_string(_level));
-		text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, (_wnd_height - text.getLocalBounds().height*3) / 2);
-		window.draw(text);
-		text.setString("PRET? (TAPEZ ENTREE)");
-		text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, (_wnd_height - text.getLocalBounds().height) / 2);
-		window.draw(text);
+		draw_center_text(window, "NIVEAU " + std::to_string(_level),"PRET? (TAPEZ ENTREE)",30, sf::Color::Red, sf::Color::White, 2.0f);	
 	}
 	else {
 		if(_game_pause) {
-			text.setFillColor(sf::Color::Red);
-			text.setOutlineColor(sf::Color::White);
-			text.setOutlineThickness(2.0f);
-			text.setString("PAUSE");
-			text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, (_wnd_height - text.getLocalBounds().height) / 2);
-			window.draw(text);
+			draw_center_text(window, "PAUSE ", "",30, sf::Color::Red, sf::Color::White, 2.0f);	
 		}
 	}
+}
+void Game::draw_center_text(sf::RenderWindow &window, std::string line1, std::string line2, int font_size, sf::Color text_color, sf::Color outline_color, float thickness)
+{
+	int nb_lines = 0;
+	sf::Text text("", _font);	
+	text.setCharacterSize(font_size);
+	text.setStyle(sf::Text::Bold);
+	text.setFillColor(text_color);
+	text.setOutlineColor(outline_color);
+	text.setOutlineThickness(thickness);
+	
+	if(line1.size() > 0) nb_lines++;
+	if(line2.size() > 0) nb_lines++;
+	
+	text.setString(line1);
+	text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, _wnd_height / 2 - (text.getLocalBounds().height / 2 *nb_lines));
+	window.draw(text);
+	text.setString(line2);
+	text.setPosition((_wnd_width - text.getLocalBounds().width) / 2, _wnd_height /2 + (text.getLocalBounds().height / 2 *(nb_lines - 1)));
+	window.draw(text);
 }
 
 void Game::animate(void) {
@@ -302,8 +337,11 @@ void Game::collision() {
 			_death_sound->play();
 			_game_start = false;
 			alive = false;
-			if(_pacman.get_lives() <= 0)
+			if(_pacman.get_lives() <= 0) {
 				_game_over = true;
+				_enter_name = true;
+				
+			}
 			return;
 		}
 	}
@@ -356,6 +394,7 @@ void Game::level_up() {
 	}	
 }
 void Game::game_reset() {
+	_name = "";
 	_game_start = false;
 	_game_over = false;
 	_game_pause = false;
@@ -392,4 +431,26 @@ void Game::reset() {
 	_pinky.set_speed(0.6f + (_level * 0.1f));
 	_pacman.set_speed(1.5f+ (_level * 0.05f));
 	alive = true;
+}
+void Game::append_char_to_name(char ch) {
+	_name += ch;
+}
+void Game::backspace_to_name() {
+	if(_name.size() > 0)
+		_name.pop_back();
+}
+
+void Game::name_is_entered()
+{
+	std::ofstream ofs (_leaderboard_filename, std::ofstream::app);
+	if(ofs.is_open()) {
+		ofs << _name;
+		ofs << ";";
+		ofs << _pacman.get_score() << std::endl;
+	}
+	else {
+		std::cerr << "Echec d'ouverture : " << _leaderboard_filename << std::endl;
+	}
+  	ofs.close();
+	_enter_name = false;
 }

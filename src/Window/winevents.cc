@@ -9,12 +9,20 @@ void Window::draw(sf::RenderWindow& window) {
 			_game->draw(window);
 			break;
 		case DrawMode::Bg :
-				_background->draw(window);
+			_background->draw(window);
 			if (_cursor->get_visible())
 				_cursor->draw(window);
-		break;
+			break;
+		case DrawMode::Leaderboard : {
+				_background->draw(window);
+				_leaderboard.draw(window);
+				/*for(auto &iter : _leaderboard.get_top_five()){
+					std::cout<< iter.name << " " << iter.score << std::endl;
+				}*/
+			}
+			break;
 		default:
-		break;
+			break;
 
 	}
 	window.display();
@@ -44,7 +52,7 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key) {
 			break;
 		case sf::Keyboard::P:
 			if (_mode == DrawMode::Game) {
-				if(_game->is_game_started())
+				if(!_game->is_entering_name() && _game->is_game_started()) 
 					_game->pause();
 			}
 			break;
@@ -65,7 +73,7 @@ void Window::key_pressed(sf::RenderWindow& window, sf::Keyboard::Key key) {
 					break;
 			}
 			break;
-	default:
-		break;
+		default:
+			break;
 	}
 }

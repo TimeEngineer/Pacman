@@ -1,17 +1,21 @@
 #include "window.hh"
 #include <thread>
+
 // background texture size : 420x460
 #define BG_WIDTH Background::bg_width
 #define BG_HEIGHT Background::bg_height
-Window::Window(unsigned int width, unsigned int height) {
-	_width = width;
-	_height = height;
-	_scale = ((_width < BG_WIDTH * 2 || _height < BG_HEIGHT * 2) ? SMALL_SCALE : MEDIUM_SCALE);
+
+Window::Window(unsigned int width, unsigned int height):
+_width(width),
+_height(height),
+_scale(((_width < BG_WIDTH * 2 || _height < BG_HEIGHT * 2) ? SMALL_SCALE : MEDIUM_SCALE)),
+_background(new Background(_width, _height, _scale)),
+_cursor(new Cursor(_width, _height, _scale, 0, 0, 2)),
+_game(new Game(_width, _height, _scale)),
+_leaderboard(_leaderboard_filename, _background->get_offset(), _scale),
+_mode(DrawMode::Bg)
+{	
 	std::cout << "scale:"<<_scale<<std::endl;
-	_background = new Background(_width, _height, _scale);
-	_cursor = new Cursor(_width, _height, _scale, 0, 0, 4);
-	_game = new Game(_width, _height, _scale);
-	_mode = DrawMode::Bg;
 }
 
 Window::~Window() {
@@ -40,6 +44,16 @@ void Window::launch() {
 			switch (event.type) {
 				case sf::Event::Closed:
 					window.close();
+					break;
+				case sf::Event::TextEntered:
+					if(_game->is_entering_name()) {
+						if(event.text.unicode < 128) {
+							if(event.text.unicode == '\b') 
+								_game->backspace_to_name();
+							else
+								_game->append_char_to_name(static_cast<char>(event.text.unicode));
+						}
+					}
 					break;
 				case sf::Event::KeyPressed:
 					key_pressed(window, event.key.code);

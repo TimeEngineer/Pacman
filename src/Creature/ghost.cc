@@ -16,7 +16,7 @@ Creature(file_path, 32)
         for (int index_ori = 0; index_ori < 4; index_ori++) {
             //std::cout << status[index_stat] + orientation[index_ori] << std::endl;
             _anim.new_cut(status[index_stat] | orientation[index_ori],
-                         (status[index_stat] >> 1) + orientation[index_ori], 2);
+                         index_ori * 2, 2);
         }
     }
     _anim.set_scale(scale, scale);
@@ -41,7 +41,7 @@ void Ghost::set_orientation(Creature::Orientation orientation) {
             _anim_orientation = GHOST_ORIENTATION::TOP;
             break;
     }
-    _anim.set_scene(static_cast<int>(_anim_orientation));
+    _anim.set_scene(GHOST_STATUS::LIVE | _anim_orientation);
     _orientation = orientation;
 }
 void Ghost::set_scene() {}

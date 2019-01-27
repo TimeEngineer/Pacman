@@ -16,6 +16,7 @@ void Game::ghost_transition_phase(Ghost &ghost) {
 		ghost.set_screen_coordinate(_map.get_screen_coordinate(ghost.get_map_coordinate()));
 		// Guide the ghost to the next block.
     	ghost.next();	
+		ghost.set_orientation(displacement_to_orientation(ghost.get_cur_pos() - ghost.get_prev_pos()));
 		ghost.set_map_coordinate(_map.get_map_coordinate(ghost.get_cur_pos()));
 		
 	}
