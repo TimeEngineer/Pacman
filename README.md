@@ -1,6 +1,6 @@
 # Pacman
 
-Projet C++ dans le cadre de la formation Electronique-Système Embarqués de 4eme annee.
+Projet C++ dans le cadre de la formation Electronique-Infomatique Système Embarqués en 4eme annee.
 
 Auteur : CHEN Pascal / KO Roqyun
 
