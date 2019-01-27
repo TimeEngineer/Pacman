@@ -11,7 +11,8 @@
 Map::Map(std::string map_file, unsigned int wnd_width,  unsigned int wnd_height, float h_scale, float v_scale):
 Graph(),
 portals(Block::MAX_PORTAL, NULL),
-destinations(Block::MAX_PORTAL, NULL)
+destinations(Block::MAX_PORTAL, NULL),
+_pacman_init_pos(0,0)
 {
 	std::ifstream file(map_file);
 	load_map(file, h_scale, v_scale);
@@ -48,7 +49,7 @@ void Map::load_map(std::ifstream &file, float h_scale, float v_scale) {
 		if(eom_flag) break;
 	}
 }
-
+//Retrieve ghost house region and ghosts' positions.
 void Map::register_ghost_house(std::ifstream &file) {
 	std::string map_str, block_id;
 	std::size_t pos_begin = 0, pos_end = 0;
@@ -62,6 +63,10 @@ void Map::register_ghost_house(std::ifstream &file) {
 			house_coordinate = parse_next_coordinate(map_str, pos_begin, pos_end);
 			if(house_coordinate.x == -1 || house_coordinate.y == -1) {
 				_house_index[line] = static_cast<int>(_ghost_house.size());
+				//Retrieve pacman's intial position
+				pos_begin = 0, pos_end = 0;
+				file >> map_str;
+				_pacman_init_pos = parse_next_coordinate(map_str, pos_begin, pos_end);
 				return;
 			}
 			_ghost_house.push_back(house_coordinate);

@@ -400,6 +400,7 @@ void Game::game_reset() {
 	_game_start = false;
 	_game_over = false;
 	_game_pause = false;
+	_enter_name = false;
 	_target_score = 0;
 	_level = -1;
 	level_up();
@@ -414,7 +415,7 @@ void Game::reset() {
 	_house_index[Map::House::Pinky] = _map.get_house_index_pinky();
 	_house_index[Map::House::Inkey] = _map.get_house_index_inkey();
 	
-	move(_pacman, _initial_map_x, _initial_map_y);
+	move(_pacman, _map.get_pacman_init_pos());
 	move(_blinky, _map.ghost_house_at(_house_index[Map::House::Blinky]));
 	move(_clyde, _map.ghost_house_at(_house_index[Map::House::Clyde]));
 	move(_inkey, _map.ghost_house_at(_house_index[Map::House::Inkey]));

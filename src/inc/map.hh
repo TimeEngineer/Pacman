@@ -47,6 +47,7 @@ public:
 	int get_house_index_inkey() const {return _house_index[House::Inkey];}
 	int get_house_index_end() const {return _house_index[House::End];}
 	const sf::Vector2i& ghost_house_at(int index) const {return _ghost_house[index];}
+	const sf::Vector2i& get_pacman_init_pos() const {return _pacman_init_pos;}
 	enum House {Blinky = 0, Door, Pinky, Inkey, Clyde, End};
 private:
 	Block& get_apparent_block_at(int x, int y) {return map_data[y][x];}
@@ -63,6 +64,7 @@ private:
 	std::vector<Block*> destinations;
 	std::vector<Block*> intersections;
 	std::vector<sf::Vector2i> _ghost_house;
+	sf::Vector2i _pacman_init_pos;
 	std::string parse_next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
 	sf::Vector2i parse_next_coordinate(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end);
 	sf::Vector2i _map_dimension;

@@ -19,7 +19,13 @@ class Game {
 
         //////////////////////////////////////////////////
         // Initialization 
-        void start() {_game_start = true; _bg_sound->loop(); _bg_sound->play();}
+        void start() {
+            _game_start = true; 
+            if(!_game_over) {
+                _bg_sound->loop();
+                _bg_sound->play();
+            }
+        }
         void stop() {_game_start = false; _bg_sound->stop();}
         void pause() {_game_pause = true;}
         void unpause() {_game_pause = false;}
@@ -89,9 +95,7 @@ class Game {
 
         Creature::Orientation _pacman_orientation;
         bool _is_pacman_moved;
-        /*bool _is_clyde_out;
-        bool _is_inkey_out;
-        bool _is_pinky_out;*/
+        
 
         sf::Vector2i _pacman_arrival_pos;
 
@@ -102,22 +106,10 @@ class Game {
         Inkey _inkey;
         Pinky _pinky;
         std::vector<Point> _points;
-        std::vector<Energizer> _energizers;
-        const int _initial_map_x = 11;
-        const int _initial_map_y = 17;
-        const int _inkey_init_x = 10;
-        const int _inkey_init_y = 10;
-        const int _pinky_init_x = 11;
-        const int _pinky_init_y = 10;
-        const int _blinky_init_x = 11;
-        const int _blinky_init_y = 8;
-        const int _clyde_init_x = 12;
-        const int _clyde_init_y = 10;
-        
+        std::vector<Energizer> _energizers;       
         
         int _house_index[6];
         bool _play_sound;
-		
 		
         Sound *_chomp_sound;
         Sound *_death_sound;
