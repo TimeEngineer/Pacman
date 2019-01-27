@@ -118,32 +118,7 @@ void Map::generate_graph() {
 		}
 	}
 	this->generate(intersections);
-	this->convert_intersections_to_vertices();
-	
-/*
-	for (const auto& iter : this->_cst_edges) {
-		std::cout << iter << std::endl;
-	}
-	*/
-	/*std::cout << "Now:" << std::endl;
-	for (const auto& viter : this->_cst_vertices) {
-		for (const auto& eiter : viter.get_paths())
-			std::cout << *(eiter.edge) << std::endl;
-	}*/
-	//std::cout << "Shortest route?" << std::endl;
-	//sf::Clock clock;
-	//clock.restart();
-	//std::vector<struct Vertex::Path> paths = shortest_route(*intersections.back(), *intersections.front());
-	/*std::cout << clock.getElapsedTime().asMilliseconds() << "ms" << std::endl;
-	int weight = 0;
-	for(auto &iter : paths) {
-		std::cout<< *iter.edge <<std::endl;
-		weight += iter.edge->get_weight();
-	}
-		std::cout<< "Weight:" << weight <<std::endl;*/
-//	
-//	std::cout << << std::endl;
-	
+	this->convert_intersections_to_vertices();	
 }
 
 std::string Map::parse_next_block(const std::string& map_str, std::size_t& pos_begin, std::size_t& pos_end) {

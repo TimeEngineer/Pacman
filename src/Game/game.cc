@@ -334,6 +334,8 @@ void Game::collision() {
 			_pacman.die();
 			_pacman.set_loop(false);
 			_pacman.set_scene(Pacman_Sprite::DEAD);
+			_alert_sound->stop();
+			_bg_sound->stop();
 			_death_sound->play();
 			_game_start = false;
 			alive = false;
