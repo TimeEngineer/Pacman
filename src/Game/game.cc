@@ -16,10 +16,6 @@ _wnd_height(wnd_height),
 alive(true),
 _pacman_orientation(Creature::Orientation::Top),
 _is_pacman_moved(false),
-/*
-_is_clyde_out(false),
-_is_inkey_out(false),
-_is_pinky_out(false),*/
 _pacman_arrival_pos(0,0),
 _map(_default_path + _map_file, wnd_width, wnd_height, scale, scale),
 _pacman(scale),
@@ -33,6 +29,7 @@ _level(0),
 _scale(scale),
 _alert(false)
 {
+	// Load files in advance so that they could be called repeatedly without reloading.
 	_font.loadFromFile(_default_path + _font_paths[FONT_TYPE::COMIC]);
 	_chomp_sound = new Sound(_default_path + _sound_paths[sound_option::sCHOMP]);
 	_death_sound = new Sound(_default_path + _sound_paths[sound_option::sDEATH]);
@@ -40,10 +37,7 @@ _alert(false)
     _bg_sound = new Sound(_default_path + _sound_paths[sound_option::sINTERMISSION]);
     _alert_sound = new Sound(_default_path + _sound_paths[sound_option::sALERT]);
 	
-	_house_index[Map::House::Blinky] = _map.get_house_index_blinky();
-	_house_index[Map::House::Clyde] = _map.get_house_index_clyde();
-	_house_index[Map::House::Pinky] = _map.get_house_index_pinky();
-	_house_index[Map::House::Inkey] = _map.get_house_index_inkey();
+	//Shift all images in order to center them.
 	_offset = _map.get_topleft();
 	_pacman.set_offset(_offset);
 	_inkey.set_offset(_offset);
@@ -51,17 +45,23 @@ _alert(false)
 	_clyde.set_offset(_offset);
 	_pinky.set_offset(_offset);
 	
+	// Random seed.
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 
+	// Rest all.
 	reset();
 	game_reset();
 }
 Game::~Game()
 {
+	delete _alert_sound;
+	delete _bg_sound;
 	delete _death_sound;
 	delete _chomp_sound;
 	delete _extra_life_sound;
 }
+
+//Predict the rotational direction of entities from their next position 
 Creature::Orientation Game::displacement_to_orientation(sf::Vector2i displacement)
 {
 	Creature::Orientation orientation = Creature::Orientation::Top;
@@ -72,7 +72,7 @@ Creature::Orientation Game::displacement_to_orientation(sf::Vector2i displacemen
 	return orientation;
 
 }
-
+//Predict the next position from the rotational direction of entities.
 sf::Vector2i Game::orientation_to_displacement(Creature::Orientation orientation) {
 	sf::Vector2i displacement(0,0);
 	switch(orientation) {
@@ -87,7 +87,7 @@ sf::Vector2i Game::orientation_to_displacement(Creature::Orientation orientation
 	}
 	return displacement;
 }
-
+//Upon receiving arrow key input, rotate pacman. Pacman will move on its own.
 void Game::move_pacman(sf::Keyboard::Key dir) {
 	Creature::Orientation orientation;
 	switch(dir) {
@@ -111,18 +111,22 @@ void Game::move_pacman(sf::Keyboard::Key dir) {
 	_pacman_orientation = orientation;
 }
 
+// Check if the next position is movable.
 bool Game::check_mobility(Creature &creature, sf::Vector2i cur_pos, sf::Vector2i displacement) {
 	sf::Vector2i target_pos(cur_pos + displacement);
+
+	// Check out of bound first.
 	if (target_pos.x < 0 || target_pos.y < 0) 
 		return false;
 	if (target_pos.x >= _map.get_map_dimension().x || target_pos.y >= _map.get_map_dimension().y)
 		return false;
-
+	// Check if the block allows the certain creatures to mount on itself.
 	if ((_map(target_pos.x, target_pos.y).get_status() & creature.get_entity_id()) == 0x0)
 		return false;
 	return true;
 }
 
+// Check the mobility and then set the next position (using displacement)
 bool Game::move_creature(Creature &creature, Creature::Orientation orientation, sf::Vector2i &arrival_pos) {
 	sf::Vector2i cur_pos(creature.get_map_coordinate());
 	sf::Vector2i displacement = orientation_to_displacement(orientation);
@@ -135,6 +139,7 @@ bool Game::move_creature(Creature &creature, Creature::Orientation orientation, 
 	
 	return true;
 }
+// Check the mobility and then set the next position (using orientation)
 bool Game::move_creature(Creature &creature, sf::Vector2i displacement, sf::Vector2i &arrival_pos) {
 	sf::Vector2i cur_pos(creature.get_map_coordinate());
 	Creature::Orientation orientation = displacement_to_orientation(displacement);
@@ -146,13 +151,13 @@ bool Game::move_creature(Creature &creature, sf::Vector2i displacement, sf::Vect
 	arrival_pos = cur_pos + displacement;
 	return true;
 }
-
+// Make smooth transition between blocks and blocks instead of an abrupt movement.
 bool Game::pacman_transition_phase(sf::Vector2i arrival_pos) {
 	bool _is_transiting = true;
 	sf::Vector2f screen_displacement, src_screen_pos, dst_screen_pos;
 	src_screen_pos = _pacman.get_screen_float_coordinate();
 	dst_screen_pos = _map.get_screen_float_coordinate(arrival_pos);
-
+	// The current screen coordinate is at the arrival, match the map coordinate.
 	if (std::fabs(src_screen_pos.x - dst_screen_pos.x) < (_pacman.get_speed() * 1.5f) && std::fabs(src_screen_pos.y - dst_screen_pos.y) < (_pacman.get_speed() * 1.5f)) {
 		if (_map(arrival_pos).is_portal()){
 			move(_pacman, arrival_pos);
@@ -163,6 +168,7 @@ bool Game::pacman_transition_phase(sf::Vector2i arrival_pos) {
 		_is_transiting = false;
 	}
 	else {
+		//Make a slow transtion.
 		screen_displacement = dst_screen_pos - src_screen_pos;
 		screen_displacement.x = _pacman.get_speed() * (std::fabs(screen_displacement.x) < 0.1 ? 0 : (screen_displacement.x < 0 ? -1 : 1));
 		screen_displacement.y = _pacman.get_speed() * (std::fabs(screen_displacement.y) < 0.1 ? 0 : (screen_displacement.y < 0 ? -1 : 1));
@@ -173,9 +179,9 @@ bool Game::pacman_transition_phase(sf::Vector2i arrival_pos) {
 }
 
 void Game::move(Entity &creature, const sf::Vector2i &pos) {
-	// Cela ne change pas la position de l'image.
+	// Change the map coordinates
 	creature.set_map_coordinate(_map.get_map_coordinate(pos.x, pos.y));
-	// Cela change la position de l'image.
+	// Change the screen coordinates
 	creature.set_screen_coordinate(_map.get_screen_coordinate(creature.get_map_coordinate()));
 }
 //Overload of function move
@@ -383,7 +389,7 @@ void Game::level_up() {
 	}
 	unsigned int size = energy_pos.size(), factor, i = 0;
 	factor = (_level <= 15 ? 17 - _level : 2);
-	//Retirer les gommees aleatoirement jusqu'a ce qu'il en reste assez pour le niveau.
+	//RRemove dots randomly until it has sufficient number of them left.
 	while(energy_pos.size() > size / factor) {
 		i = std::rand() % energy_pos.size();
 		energy_pos.erase((energy_pos.begin() + i));
@@ -410,6 +416,7 @@ void Game::game_reset() {
 }
 void Game::reset() {
 	std::vector<sf::Vector2i> null_path(0, sf::Vector2i(-1,-1));
+	// Get the initial positions of ghosts.
 	_house_index[Map::House::Blinky] = _map.get_house_index_blinky();
 	_house_index[Map::House::Clyde] = _map.get_house_index_clyde();
 	_house_index[Map::House::Pinky] = _map.get_house_index_pinky();

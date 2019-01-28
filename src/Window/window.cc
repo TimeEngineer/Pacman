@@ -22,6 +22,9 @@ Window::~Window() {
 	delete _background;
 	delete _cursor;
 	delete _game;
+	for (unsigned int i = timer_events.size() - 1; i >= 0; i--) {
+		delete timer_events[i];
+	}
 }
 
 void Window::launch() {
@@ -43,6 +46,7 @@ void Window::launch() {
 		while (window.pollEvent(event)) {
 			switch (event.type) {
 				case sf::Event::Closed:
+					//clock.stop();
 					window.close();
 					break;
 				case sf::Event::TextEntered:

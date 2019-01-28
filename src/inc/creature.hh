@@ -23,13 +23,6 @@ class Creature : public Entity {
         void set_lives(int lives) {_lives = lives;}
         float get_speed() {return _speed;}
         int get_lives() {return _lives;}
-        void add_sound(std::string file_path)
-        {
-            /*
-            Sound sound(file_path);
-            sounds.push_back(file_path);
-            */
-        }
 
         virtual EntityID get_entity_id() const {return EntityID::Creature;}
         virtual void set_orientation(Creature::Orientation orientation) {_orientation = orientation;}
@@ -43,7 +36,6 @@ class Creature : public Entity {
         
     protected:
         Creature::Orientation _orientation;
-        std::map<int, Sound> sounds;
         int _lives;
         float _speed;
 };

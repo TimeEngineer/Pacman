@@ -14,7 +14,6 @@ Creature(file_path, 32)
                                         GHOST_ORIENTATION::BOTTOM};
     for (int index_stat = 0; index_stat < 3; index_stat++) {
         for (int index_ori = 0; index_ori < 4; index_ori++) {
-            //std::cout << status[index_stat] + orientation[index_ori] << std::endl;
             _anim.new_cut(status[index_stat] | orientation[index_ori],
                          index_ori * 2, 2);
         }

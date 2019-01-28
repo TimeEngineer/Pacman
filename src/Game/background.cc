@@ -17,10 +17,12 @@ Background::~Background() {
 	
 }
 
+// Return the current option chosen.
 background_option Background::get_token() const {
 	return _token;
 }
 
+// Display different images depending on the option chosen by user at menu.
 void Background::set_sprite(background_option option) {
 	std::string image_path;
 	_image.load_image(_default_path + _bg_image_paths[option]);

@@ -9,6 +9,7 @@ void Window::switch_escape(sf::RenderWindow& window) {
 			_game->stop();
 			_game->reset();
 			_game->game_reset();
+			//std::cerr<<"Quit"<<std::endl;
 			_background->set_sprite(background_option::bMENU);
 			_cursor->set_visible(true);
 			break;
@@ -62,13 +63,14 @@ void Window::switch_return(sf::RenderWindow& window) {
 }
 void Window::menu_selected(sf::RenderWindow& window) {
 	int sel = _cursor->get_selection();
-	_background->set_sprite(_options[sel]);
 	switch (sel) {
 		case JOUER:
+			_background->set_sprite(_options[sel]);
 			_mode = DrawMode::Bg;
 			_cursor->set_visible(false);
 			break;
 		case SCORES:
+			_background->set_sprite(_options[sel]);
 			_leaderboard.reopen();
 			_mode = DrawMode::Leaderboard;
 			_cursor->set_visible(false);
@@ -76,6 +78,7 @@ void Window::menu_selected(sf::RenderWindow& window) {
 			/*_mode = DrawMode::Game;*/
 			// Don't draw game screen until rules aren't read.
 		case QUITTER:
+			//std::cerr<<"Quit"<<std::endl;
 			window.close();
 			break;
 		default:

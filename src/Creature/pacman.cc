@@ -1,5 +1,6 @@
 #include "pacman.hh"
 
+//Set animation scenes for pacman.
 Pacman::Pacman(float scale) :
 Creature(_default_path + _pacman_path, _pacman_frames),
 _score(0)

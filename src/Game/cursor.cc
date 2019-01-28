@@ -15,19 +15,21 @@ _limit_max(limit_max)
 }
 
 Cursor::~Cursor() {}
-
+// Move the cursor up and downward.
 void Cursor::move(Direction dir)
 {
     _sound.play();
+	//Check limit before moving the cursor.
 	if(dir == Direction::Down && _selection < _limit_max)
 		_selection += 1;
 	else if(dir == Direction::Up && _selection > _limit_min)
 		_selection += -1;
 	else
 		return;
-		
+	// Move only vertically.
 	_image.set_y((vertical_spacing * _image.get_scale().y) * _selection);
 }
+// Set range of limit for cursor so that it doesn't go out of bound.
 void Cursor::set_limit_min(int limit_min)
 {
 	_limit_min = limit_min;

@@ -58,5 +58,5 @@ class Window {
 		DrawMode _mode;
 
 		
-		const background_option _options[5] = {bREGLES, bSCORES, bQUIT};
+		const background_option _options[3] = {bREGLES, bSCORES, bQUIT};
 };
